@@ -1,6 +1,5 @@
 <%@ page import="java.net.URLDecoder" %><%--
   Created by IntelliJ IDEA.
-  User: chuanyihuang
   Date: 2017/6/20
   Time: 17:23
   To change this template use File | Settings | File Templates.
