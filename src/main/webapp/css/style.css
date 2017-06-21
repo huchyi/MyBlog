@@ -1,0 +1,136 @@
+* {
+    box-sizing: border-box;
+    margin:0 auto;
+}
+
+html {
+    background: #e6e6e6;
+    text-align: center;
+}
+
+#divCss {
+    width: 60%;
+    height: 100%;
+    background: #fefefe;
+    margin-top: -35px;
+    text-align: center;
+}
+
+#ulCss {
+    border: 0 solid;
+    margin: 20px auto;
+    max-width: 800px;
+    padding-top: 30px;
+}
+
+#ulCss li {
+    padding: 16px;
+    margin: 36px;
+    height: 200px;
+    border-radius: 10px;
+    display: block;
+    position: relative;
+    -webkit-box-shadow: 0 0 20px rgba(161, 208, 221, .5);
+    -moz-box-shadow: 0 0 20px rgba(161, 208, 221, .5);
+    box-shadow: 0 0 20px rgba(161, 208, 221, .5);
+}
+
+#ulCss li h3 {
+    cursor: pointer;
+}
+
+#ulCss li h5 {
+    text-align: left;
+    cursor: pointer;
+}
+
+#ulCss li h6 {
+    text-align: left;
+    color: #aaaaaa;
+    margin-top: 140px;
+}
+
+/* First styling the menu */
+#menu {
+    list-style: none;
+    padding: 0 12px;
+    background: #ffffff;
+    margin: 50px;
+    display: inline-block;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 5px;
+
+    /* 3d effect using box-shadows */
+    box-shadow: 0 4px #ffffff, 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Now the list items */
+#menu li {
+    margin-left: 10px;
+    display: inline-block;
+    position: relative;
+    bottom: -11px;
+}
+
+#menu li:first-child {
+    margin: 0
+}
+
+#menuLiASel {
+    background: #64AEE0;
+    display: block;
+    border-radius: 3px;
+    padding: 0 12px;
+    color: white;
+    position: relative;
+    text-decoration: none;
+    height: 27px;
+    font: 12px / 27px "PT Sans", Arial, sans-serif;
+    /* Now the 3d effect */
+    box-shadow: 0 3px #7fafbc, 0 4px 5px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+/* The real fun begins here :D */
+#menuLiANor {
+    background: #a1d0dd;
+    display: block;
+    border-radius: 3px;
+    padding: 0 12px;
+    color: white;
+    position: relative;
+    text-decoration: none;
+    height: 27px;
+    font: 12px / 27px "PT Sans", Arial, sans-serif;
+    /* Now the 3d effect */
+    box-shadow: 0 3px #7fafbc, 0 4px 5px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+#menuLiAEllipsis {
+    background: white;
+    display: block;
+    border-radius: 3px;
+    padding: 0 12px;
+    color: black;
+    height: 27px;
+    font: 18px / 27px "PT Sans", Arial, sans-serif;
+}
+
+/* Basic design is ready, now let's make it animate when hovered or clicked */
+/* For this, we'll use transition property */
+
+#menu li a:hover {
+    background: #bae0ea
+}
+
+#menu li a:active {
+    background: #bae0ea;
+    /* Now, let's make it look like its pressed down when clicked */
+    bottom: -3px;
+    box-shadow: 0 0 #7fafbc, 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Perfect */
+/* Using the same technique, you can create buttons, menus and what not! I have already put some examples in the PSD. Get it here  http://dribbble.com/shots/757549-Freebie-3D-Pagination-and-Buttons-with-PSD */

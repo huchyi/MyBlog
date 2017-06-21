@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+例如namespace="me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀)
+        -->
+<mapper namespace="mapping.ArticleMapper">
+    <!--<select id="getUser" parameterType="int"-->
+    <!--resultType="com.springmvc.model.ArticleModel">-->
+    <!--select * from users where id=#{id}-->
+    <!--</select>-->
+
+    <insert id="insertArticle" parameterType="com.springmvc.db.model.ArticleModel">
+        insert into article (article_id,userid,username,title,describes,content,img_url,create_time)
+        values (#{article_id},#{userid},#{username},#{title},#{describes},#{content},#{img_url},#{create_time})
+    </insert>
+
+    <update id="updateArticle" parameterType="com.springmvc.db.model.ArticleModel">
+        UPDATE article SET article_id=#{article_id},title=#{title},describes=#{describes},content=#{content},
+        img_url=#{img_url},create_time=#{create_time} WHERE id = #{id} AND userid = #{userid}
+    </update>
+
+    <select id="getArticleLast" parameterType="int"
+            resultType="com.springmvc.db.model.ArticleModel">
+          select * from article order by id desc limit 1
+    </select>
+
+    <select id="getArticleById" parameterType="int"
+            resultType="com.springmvc.db.model.ArticleModel">
+    select * from article where id=#{id}
+    </select>
+    <select id="getArticleByUserid" parameterType="String"
+            resultType="com.springmvc.db.model.ArticleModel">
+        select * from article where userid=#{userid}
+    </select>
+
+    <select id="getArticleAll"
+            resultType="com.springmvc.db.model.ArticleModel">
+        select * from article
+    </select>
+
+    <select id="getPageCount"
+            resultType="int">
+        select * from article
+    </select>
+
+    <select id="getPageData" parameterType="int"
+            resultType="com.springmvc.db.model.ArticleModel">
+        select * from article order by id desc limit #{pageNum} ,10
+    </select>
+
+    <!--insert, update 和 delete-->
+    <!--数据变更语句 insert，update 和 delete 的实现非常接近：-->
+
+    <!--<insert-->
+    <!--id="insertAuthor"-->
+    <!--parameterType="domain.blog.Author"-->
+    <!--flushCache="true"-->
+    <!--statementType="PREPARED"-->
+    <!--keyProperty=""-->
+    <!--keyColumn=""-->
+    <!--useGeneratedKeys=""-->
+    <!--timeout="20">-->
+
+    <!--<update-->
+    <!--id="updateAuthor"-->
+    <!--parameterType="domain.blog.Author"-->
+    <!--flushCache="true"-->
+    <!--statementType="PREPARED"-->
+    <!--timeout="20">-->
+
+    <!--<delete-->
+    <!--id="deleteAuthor"-->
+    <!--parameterType="domain.blog.Author"-->
+    <!--flushCache="true"-->
+    <!--statementType="PREPARED"-->
+    <!--timeout="20">-->
+    <!--Insert, Update, Delete 's Attributes-->
+    <!--属性	描述-->
+    <!--id	命名空间中的唯一标识符，可被用来代表这条语句。-->
+    <!--parameterType	将要传入语句的参数的完全限定类名或别名。这个属性是可选的，因为 MyBatis 可以通过 TypeHandler 推断出具体传入语句的参数，默认值为 unset。-->
+    <!--parameterMap	这是引用外部 parameterMap 的已经被废弃的方法。使用内联参数映射和 parameterType 属性。-->
+    <!--flushCache	将其设置为 true，任何时候只要语句被调用，都会导致本地缓存和二级缓存都会被清空，默认值：true（对应插入、更新和删除语句）。-->
+    <!--timeout	这个设置是在抛出异常之前，驱动程序等待数据库返回请求结果的秒数。默认值为 unset（依赖驱动）。-->
+    <!--statementType	STATEMENT，PREPARED 或 CALLABLE 的一个。这会让 MyBatis 分别使用 Statement，PreparedStatement 或 CallableStatement，默认值：PREPARED。-->
+    <!--useGeneratedKeys	（仅对 insert 和 update 有用）这会令 MyBatis 使用 JDBC 的 getGeneratedKeys 方法来取出由数据库内部生成的主键（比如：像 MySQL 和 SQL Server 这样的关系数据库管理系统的自动递增字段），默认值：false。-->
+    <!--keyProperty	（仅对 insert 和 update 有用）唯一标记一个属性，MyBatis 会通过 getGeneratedKeys 的返回值或者通过 insert 语句的 selectKey 子元素设置它的键值，默认：unset。如果希望得到多个生成的列，也可以是逗号分隔的属性名称列表。-->
+    <!--keyColumn	（仅对 insert 和 update 有用）通过生成的键值设置表中的列名，这个设置仅在某些数据库（像 PostgreSQL）是必须的，当主键列不是表中的第一列的时候需要设置。如果希望得到多个生成的列，也可以是逗号分隔的属性名称列表。-->
+    <!--databaseId	如果配置了 databaseIdProvider，MyBatis 会加载所有的不带 databaseId 或匹配当前 databaseId 的语句；如果带或者不带的语句都有，则不带的会被忽略。-->
+
+</mapper>

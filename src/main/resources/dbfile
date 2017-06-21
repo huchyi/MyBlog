@@ -1,0 +1,34 @@
+create database mybatis;
+create table article
+(
+	id int auto_increment
+		primary key,
+	title varchar(255) not null,
+	content text null,
+	img_url varchar(255) null,
+	create_time datetime not null,
+	article_id mediumtext not null,
+	describes text null,
+	userid varchar(255) null,
+	username varchar(255) null
+)
+;
+
+create table users
+(
+	id int auto_increment
+		primary key,
+	userid varchar(255) default '-1' not null,
+	username varchar(20) not null,
+	psw varchar(255) not null,
+	userphone varchar(255) null,
+	email varchar(255) null,
+	constraint users_userid_uindex
+		unique (userid),
+	constraint users_userphone_uindex
+		unique (userphone),
+	constraint users_email_uindex
+		unique (email)
+)
+;
+
