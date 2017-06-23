@@ -21,7 +21,7 @@
     <%--<script type="text/javascript" src="<%=basePath%>js/highlight.pack.js"></script>--%>
     <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">
     <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
-    <script >hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <script type="application/javascript">
         function toEdit() {
             window.location.href = "/article/editPage?id=" + <%= articleModel.getId()%>;
@@ -79,14 +79,13 @@
         <p id="title"><%= articleModel.getTitle()%>
         </p>
         <p style="margin-top: 30px">
-        <div style="margin: 8px;padding: 8px;background: #f2f2f2">
-            <p id="des">
-                <%= articleModel.getDescribes()%>
-            </p>
-        </div>
+        <p id="des">
+        <pre style="margin: 8px;padding: 8px;background: #f2f2f2"><%= articleModel.getDescribes()%>
+        </pre>
+        </p>
         <p style="margin-top: 100px">
-        <h5 align="left"><%= articleModel.getContent()%>
-        </h5>
+        <%= articleModel.getContent()%>
+        </p>
     </div>
 </div>
 </body>

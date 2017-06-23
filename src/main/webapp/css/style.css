@@ -50,13 +50,16 @@ html {
     text-align: left;
     float: left;
     font-size: 14px;
-    max-height: 60%;
+    max-height: 50%;
     /*font-family: verdana, serif;*/
     font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
     font-weight: normal;
     padding: 0;
     margin-top: 20px;
     line-height: 23px; /* 行距 */
+}
+
+#des pre{
 }
 
 #userAndTime{
