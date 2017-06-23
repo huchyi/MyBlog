@@ -10,7 +10,7 @@ public class ArticleModel {
     public int id;
 
     @Column
-    public int article_id;
+    public String article_id;
     public String userid;
     public String username;
     public String title;
@@ -27,11 +27,11 @@ public class ArticleModel {
         this.id = id;
     }
 
-    public int getArticle_id() {
+    public String getArticle_id() {
         return article_id;
     }
 
-    public void setArticle_id(int article_id) {
+    public void setArticle_id(String article_id) {
         this.article_id = article_id;
     }
 

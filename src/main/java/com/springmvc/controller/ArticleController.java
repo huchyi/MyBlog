@@ -154,7 +154,7 @@ public class ArticleController {
         String des = req.getParameter("des");
         String content = req.getParameter("content");
 
-        articleModel.setArticle_id((int) System.currentTimeMillis());
+        articleModel.setArticle_id(String.valueOf( System.currentTimeMillis()));
         articleModel.setUserid(userid);
         articleModel.setUsername(username);
         articleModel.setTitle(title);
@@ -190,7 +190,6 @@ public class ArticleController {
         String content = req.getParameter("content");
         System.out.println("============update  title:" + title + ",userid=" + userid);
 
-        articleModel.setArticle_id((int) System.currentTimeMillis());
         articleModel.setUserid(userid);
         articleModel.setTitle(title);
         articleModel.setDescribes(des);
