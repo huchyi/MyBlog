@@ -87,6 +87,10 @@
         <%= articleModel.getContent()%>
         </p>
     </div>
+
+    <div id="bottom">
+        <p>作者：<%= articleModel.getUsername()%>  |  创建时间：<%= articleModel.getCreate_time()%> </p>
+    </div>
 </div>
 </body>
 </html>
