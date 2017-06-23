@@ -30,7 +30,7 @@
             <%
            Cookie cookie = null;
            Cookie[] cookies = null;
-       // 获取cookies的数据,是一个数组
+       // 获取cookies的数据,是一个数组数据。
            cookies = request.getCookies();
           if( cookies != null ){
           for (int i = 0; i < cookies.length; i++){
