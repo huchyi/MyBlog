@@ -16,8 +16,12 @@
 <html>
 <head>
     <title>文章详情</title>
-    <link rel="stylesheet" href="/css/details_styles.css" media="screen" type="text/css"/>
+    <link rel="stylesheet" href="<%=basePath%>/css/details_styles.css" media="screen" type="text/css"/>
     <script type="text/javascript" src="<%=basePath%>js/jquery-3.2.1.min.js"></script>
+    <%--<script type="text/javascript" src="<%=basePath%>js/highlight.pack.js"></script>--%>
+    <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">
+    <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+    <script >hljs.initHighlightingOnLoad();</script>
     <script type="application/javascript">
         function toEdit() {
             window.location.href = "/article/editPage?id=" + <%= articleModel.getId()%>;
