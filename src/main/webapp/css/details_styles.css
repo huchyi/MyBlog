@@ -4,14 +4,41 @@ h5 img {
 
 }
 
-/*pre {*/
-    /*font-size: 12px;*/
-    /*padding: 0;*/
-    /*margin: 0;*/
+code {
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
     /*background: #f0f0f0;*/
-    /*line-height: 20px; !* 行距 *!*/
+    line-height: 20px; /* 行距 */
     /*background: url(/image/add_file.png) repeat-y left top;*/
     /*width: 600px;*/
-    /*overflow: auto; !* 超出宽度出现滑动条 *!*/
-    /*overflow-Y:hidden; !* 作用是隐藏IE的右侧滑动条 *!*/
-/*}*/
+    overflow: auto; /* 超出宽度出现滑动条 */
+    overflow-Y:hidden; /* 作用是隐藏IE的右侧滑动条 */
+}
+
+p {
+    font-size: 14px;
+    /*font-family: verdana, serif;*/
+    font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
+    line-height: 30px; /* 行距 */
+}
+
+#title{
+    font-size: 18px;
+    /*font-family: verdana, serif;*/
+    font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+    font-weight: bold;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+#des{
+    font-size: 16px;
+    /*font-family: verdana, serif;*/
+    font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+    font-weight: normal;
+}

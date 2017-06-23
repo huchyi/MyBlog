@@ -13,7 +13,6 @@ html {
     height: 100%;
     background: #fefefe;
     margin-top: -35px;
-    text-align: center;
 }
 
 #ulCss {
@@ -35,19 +34,44 @@ html {
     box-shadow: 0 0 20px rgba(161, 208, 221, .5);
 }
 
-#ulCss li h3 {
+#title {
     cursor: pointer;
+    font-size: 18px;
+    /*font-family: verdana, serif;*/
+    font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+    line-height: 23px; /* 行距 */
 }
 
-#ulCss li h5 {
-    text-align: left;
+#des {
     cursor: pointer;
+    text-align: left;
+    float: left;
+    font-size: 14px;
+    max-height: 60%;
+    /*font-family: verdana, serif;*/
+    font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+    font-weight: normal;
+    padding: 0;
+    margin-top: 20px;
+    line-height: 23px; /* 行距 */
 }
 
-#ulCss li h6 {
+#userAndTime{
+    font-size: 12px;
+    /*font-family: verdana, serif;*/
+    font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+    font-weight: lighter;
+    color: #c0c0c0;
     text-align: left;
-    color: #aaaaaa;
-    margin-top: 140px;
+    float: left;
+    margin: 0;
+    padding: 0;
+    bottom: 0;
+    position: absolute;
+    line-height: 23px; /* 行距 */
 }
 
 /* First styling the menu */

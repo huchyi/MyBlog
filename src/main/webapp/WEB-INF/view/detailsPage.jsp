@@ -75,14 +75,14 @@
         </script>
     </div>
 
-    <div style="background: #fefefe">
-        <h2><%= articleModel.getTitle()%>
-        </h2>
+    <div style="background: #fefefe;margin-top: 30px">
+        <p id="title"><%= articleModel.getTitle()%>
+        </p>
         <p style="margin-top: 30px">
         <div style="margin: 8px;padding: 8px;background: #f2f2f2">
-            <h4>
+            <p id="des">
                 <%= articleModel.getDescribes()%>
-            </h4>
+            </p>
         </div>
         <p style="margin-top: 100px">
         <h5 align="left"><%= articleModel.getContent()%>
