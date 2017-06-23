@@ -26,12 +26,14 @@ html {
     padding: 16px;
     margin: 36px;
     height: 200px;
-    border-radius: 10px;
     display: block;
     position: relative;
-    -webkit-box-shadow: 0 0 20px rgba(161, 208, 221, .5);
-    -moz-box-shadow: 0 0 20px rgba(161, 208, 221, .5);
-    box-shadow: 0 0 20px rgba(161, 208, 221, .5);
+
+    border-bottom: ridge 1px #b5b5b5;
+
+    /*-webkit-box-shadow: 0 0 20px rgba(161, 208, 221, .5);*/
+    /*-moz-box-shadow: 0 0 20px rgba(161, 208, 221, .5);*/
+    /*box-shadow: 0 0 20px rgba(161, 208, 221, .5);*/
 }
 
 #title {
