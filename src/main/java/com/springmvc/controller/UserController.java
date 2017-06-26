@@ -1,5 +1,6 @@
 package com.springmvc.controller;
 
+import com.springmvc.controller.utils.AccountValidatorUtil;
 import com.springmvc.controller.utils.Base64;
 import com.springmvc.controller.utils.DESUtil;
 import com.springmvc.db.UserDB;
@@ -151,6 +152,10 @@ public class UserController {
         String email = req.getParameter("email");
         String psw = req.getParameter("psw");
         String url = req.getParameter("url");
+
+        if(phone == null || phone.equals("") || !AccountValidatorUtil.isMobile(phone)){
+            return "register fail,Please enter the correct cell phone number";
+        }
 
         Map<String, String> map = new HashMap<String, String>();
         map.put("username", username);
