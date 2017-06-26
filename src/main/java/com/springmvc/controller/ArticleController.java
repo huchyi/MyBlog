@@ -139,11 +139,13 @@ public class ArticleController {
 
         int row = ArticleDB.getInstence().insertOne(articleModel);
         if(row <= 0){
+            modelAndView.addObject("msg","提交失败");
             modelAndView.setViewName("fail");
             return modelAndView;
         }
         ArticleModel articleModel1 = ArticleDB.getInstence().getArticleLast();
         if(articleModel1 == null){
+            modelAndView.addObject("msg","获取数据失败");
             modelAndView.setViewName("fail");
             return modelAndView;
         }
@@ -177,12 +179,14 @@ public class ArticleController {
             articleModel.setId(Integer.valueOf(id));
             int row = ArticleDB.getInstence().updateOne(articleModel);
             if(row <= 0){
+                modelAndView.addObject("msg","用户信息不正确");
                 modelAndView.setViewName("fail");
                 return modelAndView;
             }
         }else{
             int row = ArticleDB.getInstence().insertOne(articleModel);
             if(row <= 0){
+                modelAndView.addObject("msg","提交失败");
                 modelAndView.setViewName("fail");
                 return modelAndView;
             }

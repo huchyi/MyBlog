@@ -11,5 +11,7 @@
 </head>
 <body>
 <h2>失败</h2>
+<br style="margin-top: 30px">
+<%=request.getAttribute("msg")%>
 </body>
 </html>
