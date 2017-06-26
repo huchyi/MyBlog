@@ -180,7 +180,7 @@ public class ArticleController {
         articleModel.setTitle(title);
         articleModel.setDescribes(des);
         articleModel.setContent(content);
-        articleModel.setCreate_time(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+
         int row = ArticleDB.getInstence().insertOne(articleModel);
         if(row <= 0){
             modelAndView.setViewName("fail");
@@ -212,13 +212,11 @@ public class ArticleController {
         String title = req.getParameter("title");
         String des = req.getParameter("des");
         String content = req.getParameter("content");
-        System.out.println("============update  title:" + title + ",userid=" + userid);
 
         articleModel.setUserid(userid);
         articleModel.setTitle(title);
         articleModel.setDescribes(des);
         articleModel.setContent(content);
-        articleModel.setCreate_time(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         if(id != null && !id.equals("")){
             articleModel.setId(Integer.valueOf(id));
             int row = ArticleDB.getInstence().updateOne(articleModel);

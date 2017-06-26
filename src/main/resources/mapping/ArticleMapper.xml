@@ -11,12 +11,12 @@
 
     <insert id="insertArticle" parameterType="com.springmvc.db.model.ArticleModel">
         insert into article (article_id,userid,username,title,describes,content,img_url,create_time)
-        values (#{article_id},#{userid},#{username},#{title},#{describes},#{content},#{img_url},#{create_time})
+        values (#{article_id},#{userid},#{username},#{title},#{describes},#{content},#{img_url},now())
     </insert>
 
     <update id="updateArticle" parameterType="com.springmvc.db.model.ArticleModel">
         UPDATE article SET article_id=#{article_id},title=#{title},describes=#{describes},content=#{content},
-        img_url=#{img_url},create_time=#{create_time} WHERE id = #{id} AND userid = #{userid}
+        img_url=#{img_url},create_time=now() WHERE id = #{id} AND userid = #{userid}
     </update>
 
     <select id="getArticleLast" parameterType="int"
