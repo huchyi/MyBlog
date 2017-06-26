@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +25,11 @@ public class UserController {
 
     //登录
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model, @RequestParam String url) {
-        model.addAttribute("url",url);
-        System.out.println(">>>>>>>>>>>>>>login");
-        return "login";
+    public ModelAndView login(@RequestParam String url) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
+        modelAndView.addObject("url",url);
+        return modelAndView;
     }
 
     //登录验证
@@ -111,9 +113,11 @@ public class UserController {
 
     //注册
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String register(Model model, @RequestParam String url) {
-        model.addAttribute("url",url);
-        return "register";
+    public ModelAndView register(@RequestParam String url) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("register");
+        modelAndView.addObject("url",url);
+        return modelAndView;
     }
 
     //注册验证

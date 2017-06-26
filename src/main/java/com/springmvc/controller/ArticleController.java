@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +30,11 @@ public class ArticleController {
 
     //主页
     @RequestMapping(value = "/showHomePage", method = RequestMethod.GET)
-    public String showHomePage(HttpServletRequest request) {
-        return "index";
+    public ModelAndView showHomePage(HttpServletRequest request) {
+//        return "index";
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index");
+        return modelAndView;
     }
 
     //得到所有的文章列表*****暂时没用到
@@ -56,8 +60,11 @@ public class ArticleController {
 
     //主页
     @RequestMapping(value = "/showMyHome", method = RequestMethod.GET)
-    public String showMyHome() {
-        return "myhome";
+    public ModelAndView showMyHome() {
+//        return "myhome";
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("myhome");
+        return modelAndView;
     }
 
     //得到所有的文章列表*****暂时没用到
@@ -112,34 +119,47 @@ public class ArticleController {
 
     //展示详情页
     @RequestMapping(value = "/showDetails", method = RequestMethod.GET)
-    public String showDetails(String id, Model model) {
+    public ModelAndView showDetails(String id) {
         System.out.println("============showDetails  id:" + id);
         ArticleModel articleModel = ArticleDB.getInstence().getArticleById(Integer.valueOf(id));
+        ModelAndView modelAndView = new ModelAndView();
         if (articleModel == null) {
-            return "404";
+            modelAndView.setViewName("404");
+        }else{
+            modelAndView.setViewName("detailsPage");
+            modelAndView.addObject("articleModel", articleModel);
         }
-        model.addAttribute("articleModel", articleModel);
-        return "detailsPage";
+        return modelAndView;
+//        ArticleModel articleModel = ArticleDB.getInstence().getArticleById(Integer.valueOf(id));
+//        if (articleModel == null) {
+//            return "404";
+//        }
+//        model.addAttribute("articleModel", articleModel);
+//        return "detailsPage";
     }
 
     //编辑文章,新建文章
     @RequestMapping(value = "/editPage", method = RequestMethod.GET)
-    public String editPage(String id, Model model) {
+    public ModelAndView editPage(String id) {
+        ModelAndView modelAndView = new ModelAndView();
         if (id != null && !id.equals("") && !id.equals("0")) {
             ArticleModel articleModel = ArticleDB.getInstence().getArticleById(Integer.valueOf(id));
             if (articleModel == null) {
-                return "404";
+                modelAndView.setViewName("404");
+            }else{
+                modelAndView.addObject("articleModel", articleModel);
+                modelAndView.setViewName("edit_page");
             }
-            model.addAttribute("articleModel", articleModel);
-            return "edit_page";
         } else {
-            return "create_page";
+            modelAndView.setViewName("create_page");
         }
+        return modelAndView;
     }
 
     //插入一篇文章
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public String insert(HttpServletRequest req, Model model) {
+    public ModelAndView insert(HttpServletRequest req) {
+        ModelAndView modelAndView = new ModelAndView();
         //取得表单数据
         ArticleModel articleModel = new ArticleModel();
 
@@ -163,19 +183,23 @@ public class ArticleController {
         articleModel.setCreate_time(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         int row = ArticleDB.getInstence().insertOne(articleModel);
         if(row <= 0){
-            return "fail";
+            modelAndView.setViewName("fail");
+            return modelAndView;
         }
         ArticleModel articleModel1 = ArticleDB.getInstence().getArticleLast();
         if(articleModel1 == null){
-            return "fail";
+            modelAndView.setViewName("fail");
+            return modelAndView;
         }
-        model.addAttribute("articleModel", articleModel1);
-        return "detailsPage";
+        modelAndView.addObject("articleModel", articleModel1);
+        modelAndView.setViewName("detailsPage");
+        return modelAndView;
     }
 
     //更新文章
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String update( HttpServletRequest req, Model model) {
+    public ModelAndView update( HttpServletRequest req) {
+        ModelAndView modelAndView = new ModelAndView();
         //取得表单数据
         ArticleModel articleModel = new ArticleModel();
         try {
@@ -199,17 +223,19 @@ public class ArticleController {
             articleModel.setId(Integer.valueOf(id));
             int row = ArticleDB.getInstence().updateOne(articleModel);
             if(row <= 0){
-                return "fail";
+                modelAndView.setViewName("fail");
+                return modelAndView;
             }
         }else{
             int row = ArticleDB.getInstence().insertOne(articleModel);
             if(row <= 0){
-                return "fail";
+                modelAndView.setViewName("fail");
+                return modelAndView;
             }
         }
-
-        model.addAttribute("articleModel", articleModel);
-        return "detailsPage";
+        modelAndView.setViewName("detailsPage");
+        modelAndView.addObject("articleModel", articleModel);
+        return modelAndView;
     }
 
 }
