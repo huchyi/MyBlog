@@ -26,7 +26,7 @@ public class Base64 {
     }
 
     // 解密
-    public static String getFromBase64(String s) {
+    public static String decode(String s) {
         byte[] b = null;
         String result = null;
         if (s != null) {

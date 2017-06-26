@@ -24,6 +24,7 @@
         var userid;
         function getCookies() {
             <%
+            String psw = null;
            Cookie cookie = null;
            Cookie[] cookies = null;
            // 获取cookies的数据,是一个数组
@@ -34,8 +35,10 @@
              String cookieName = cookie.getName();
                if(cookieName.compareTo("userid") == 0){
              %>
-               userid = "<%=URLDecoder.decode(cookie.getValue(),"utf-8")%>";
+            userid = "<%=URLDecoder.decode(cookie.getValue(),"utf-8")%>";
             <%
+                    }else if(cookieName.compareTo("psw") == 0){
+                   psw = URLDecoder.decode(cookie.getValue(),"utf-8");
                     }
                  }
               }
@@ -68,7 +71,10 @@
 <body>
 <div id="divCss" align="center" style="padding-top: 100px;margin-bottom: 100px">
     <form action="/article/update" method="post" accept-charset="UTF-8">
-        <div id="userinfo" style="visibility: hidden" ><script type="text/javascript">getCookies()</script></div>
+        <div id="userinfo" style="visibility: hidden">
+            <script type="text/javascript">getCookies()</script>
+        </div>
+        <input type="text" name="psw" style="visibility: hidden" value="<%=psw%>">
         <input type="text" name="id" style="visibility: hidden" value="<%=articleModel.getId()%>">
         <br>
         <h2><input type="text" name="title" placeholder="输入标题" style="padding: 15px"

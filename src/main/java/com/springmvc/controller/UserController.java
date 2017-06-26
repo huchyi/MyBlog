@@ -1,5 +1,7 @@
 package com.springmvc.controller;
 
+import com.springmvc.controller.utils.Base64;
+import com.springmvc.controller.utils.DESUtil;
 import com.springmvc.db.UserDB;
 import com.springmvc.db.model.User;
 import org.springframework.stereotype.Controller;
@@ -71,17 +73,21 @@ public class UserController {
             // 设置 name 和 url cookie
             Cookie usernameCookie = new Cookie("username", username);
             Cookie useridCookie = new Cookie("userid", userid);
+            Cookie pswCookie = new Cookie("psw",  new DESUtil().encrypt(psw));
 
             // 设置cookie过期时间为12h。
             usernameCookie.setMaxAge(60 * 60 * 12);
             useridCookie.setMaxAge(60 * 60 * 12);
+            pswCookie.setMaxAge(60 * 60 * 12);
 
             usernameCookie.setPath("/");
             useridCookie.setPath("/");
+            pswCookie.setPath("/");
 
             // 在响应头部添加cookie
             response.addCookie(usernameCookie);
             response.addCookie(useridCookie);
+            response.addCookie(pswCookie);
 
             if (url != null && !url.equals("")) {
                 return "<script type=\"text/javascript\">" +
@@ -168,17 +174,21 @@ public class UserController {
             // 设置 name 和 url cookie
             Cookie usernameCookie = new Cookie("username", username);
             Cookie useridCookie = new Cookie("userid", userid);
+            Cookie pswCookie = new Cookie("psw", new DESUtil().encrypt(psw));
 
             // 设置cookie过期时间为12h。
             usernameCookie.setMaxAge(60 * 60 * 12);
             useridCookie.setMaxAge(60 * 60 * 12);
+            pswCookie.setMaxAge(60 * 60 * 12);
 
             usernameCookie.setPath("/");
             useridCookie.setPath("/");
+            pswCookie.setPath("/");
 
             // 在响应头部添加cookie
             response.addCookie(usernameCookie);
             response.addCookie(useridCookie);
+            response.addCookie(pswCookie);
 
             if (url != null && !url.equals("")) {
                 return "<script type=\"text/javascript\">" +

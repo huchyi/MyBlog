@@ -49,5 +49,14 @@ public class UserDB {
         return row > 0;
     }
 
+    public User getUserByUserId(String userid){
+        String statement = "mapping.userMapper.judgeUser";//映射sql的标识字符串
+        //执行查询返回一个唯一user对象的sql
+        SqlSession sqlSession = DBHelper.getInstance().getSession();
+        User user1 = sqlSession.selectOne(statement, userid);
+        sqlSession.close();
+        return user1;
+    }
+
 
 }

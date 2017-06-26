@@ -23,7 +23,7 @@
 
     <!-- 用户名唯一性的判断 -->
     <select id="judgeUser" parameterType="String" resultType="com.springmvc.db.model.User">
-        select userid from users where userid=#{userid}
+        select * from users where userid=#{userid}
     </select>
 
     <!-- 用户登录的判断返回一个user给service处理 -->
