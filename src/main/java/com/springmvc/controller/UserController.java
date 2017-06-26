@@ -57,18 +57,9 @@ public class UserController {
         if (user != null && user.getId() > 0) {
             //设置cookie
 
-            String username = "";
-            String userid = "";
-            try {
-                // 编码，解决中文乱码
-                username = URLEncoder.encode(user.getUsername(), "utf-8");
-                userid = URLEncoder.encode(user.getUserid(), "utf-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
             // 设置 name 和 url cookie
-            Cookie usernameCookie = new Cookie("username", username);
-            Cookie useridCookie = new Cookie("userid", userid);
+            Cookie usernameCookie = new Cookie("username",  user.getUsername());
+            Cookie useridCookie = new Cookie("userid", user.getUserid());
             Cookie pswCookie = new Cookie("psw",  new DESUtil().encrypt(psw));
 
             // 设置cookie过期时间为12h。
@@ -158,17 +149,9 @@ public class UserController {
         map.put("psw", psw);
         boolean isRegister = UserDB.getInstence().register(map);
         if (isRegister) {
-
-            String userid = "";
-            try {
-                // 编码，解决中文乱码
-                userid = URLEncoder.encode(uuid.toString(), "utf-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
             // 设置 name 和 url cookie
             Cookie usernameCookie = new Cookie("username", username);
-            Cookie useridCookie = new Cookie("userid", userid);
+            Cookie useridCookie = new Cookie("userid", uuid.toString());
             Cookie pswCookie = new Cookie("psw", new DESUtil().encrypt(psw));
 
             // 设置cookie过期时间为12h。
