@@ -96,9 +96,10 @@
             var ulCss = "";
             for (var i = 0; i < list.length; i++) {
                 ulCss += "<li>";
-                ulCss += "<h3 onclick='toDetails(" + list[i].id + ") '>" + list[i].title + "</h3>";
-                ulCss += "<h5 style='margin-top: 20px;float: left;' onclick='toDetails(" + list[i].id + ")'>" + list[i].describes + "</h5>";
-                ulCss += "<h6>作者:" + list[i].username + " | 创建时间:" + list[i].create_time + "</h6>";
+                ulCss += "<p id='title' onclick='toDetails(" + list[i].id + ") '>" + list[i].title + "</p>";
+                ulCss += "<p id='des'  onclick='toDetails(" + list[i].id + ")'>" + list[i].describes + "</p>";
+                ulCss += "<p></p>";
+                ulCss += "<p id='userAndTime'>作者:" + list[i].username + " | 创建时间:" + list[i].create_time + "</p>";
                 ulCss += "</li>";
             }
             $("#ulCss").html(ulCss);
