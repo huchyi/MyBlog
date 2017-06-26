@@ -58,8 +58,7 @@
                 editStr = "<div align='left'>当前登录用户：" + userName;
                 var userid2 = <%=articleModel.getUserid()%>;
                 if (userid2 !== undefined && userid == userid2) {
-                    editStr = editStr + "<br/><h4 style=\"width:35px;color: #bae0ea;padding: 3px;border:1px solid #bae0ea;cursor:" +
-                        " pointer;float: right\" onclick=\"toEdit()\">编辑</h4>";
+                    editStr = editStr + "<br/><p id='editText' onclick=\"toEdit()\">编辑</p>";
                 }
                 editStr = editStr + "</div>";
                 $("#edit").html(editStr);
@@ -68,7 +67,7 @@
     </script>
 </head>
 <body style="background: #e6e6e6;">
-<div style="margin-left: 200px;margin-right: 200px;margin-top: -35px;min-width:600px;padding: 40px;min-height: 800px;background: #fefefe">
+<div id="divCss">
     <div id="edit">
         <script type="application/javascript">
             getCookies();
@@ -80,7 +79,7 @@
         </p>
         <p style="margin-top: 30px">
         <p id="des">
-        <pre style="margin: 8px;padding: 8px;background: #f2f2f2"><%= articleModel.getDescribes()%>
+        <pre id="preCss"><%= articleModel.getDescribes()%>
         </pre>
         </p>
         <p style="margin-top: 100px">

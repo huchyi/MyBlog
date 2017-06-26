@@ -1,7 +1,36 @@
+* {
+    box-sizing: border-box;
+    margin:0 auto;
+}
 
+html {
+    background: #e6e6e6;
+}
 
-h5 img {
-
+#divCss {
+    width: 60%;
+    height: 100%;
+    background: #fefefe;
+    padding-top: 30px;
+    padding-right: 50px;
+    padding-left: 50px;
+}
+#preCss {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 8px;
+    padding: 8px;
+    background: #f2f2f2;
+}
+#editText{
+    font-size: 16px;
+    width: auto;
+    color: #bae0ea;
+    padding-left: 5px;
+    padding-right: 5px;
+    border:1px solid #bae0ea;
+    cursor:pointer;
+    float: right;
 }
 
 code {
