@@ -1,27 +1,17 @@
 package com.springmvc.controller;
 
-import com.springmvc.controller.utils.Base64;
-import com.springmvc.controller.utils.CustomFileUtils;
+import com.springmvc.controller.utils.ModelAndJsonUtils;
 import com.springmvc.db.ArticleDB;
 import com.springmvc.db.model.ArticleModel;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Controller  //告诉DispatcherServlet相关的容器， 这是一个Controller，
@@ -45,17 +35,7 @@ public class ArticleController {
         if (articleModels == null || articleModels.size() <= 0) {
             return "";
         }
-
-        ObjectMapper mapper = new ObjectMapper();
-        String json = null;
-        try {
-            json = mapper.writeValueAsString(articleModels);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(json);
-
-        return Base64.encode(json);
+        return ModelAndJsonUtils.ModelToJsonWithBase64(articleModels);
     }
 
     //主页
@@ -76,16 +56,7 @@ public class ArticleController {
         if (articleModels == null || articleModels.size() <= 0) {
             return "";
         }
-        ObjectMapper mapper = new ObjectMapper();
-        String json = null;
-        try {
-            json = mapper.writeValueAsString(articleModels);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(json);
-
-        return Base64.encode(json);
+        return ModelAndJsonUtils.ModelToJsonWithBase64(articleModels);
     }
 
     //得到文章的数量
@@ -104,16 +75,7 @@ public class ArticleController {
         if (articleModels == null || articleModels.size() <= 0) {
             return "fail";
         }
-
-        ObjectMapper mapper = new ObjectMapper();
-        String json = null;
-        try {
-            json = mapper.writeValueAsString(articleModels);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(json);
-        return Base64.encode(json);
+        return ModelAndJsonUtils.ModelToJsonWithBase64(articleModels);
     }
 
 
@@ -130,12 +92,6 @@ public class ArticleController {
             modelAndView.addObject("articleModel", articleModel);
         }
         return modelAndView;
-//        ArticleModel articleModel = ArticleDB.getInstence().getArticleById(Integer.valueOf(id));
-//        if (articleModel == null) {
-//            return "404";
-//        }
-//        model.addAttribute("articleModel", articleModel);
-//        return "detailsPage";
     }
 
     //编辑文章,新建文章
