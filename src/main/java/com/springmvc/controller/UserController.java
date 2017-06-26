@@ -43,11 +43,6 @@ public class UserController {
     @RequestMapping(value = "/loginRequest", method = RequestMethod.POST)
     @ResponseBody
     public String loginRequest(HttpServletRequest req, HttpServletResponse response) {
-        try {
-            req.setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         String account = req.getParameter("account");
         String psw = req.getParameter("psw");
         String url = req.getParameter("url");
@@ -141,11 +136,6 @@ public class UserController {
     @RequestMapping(value = "/registerRequest", method = RequestMethod.POST)
     @ResponseBody
     public String registerRequest(HttpServletRequest req, HttpServletResponse response) {
-        try {
-            req.setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
 
         String username = req.getParameter("username");
         String phone = req.getParameter("phone");

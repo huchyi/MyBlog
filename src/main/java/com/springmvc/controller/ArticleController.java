@@ -141,17 +141,12 @@ public class ArticleController {
         ModelAndView modelAndView = new ModelAndView();
         //取得表单数据
         ArticleModel articleModel = new ArticleModel();
-
-        try {
-            req.setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         String username = req.getParameter("username");
         String userid = req.getParameter("userid");
         String title = req.getParameter("title");
         String des = req.getParameter("des");
         String content = req.getParameter("content");
+        System.out.println(">>>：" + content);
 
         articleModel.setArticle_id(String.valueOf(System.currentTimeMillis()));
         articleModel.setUserid(userid);
@@ -199,11 +194,6 @@ public class ArticleController {
         ModelAndView modelAndView = new ModelAndView();
         //取得表单数据
         ArticleModel articleModel = new ArticleModel();
-        try {
-            req.setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         String userid = req.getParameter("userid");
         String id = req.getParameter("id");
         String title = req.getParameter("title");
