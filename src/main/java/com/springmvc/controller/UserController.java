@@ -23,16 +23,20 @@ import java.util.UUID;
 @RequestMapping(value = "/user")  //类级别的RequestMapping，告诉DispatcherServlet由这个类负责处理以及URL。HandlerMapping依靠这个标签来工作
 public class UserController {
 
-    //登录
+    /**
+     * 登录
+     */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(@RequestParam String url) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
-        modelAndView.addObject("url",url);
+        modelAndView.addObject("url", url);
         return modelAndView;
     }
 
-    //登录验证
+    /**
+     * 登录验证
+     */
     @RequestMapping(value = "/loginRequest", method = RequestMethod.POST)
     @ResponseBody
     public String loginRequest(HttpServletRequest req, HttpServletResponse response) {
@@ -69,8 +73,8 @@ public class UserController {
             Cookie useridCookie = new Cookie("userid", userid);
 
             // 设置cookie过期时间为12h。
-            usernameCookie.setMaxAge(60*60*12);
-            useridCookie.setMaxAge(60*60*12);
+            usernameCookie.setMaxAge(60 * 60 * 12);
+            useridCookie.setMaxAge(60 * 60 * 12);
 
             usernameCookie.setPath("/");
             useridCookie.setPath("/");
@@ -79,21 +83,23 @@ public class UserController {
             response.addCookie(usernameCookie);
             response.addCookie(useridCookie);
 
-            if(url != null && !url.equals("")){
+            if (url != null && !url.equals("")) {
                 return "<script type=\"text/javascript\">" +
                         "window.location.href = \"" + url + "\";" +
                         "</script>";
-            }else{
+            } else {
                 return "login success";
             }
         }
         return "login fail";
     }
 
-    //登录
+    /**
+     * 登出
+     */
     @RequestMapping(value = "/loginOut", method = RequestMethod.GET)
     @ResponseBody
-    public String loginOut( HttpServletResponse response) {
+    public String loginOut(HttpServletResponse response) {
         // 设置 name 和 url cookie
         Cookie usernameCookie = new Cookie("username", "");
         Cookie useridCookie = new Cookie("userid", "");
@@ -111,16 +117,20 @@ public class UserController {
         return "success";
     }
 
-    //注册
+    /**
+     * 注册
+     */
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView register(@RequestParam String url) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("register");
-        modelAndView.addObject("url",url);
+        modelAndView.addObject("url", url);
         return modelAndView;
     }
 
-    //注册验证
+    /**
+     * 注册验证
+     */
     @RequestMapping(value = "/registerRequest", method = RequestMethod.POST)
     @ResponseBody
     public String registerRequest(HttpServletRequest req, HttpServletResponse response) {
@@ -139,46 +149,46 @@ public class UserController {
         Map<String, String> map = new HashMap<String, String>();
         map.put("username", username);
         map.put("userphone", phone);
-        if(email != null && !email.equals("")){
+        if (email != null && !email.equals("")) {
             map.put("email", email);
         }
         UUID uuid = UUID.randomUUID();
-        map.put("userid",uuid.toString());
+        map.put("userid", uuid.toString());
         map.put("psw", psw);
         boolean isRegister = UserDB.getInstence().register(map);
-        if(isRegister){
+        if (isRegister) {
 
             String userid = "";
             try {
                 // 编码，解决中文乱码
-                userid = URLEncoder.encode(uuid.toString(),"utf-8");
+                userid = URLEncoder.encode(uuid.toString(), "utf-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
             // 设置 name 和 url cookie
-            Cookie usernameCookie = new Cookie("username",username);
-            Cookie useridCookie = new Cookie("userid",userid);
+            Cookie usernameCookie = new Cookie("username", username);
+            Cookie useridCookie = new Cookie("userid", userid);
 
             // 设置cookie过期时间为12h。
-            usernameCookie.setMaxAge(60*60*12);
-            useridCookie.setMaxAge(60*60*12);
+            usernameCookie.setMaxAge(60 * 60 * 12);
+            useridCookie.setMaxAge(60 * 60 * 12);
 
             usernameCookie.setPath("/");
             useridCookie.setPath("/");
 
             // 在响应头部添加cookie
-            response.addCookie( usernameCookie );
-            response.addCookie( useridCookie );
+            response.addCookie(usernameCookie);
+            response.addCookie(useridCookie);
 
-            if(url != null && !url.equals("")){
+            if (url != null && !url.equals("")) {
                 return "<script type=\"text/javascript\">" +
                         "window.location.href = \"" + url + "\";" +
                         "</script>";
-            }else{
+            } else {
                 return "login success";
             }
-        }else{
-            return "register fail" ;
+        } else {
+            return "register fail";
         }
     }
 }

@@ -18,7 +18,9 @@ import java.util.List;
 @RequestMapping(value = "/article")  //类级别的RequestMapping，告诉DispatcherServlet由这个类负责处理以及URL。HandlerMapping依靠这个标签来工作
 public class ArticleController {
 
-    //主页
+    /**
+     * 主页
+     */
     @RequestMapping(value = "/showHomePage", method = RequestMethod.GET)
     public ModelAndView showHomePage(HttpServletRequest request) {
 //        return "index";
@@ -27,7 +29,9 @@ public class ArticleController {
         return modelAndView;
     }
 
-    //得到所有的文章列表*****暂时没用到
+    /**
+     * 得到所有的文章列表*****暂时没用到
+     */
     @RequestMapping(value = "/getArticleList", method = RequestMethod.GET)
     @ResponseBody
     public String getArticleList() {
@@ -38,7 +42,9 @@ public class ArticleController {
         return ModelAndJsonUtils.ModelToJsonWithBase64(articleModels);
     }
 
-    //主页
+    /**
+     * 我的主页
+     */
     @RequestMapping(value = "/showMyHome", method = RequestMethod.GET)
     public ModelAndView showMyHome() {
 //        return "myhome";
@@ -47,11 +53,12 @@ public class ArticleController {
         return modelAndView;
     }
 
-    //得到所有的文章列表*****暂时没用到
+    /**
+     * 通过userid得到所有的文章列表*****暂时没用到
+     */
     @RequestMapping(value = "/getArticleListByUserid", method = RequestMethod.GET)
     @ResponseBody
     public String getArticleList(String userid) {
-
         ArrayList<ArticleModel> articleModels = (ArrayList<ArticleModel>) ArticleDB.getInstence().getArticleByuserid(userid);
         if (articleModels == null || articleModels.size() <= 0) {
             return "";
@@ -59,14 +66,18 @@ public class ArticleController {
         return ModelAndJsonUtils.ModelToJsonWithBase64(articleModels);
     }
 
-    //得到文章的数量
+    /**
+     * 得到文章的数量
+     */
     @RequestMapping(value = "/getPageNumCount", method = RequestMethod.GET)
     @ResponseBody
     public String getPageNumCount() {
         return String.valueOf(ArticleDB.getInstence().getPageCount());
     }
 
-    //根据页数获取数据
+    /**
+     * 根据页数获取数据
+     */
     @RequestMapping(value = "/getPageNumData", method = RequestMethod.GET)
     @ResponseBody
     public String getPageNumData(String pageNum) {
@@ -79,7 +90,9 @@ public class ArticleController {
     }
 
 
-    //展示详情页
+    /**
+     * 展示详情页
+     */
     @RequestMapping(value = "/showDetails", method = RequestMethod.GET)
     public ModelAndView showDetails(String id) {
         System.out.println("============showDetails  id:" + id);
@@ -87,14 +100,16 @@ public class ArticleController {
         ModelAndView modelAndView = new ModelAndView();
         if (articleModel == null) {
             modelAndView.setViewName("404");
-        }else{
+        } else {
             modelAndView.setViewName("detailsPage");
             modelAndView.addObject("articleModel", articleModel);
         }
         return modelAndView;
     }
 
-    //编辑文章,新建文章
+    /**
+     * 编辑文章,新建文章
+     */
     @RequestMapping(value = "/editPage", method = RequestMethod.GET)
     public ModelAndView editPage(String id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -102,7 +117,7 @@ public class ArticleController {
             ArticleModel articleModel = ArticleDB.getInstence().getArticleById(Integer.valueOf(id));
             if (articleModel == null) {
                 modelAndView.setViewName("404");
-            }else{
+            } else {
                 modelAndView.addObject("articleModel", articleModel);
                 modelAndView.setViewName("edit_page");
             }
@@ -112,7 +127,9 @@ public class ArticleController {
         return modelAndView;
     }
 
-    //插入一篇文章
+    /**
+     * 插入一篇文章
+     */
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public ModelAndView insert(HttpServletRequest req) {
         ModelAndView modelAndView = new ModelAndView();
@@ -130,7 +147,7 @@ public class ArticleController {
         String des = req.getParameter("des");
         String content = req.getParameter("content");
 
-        articleModel.setArticle_id(String.valueOf( System.currentTimeMillis()));
+        articleModel.setArticle_id(String.valueOf(System.currentTimeMillis()));
         articleModel.setUserid(userid);
         articleModel.setUsername(username);
         articleModel.setTitle(title);
@@ -138,14 +155,14 @@ public class ArticleController {
         articleModel.setContent(content);
 
         int row = ArticleDB.getInstence().insertOne(articleModel);
-        if(row <= 0){
-            modelAndView.addObject("msg","提交失败");
+        if (row <= 0) {
+            modelAndView.addObject("msg", "提交失败");
             modelAndView.setViewName("fail");
             return modelAndView;
         }
         ArticleModel articleModel1 = ArticleDB.getInstence().getArticleLast();
-        if(articleModel1 == null){
-            modelAndView.addObject("msg","获取数据失败");
+        if (articleModel1 == null) {
+            modelAndView.addObject("msg", "获取数据失败");
             modelAndView.setViewName("fail");
             return modelAndView;
         }
@@ -154,9 +171,11 @@ public class ArticleController {
         return modelAndView;
     }
 
-    //更新文章
+    /**
+     * 更新文章
+     */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ModelAndView update( HttpServletRequest req) {
+    public ModelAndView update(HttpServletRequest req) {
         ModelAndView modelAndView = new ModelAndView();
         //取得表单数据
         ArticleModel articleModel = new ArticleModel();
@@ -175,18 +194,18 @@ public class ArticleController {
         articleModel.setTitle(title);
         articleModel.setDescribes(des);
         articleModel.setContent(content);
-        if(id != null && !id.equals("")){
+        if (id != null && !id.equals("")) {
             articleModel.setId(Integer.valueOf(id));
             int row = ArticleDB.getInstence().updateOne(articleModel);
-            if(row <= 0){
-                modelAndView.addObject("msg","用户信息不正确");
+            if (row <= 0) {
+                modelAndView.addObject("msg", "用户信息不正确");
                 modelAndView.setViewName("fail");
                 return modelAndView;
             }
-        }else{
+        } else {
             int row = ArticleDB.getInstence().insertOne(articleModel);
-            if(row <= 0){
-                modelAndView.addObject("msg","提交失败");
+            if (row <= 0) {
+                modelAndView.addObject("msg", "提交失败");
                 modelAndView.setViewName("fail");
                 return modelAndView;
             }
