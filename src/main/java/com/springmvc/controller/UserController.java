@@ -1,12 +1,13 @@
 package com.springmvc.controller;
 
 import com.springmvc.controller.utils.AccountValidatorUtil;
-import com.springmvc.controller.utils.Base64;
 import com.springmvc.controller.utils.DESUtil;
-import com.springmvc.db.UserDB;
+import com.springmvc.db.UserDao;
 import com.springmvc.db.model.User;
+import com.springmvc.db.service.ArticleService;
+import com.springmvc.db.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,8 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -26,6 +25,8 @@ import java.util.UUID;
 @RequestMapping(value = "/user")  //类级别的RequestMapping，告诉DispatcherServlet由这个类负责处理以及URL。HandlerMapping依靠这个标签来工作
 public class UserController {
 
+    @Autowired
+    private UserService userService;
     /**
      * 登录
      */
@@ -52,7 +53,7 @@ public class UserController {
         map.put("userphone", account);
         map.put("userid", account);
         map.put("psw", psw);
-        User user = UserDB.getInstence().login(map);
+        User user = userService.login(map);
 
         if (user != null && user.getId() > 0) {
             //设置cookie
@@ -147,7 +148,7 @@ public class UserController {
         UUID uuid = UUID.randomUUID();
         map.put("userid", uuid.toString());
         map.put("psw", psw);
-        boolean isRegister = UserDB.getInstence().register(map);
+        boolean isRegister = userService.register(map);
         if (isRegister) {
             // 设置 name 和 url cookie
             Cookie usernameCookie = new Cookie("username", username);

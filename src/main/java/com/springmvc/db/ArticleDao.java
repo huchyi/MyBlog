@@ -1,24 +1,16 @@
 package com.springmvc.db;
 
+import com.springmvc.controller.utils.ModelAndJsonUtils;
 import com.springmvc.db.model.ArticleModel;
 import org.apache.ibatis.session.SqlSession;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-public class ArticleDB {
-
-    public static ArticleDB articleDB;
-
-    public static ArticleDB getInstence() {
-        if (articleDB == null) {
-            articleDB = new ArticleDB();
-        }
-        return articleDB;
-    }
+@Service("articleDao")
+public class ArticleDao {
 
     public ArticleModel getArticleById(int id) {
         /**
@@ -32,15 +24,7 @@ public class ArticleDB {
         ArticleModel articleModel = sqlSession.selectOne(statement, id);
         sqlSession.close();
 
-        ObjectMapper mapper = new ObjectMapper();
-        //User类转JSON
-        String json = null;
-        try {
-            json = mapper.writeValueAsString(articleModel);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(json);
+        System.out.println(ModelAndJsonUtils.ModelToJson(articleModel));
 
         return articleModel;
     }
@@ -72,15 +56,7 @@ public class ArticleDB {
         List<ArticleModel> articleModels = sqlSession.selectList(statement);
         sqlSession.close();
 
-        ObjectMapper mapper = new ObjectMapper();
-        //User类转JSON
-        String json = null;
-        try {
-            json = mapper.writeValueAsString(articleModels);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(json);
+        System.out.println(ModelAndJsonUtils.ModelToJson(articleModels));
 
         return articleModels;
     }
@@ -92,15 +68,7 @@ public class ArticleDB {
         List<ArticleModel> articleModels = sqlSession.selectList(statement,userid);
         sqlSession.close();
 
-        ObjectMapper mapper = new ObjectMapper();
-        //User类转JSON
-        String json = null;
-        try {
-            json = mapper.writeValueAsString(articleModels);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(json);
+        System.out.println(ModelAndJsonUtils.ModelToJson(articleModels));
 
         return articleModels;
     }
@@ -113,15 +81,7 @@ public class ArticleDB {
         ArticleModel articleModel = sqlSession.selectOne(statement);
         sqlSession.close();
 
-        ObjectMapper mapper = new ObjectMapper();
-        //User类转JSON
-        String json = null;
-        try {
-            json = mapper.writeValueAsString(articleModel);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(json);
+        System.out.println(ModelAndJsonUtils.ModelToJson(articleModel));
 
         return articleModel;
     }

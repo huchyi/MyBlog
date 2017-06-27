@@ -1,12 +1,13 @@
 package com.springmvc.controller;
 
-import com.springmvc.controller.utils.Base64;
 import com.springmvc.controller.utils.DESUtil;
 import com.springmvc.controller.utils.ModelAndJsonUtils;
-import com.springmvc.db.ArticleDB;
-import com.springmvc.db.UserDB;
+import com.springmvc.db.UserDao;
 import com.springmvc.db.model.ArticleModel;
 import com.springmvc.db.model.User;
+import com.springmvc.db.service.ArticleService;
+import com.springmvc.db.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +23,12 @@ import java.util.Map;
 @Controller  //告诉DispatcherServlet相关的容器， 这是一个Controller，
 @RequestMapping(value = "/article")  //类级别的RequestMapping，告诉DispatcherServlet由这个类负责处理以及URL。HandlerMapping依靠这个标签来工作
 public class ArticleController {
+
+    @Autowired
+    private ArticleService articleService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 主页
@@ -41,7 +47,7 @@ public class ArticleController {
     @RequestMapping(value = "/getArticleList", method = RequestMethod.GET)
     @ResponseBody
     public String getArticleList() {
-        ArrayList<ArticleModel> articleModels = (ArrayList<ArticleModel>) ArticleDB.getInstence().getArticleAll();
+        ArrayList<ArticleModel> articleModels = (ArrayList<ArticleModel>)articleService.getArticleAll();
         if (articleModels == null || articleModels.size() <= 0) {
             return "";
         }
@@ -53,7 +59,6 @@ public class ArticleController {
      */
     @RequestMapping(value = "/showMyHome", method = RequestMethod.GET)
     public ModelAndView showMyHome() {
-//        return "myhome";
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("myhome");
         return modelAndView;
@@ -65,7 +70,7 @@ public class ArticleController {
     @RequestMapping(value = "/getArticleListByUserid", method = RequestMethod.GET)
     @ResponseBody
     public String getArticleList(String userid) {
-        ArrayList<ArticleModel> articleModels = (ArrayList<ArticleModel>) ArticleDB.getInstence().getArticleByuserid(userid);
+        ArrayList<ArticleModel> articleModels = (ArrayList<ArticleModel>) articleService.getArticleByuserid(userid);
         if (articleModels == null || articleModels.size() <= 0) {
             return "";
         }
@@ -78,7 +83,7 @@ public class ArticleController {
     @RequestMapping(value = "/getPageNumCount", method = RequestMethod.GET)
     @ResponseBody
     public String getPageNumCount() {
-        return String.valueOf(ArticleDB.getInstence().getPageCount());
+        return String.valueOf(articleService.getPageCount());
     }
 
     /**
@@ -88,7 +93,7 @@ public class ArticleController {
     @ResponseBody
     public String getPageNumData(String pageNum) {
 
-        List<ArticleModel> articleModels = ArticleDB.getInstence().getPageNumData(Integer.valueOf(pageNum));
+        List<ArticleModel> articleModels =articleService.getPageNumData(Integer.valueOf(pageNum));
         if (articleModels == null || articleModels.size() <= 0) {
             return "fail";
         }
@@ -102,7 +107,7 @@ public class ArticleController {
     @RequestMapping(value = "/showDetails", method = RequestMethod.GET)
     public ModelAndView showDetails(String id) {
         System.out.println("============showDetails  id:" + id);
-        ArticleModel articleModel = ArticleDB.getInstence().getArticleById(Integer.valueOf(id));
+        ArticleModel articleModel =articleService.getArticleById(Integer.valueOf(id));
         ModelAndView modelAndView = new ModelAndView();
         if (articleModel == null) {
             modelAndView.setViewName("404");
@@ -120,7 +125,7 @@ public class ArticleController {
     public ModelAndView editPage(String id) {
         ModelAndView modelAndView = new ModelAndView();
         if (id != null && !id.equals("") && !id.equals("0")) {
-            ArticleModel articleModel = ArticleDB.getInstence().getArticleById(Integer.valueOf(id));
+            ArticleModel articleModel =articleService.getArticleById(Integer.valueOf(id));
             if (articleModel == null) {
                 modelAndView.setViewName("404");
             } else {
@@ -160,7 +165,7 @@ public class ArticleController {
             modelAndView.setViewName("fail");
             return modelAndView;
         }else{
-            User user = UserDB.getInstence().getUserByUserId(userid);
+            User user = userService.getUserByUserId(userid);
             if(user == null || user.getId() <= 0){
                 modelAndView.addObject("msg", "请先注册");
                 modelAndView.setViewName("fail");
@@ -169,13 +174,13 @@ public class ArticleController {
         }
 
 
-        int row = ArticleDB.getInstence().insertOne(articleModel);
+        int row =articleService.insertOne(articleModel);
         if (row <= 0) {
             modelAndView.addObject("msg", "提交失败");
             modelAndView.setViewName("fail");
             return modelAndView;
         }
-        ArticleModel articleModel1 = ArticleDB.getInstence().getArticleLast();
+        ArticleModel articleModel1 =articleService.getArticleLast();
         if (articleModel1 == null) {
             modelAndView.addObject("msg", "获取数据失败");
             modelAndView.setViewName("fail");
@@ -213,7 +218,7 @@ public class ArticleController {
         Map<String, String> map = new HashMap<String, String>();
         map.put("userid", userid);
         map.put("psw", psw);
-        User user = UserDB.getInstence().login(map);
+        User user = userService.login(map);
         if(user == null || user.getId()<= 0){
             modelAndView.addObject("msg", "账号不正确");
             modelAndView.setViewName("fail");
@@ -227,14 +232,14 @@ public class ArticleController {
         articleModel.setContent(content);
         if (id != null && !id.equals("")) {
             articleModel.setId(Integer.valueOf(id));
-            int row = ArticleDB.getInstence().updateOne(articleModel);
+            int row =articleService.updateOne(articleModel);
             if (row <= 0) {
                 modelAndView.addObject("msg", "用户信息不正确");
                 modelAndView.setViewName("fail");
                 return modelAndView;
             }
         } else {
-            int row = ArticleDB.getInstence().insertOne(articleModel);
+            int row =articleService.insertOne(articleModel);
             if (row <= 0) {
                 modelAndView.addObject("msg", "提交失败");
                 modelAndView.setViewName("fail");
