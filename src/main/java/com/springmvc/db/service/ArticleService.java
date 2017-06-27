@@ -3,6 +3,7 @@ package com.springmvc.db.service;
 import com.springmvc.db.model.ArticleModel;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface ArticleService {
@@ -11,7 +12,7 @@ public interface ArticleService {
 
     int getPageCount();
 
-    List<ArticleModel> getPageNumData(int pageNum);
+    List<ArticleModel> getPageNumData(Map<String,Integer> map);
 
     List<ArticleModel> getArticleAll();
 

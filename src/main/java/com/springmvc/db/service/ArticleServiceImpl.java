@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service("articleService")
 public class ArticleServiceImpl implements ArticleService {
@@ -21,8 +22,8 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDao.getPageCount();
     }
 
-    public List<ArticleModel> getPageNumData(int pageNum) {
-        return articleDao.getPageNumData(pageNum);
+    public List<ArticleModel> getPageNumData(Map<String,Integer> map) {
+        return articleDao.getPageNumData(map);
     }
 
     public List<ArticleModel> getArticleAll() {

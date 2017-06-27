@@ -90,15 +90,18 @@ public class ArticleController {
      */
     @RequestMapping(value = "/getPageNumData", method = RequestMethod.GET)
     @ResponseBody
-    public String getPageNumData(String pageNum) {
-
-        List<ArticleModel> articleModels =articleService.getPageNumData(Integer.valueOf(pageNum));
+    public String getPageNumData(int pageNum,int totalCount) {
+        int endNum = totalCount - (pageNum - 1) * 10 - 1;
+        int startNum = endNum - 9 >= 0 ? (endNum - 9) : 0;
+        Map<String,Integer> map = new HashMap<String, Integer>();
+        map.put("startNum",startNum);
+        map.put("endNum",endNum);
+        List<ArticleModel> articleModels =articleService.getPageNumData(map);
         if (articleModels == null || articleModels.size() <= 0) {
             return "fail";
         }
         return ModelAndJsonUtils.ModelToJsonWithBase64(articleModels);
     }
-
 
     /**
      * 展示详情页

@@ -10,7 +10,7 @@
 
     <update id="updateOne" parameterType="com.springmvc.db.model.ArticleModel">
         UPDATE article SET article_id=#{article_id},title=#{title},describes=#{describes},content=#{content},
-        img_url=#{img_url},create_time=now() WHERE id = #{id} AND userid = #{userid}
+        img_url=#{img_url} WHERE id = #{id} AND userid = #{userid}
     </update>
 
     <select id="getArticleLast" parameterType="int" resultMap="article">
@@ -21,7 +21,7 @@
     select * from article where id=#{id}
     </select>
     <select id="getArticleByUserid" parameterType="String" resultMap="article">
-        select * from article where userid=#{userid}
+        select * from article where userid=#{userid} order by id desc
     </select>
 
     <select id="getArticleAll" resultMap="article">
@@ -32,7 +32,10 @@
         select COUNT(*) from article
     </select>
 
-    <select id="queryPageNumData" parameterType="int" resultMap="article">
-        select * from article order by id desc limit #{pageNum} ,10
+    <select id="queryPageNumData" parameterType="map" resultMap="article">
+        <!--      select * from article order by id desc limit #{pageNum} ,10
+        select * from article order by id desc BETWEEN #{startNum} AND #{endNum}
+             SELECT * FROM article WHERE id > =(select id from article limit #{startNum}, 1) limit 10-->
+        select * from article WHERE id  BETWEEN #{startNum} AND #{endNum} ORDER BY id DESC
     </select>
 </mapper>

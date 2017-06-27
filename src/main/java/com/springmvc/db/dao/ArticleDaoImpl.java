@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository("articleDao")
 public class ArticleDaoImpl implements ArticleDao {
@@ -21,8 +22,8 @@ public class ArticleDaoImpl implements ArticleDao {
         return articleMapper.getPageCount();
     }
 
-    public List<ArticleModel> getPageNumData(int pageNum) {
-        return articleMapper.queryPageNumData(pageNum);
+    public List<ArticleModel> getPageNumData(Map<String,Integer> map) {
+        return articleMapper.queryPageNumData(map);
     }
 
     public List<ArticleModel> getArticleAll() {

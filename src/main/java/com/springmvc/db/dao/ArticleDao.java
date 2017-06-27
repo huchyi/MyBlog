@@ -3,6 +3,7 @@ package com.springmvc.db.dao;
 import com.springmvc.db.model.ArticleModel;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ArticleDao {
 
@@ -10,7 +11,7 @@ public interface ArticleDao {
 
     int getPageCount();
 
-    List<ArticleModel> getPageNumData(int pageNum);
+    List<ArticleModel> getPageNumData(Map<String,Integer> map);
 
     List<ArticleModel> getArticleAll();
 

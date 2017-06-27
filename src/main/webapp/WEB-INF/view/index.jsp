@@ -96,7 +96,7 @@
 
         function getPageData(pageSize, pageNum) {
             setBottom(pageSize, pageNum);
-            $.get("/article/getPageNumData?pageNum=" + pageNum, function (data, status) {
+            $.get("/article/getPageNumData?pageNum=" + pageNum + "&totalCount=" + pageSize, function (data, status) {
 //                alert("getPageData pageSize:" + pageSize +　",\npageNum:" + pageNum);
                 setTop(data);
             });

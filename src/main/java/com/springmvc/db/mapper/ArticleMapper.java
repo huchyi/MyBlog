@@ -6,6 +6,7 @@ import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository(value="articleMapper")
 public interface  ArticleMapper{
@@ -13,7 +14,7 @@ public interface  ArticleMapper{
 
     int getPageCount();
 
-    List<ArticleModel> queryPageNumData(int pageNum);
+    List<ArticleModel> queryPageNumData(Map<String,Integer> map);
 
     List<ArticleModel> getArticleAll();
 
