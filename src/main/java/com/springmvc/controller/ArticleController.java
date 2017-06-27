@@ -106,7 +106,6 @@ public class ArticleController {
      */
     @RequestMapping(value = "/showDetails", method = RequestMethod.GET)
     public ModelAndView showDetails(String id) {
-        System.out.println("============showDetails  id:" + id);
         ArticleModel articleModel =articleService.getArticleById(Integer.valueOf(id));
         ModelAndView modelAndView = new ModelAndView();
         if (articleModel == null) {
@@ -151,7 +150,6 @@ public class ArticleController {
         String title = req.getParameter("title");
         String des = req.getParameter("des");
         String content = req.getParameter("content");
-        System.out.println(">>>：" + content);
 
         articleModel.setArticle_id(String.valueOf(System.currentTimeMillis()));
         articleModel.setUserid(userid);
