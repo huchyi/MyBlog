@@ -1,6 +1,5 @@
 package com.springmvc;
 
-import com.springmvc.db.UserDao;
 import com.springmvc.db.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 

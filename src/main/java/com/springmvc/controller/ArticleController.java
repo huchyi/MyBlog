@@ -2,7 +2,6 @@ package com.springmvc.controller;
 
 import com.springmvc.controller.utils.DESUtil;
 import com.springmvc.controller.utils.ModelAndJsonUtils;
-import com.springmvc.db.UserDao;
 import com.springmvc.db.model.ArticleModel;
 import com.springmvc.db.model.User;
 import com.springmvc.db.service.ArticleService;

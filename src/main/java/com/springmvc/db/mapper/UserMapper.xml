@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springmvc.db.mapper.UserMapper">
+    <resultMap id="user" type="com.springmvc.db.model.User">
+    </resultMap>
+    <select id="getUser" parameterType="int" resultMap="user">
+        select * from users where id=#{id}
+    </select>
+    <insert id="register" parameterType="map">
+        insert into users (userid,psw,username,userphone,email) values(#{userid},#{psw},#{username},#{userphone},#{email})
+    </insert>
+
+    <select id="getUserByUserId" parameterType="String" resultMap="user">
+        select * from users where userid=#{userid}
+    </select>
+
+    <select id="login" parameterType="map" resultMap="user">
+        select * from users where id=#{id} OR userid=#{userid} OR userphone=#{userphone}  OR email=#{email} AND psw=#{psw}
+    </select>
+</mapper>

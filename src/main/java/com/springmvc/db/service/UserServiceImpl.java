@@ -1,7 +1,6 @@
 package com.springmvc.db.service;
 
-import com.springmvc.db.ArticleDao;
-import com.springmvc.db.UserDao;
+import com.springmvc.db.dao.UserDao;
 import com.springmvc.db.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

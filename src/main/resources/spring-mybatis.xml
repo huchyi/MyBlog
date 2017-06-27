@@ -3,9 +3,9 @@
 <configuration>
 
     <!-- mybatis别名定义 -->
-    <typeAliases>
-        <typeAlias alias="ArticleModel" type="com.springmvc.db.model.ArticleModel"/>
-    </typeAliases>
+    <!--<typeAliases>-->
+        <!--<typeAlias alias="ArticleModel" type="com.springmvc.db.model.ArticleModel"/>-->
+    <!--</typeAliases>-->
 
     <!--
     plugins在配置文件中的位置必须符合要求，否则会报错，顺序如下:
@@ -16,24 +16,24 @@
     environments?, databaseIdProvider?, mappers?
 -->
 
-    <environments default="development">
-        <environment id="development">
-            <transactionManager type="JDBC"/>
-            <!-- 配置数据库连接信息 -->
-            <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?serverTimezone=UTC"/>
-                <property name="username" value="root"/>
-                <property name="password" value="root"/>
-            </dataSource>
-        </environment>
-    </environments>
+    <!--<environments default="development">-->
+        <!--<environment id="development">-->
+            <!--<transactionManager type="JDBC"/>-->
+            <!--&lt;!&ndash; 配置数据库连接信息 &ndash;&gt;-->
+            <!--<dataSource type="POOLED">-->
+                <!--<property name="driver" value="com.mysql.jdbc.Driver"/>-->
+                <!--<property name="url" value="jdbc:mysql://localhost:3306/mybatis?serverTimezone=UTC"/>-->
+                <!--<property name="username" value="root"/>-->
+                <!--<property name="password" value="root"/>-->
+            <!--</dataSource>-->
+        <!--</environment>-->
+    <!--</environments>-->
 
-    <mappers>
-        <!-- 注册userMapper.xml文件，
-         userMapper.xml位于me.gacl.mapping这个包下，所以resource写成me/gacl/mapping/userMapper.xml-->
-        <mapper resource="mapping/userMapper.xml"/>
-        <mapper resource="mapping/ArticleMapper.xml"/>
-    </mappers>
+    <!--<mappers>-->
+        <!--&lt;!&ndash; 注册userMapper.xml文件，-->
+         <!--userMapper.xml位于me.gacl.mapping这个包下，所以resource写成me/gacl/mapping/注册userMapper.xml&ndash;&gt;-->
+        <!--<mapper resource="mapping/注册userMapper.xml"/>-->
+        <!--<mapper resource="mapping/ArticleMapper.xml"/>-->
+    <!--</mappers>-->
 
 </configuration>

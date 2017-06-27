@@ -8,7 +8,58 @@
 	   		http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!--扫描所有的类,自动注入,用于@autowired,除了conroller,因为在spring-mvc中注入了-->
-	<context:component-scan base-package="com.springmvc.db">
+	<context:component-scan base-package="com.springmvc">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
+
+	<!-- 配置mybatis -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dsMaster" />
+		<property name="configLocation" value="classpath:spring-mybatis.xml"/>
+		<!--<property name="mapperLocations" value="classpath:mapping/*.xml"></property>-->
+		<property name="mapperLocations" value="classpath:com/springmvc/db/mapper/*.xml"/>
+	</bean>
+	<!--用于mybatis的动态代理-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.springmvc.db.mapper"/>
+	</bean>
+
+	<bean id="dsMaster" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="driverClassName" value="${master.jdbc.driver.class}" />
+		<property name="url" value="${master.jdbc.url}" />
+		<property name="username" value="${master.jdbc.username}" />
+		<property name="password" value="${master.jdbc.password}" />
+		<property name="defaultReadOnly" value="${master.jdbc.default.read.only}" />
+		<property name="filters" value="${master.jdbc.filters}" />
+		<property name="maxActive" value="${master.jdbc.max.active}" />
+		<property name="initialSize" value="${master.jdbc.initial.size}" />
+		<property name="maxWait" value="${master.jdbc.max.wait}" />
+		<property name="removeAbandoned" value="${master.jdbc.remove.abandoned}" />
+		<property name="removeAbandonedTimeout" value="${master.jdbc.remove.abandoned.timeout}" />
+		<property name="minIdle" value="${master.jdbc.min.idle}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${master.jdbc.time.between.eviction.runs.millis}" />
+		<property name="minEvictableIdleTimeMillis" value="${master.jdbc.min.evictable.idle.time.millis}" />
+		<property name="validationQuery" value="${master.jdbc.validation.query}" />
+		<property name="testWhileIdle" value="${master.jdbc.test.while.idle}" />
+		<property name="testOnBorrow" value="${master.jdbc.test.on.borrow}" />
+		<property name="testOnReturn" value="${master.jdbc.test.on.return}" />
+		<property name="poolPreparedStatements" value="${master.jdbc.pool.prepared.statements}" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="${master.jdbc.max.pool.prepared.statement.per.connection.size}" />
+		<property name="maxOpenPreparedStatements" value="${master.jdbc.max.open.prepared.statements}" />
+	</bean>
+
+	<!-- 使用spring自带的占位符替换功能 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<!-- 允许JVM参数覆盖 -->
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<!-- 忽略没有找到的资源文件 -->
+		<property name="ignoreResourceNotFound" value="true" />
+		<!-- 配置资源文件 -->
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
 </beans>

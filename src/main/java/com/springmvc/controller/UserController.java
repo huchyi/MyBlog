@@ -2,9 +2,7 @@ package com.springmvc.controller;
 
 import com.springmvc.controller.utils.AccountValidatorUtil;
 import com.springmvc.controller.utils.DESUtil;
-import com.springmvc.db.UserDao;
 import com.springmvc.db.model.User;
-import com.springmvc.db.service.ArticleService;
 import com.springmvc.db.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
