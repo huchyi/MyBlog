@@ -36,6 +36,7 @@
         <!--      select * from article order by id desc limit #{pageNum} ,10
         select * from article order by id desc BETWEEN #{startNum} AND #{endNum}
              SELECT * FROM article WHERE id > =(select id from article limit #{startNum}, 1) limit 10-->
-        select * from article WHERE id  BETWEEN #{startNum} AND #{endNum} ORDER BY id DESC
+        <!--select * from article WHERE id  BETWEEN #{startNum} AND #{endNum} ORDER BY id DESC-->
+        SELECT * FROM article WHERE id >=(select id from article limit #{startNum}, 1) limit #{size}
     </select>
 </mapper>

@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller  //告诉DispatcherServlet相关的容器， 这是一个Controller，
 @RequestMapping(value = "/article")  //类级别的RequestMapping，告诉DispatcherServlet由这个类负责处理以及URL。HandlerMapping依靠这个标签来工作
@@ -92,15 +89,28 @@ public class ArticleController {
     @RequestMapping(value = "/getPageNumData", method = RequestMethod.GET)
     @ResponseBody
     public String getPageNumData(int pageNum, int totalCount) {
-        int endNum = totalCount - (pageNum - 1) * 10 - 1;
-        int startNum = endNum - 9 >= 0 ? (endNum - 9) : 0;
+//        int endNum = totalCount - (pageNum - 1) * 10 - 1;
+//        int startNum = endNum - 9 >= 0 ? (endNum - 9) : 0;
+//        Map<String, Integer> map = new HashMap<String, Integer>();
+//        map.put("startNum", startNum);
+//        map.put("endNum", endNum);
+        int startNum = 0;
+        int size = 10;
+        if (totalCount > 10) {
+            startNum = totalCount - pageNum * 10;
+            if(startNum < 0){
+                size =  10 + startNum;
+                startNum = 0;
+            }
+        }
         Map<String, Integer> map = new HashMap<String, Integer>();
         map.put("startNum", startNum);
-        map.put("endNum", endNum);
+        map.put("size", size);
         List<ArticleModel> articleModels = articleService.getPageNumData(map);
         if (articleModels == null || articleModels.size() <= 0) {
             return "fail";
         }
+        Collections.reverse(articleModels);// 倒序排列
         return ModelAndJsonUtils.ModelToJsonWithBase64(articleModels);
     }
 
