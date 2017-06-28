@@ -14,11 +14,12 @@
 <html>
 <head>
     <title>编辑界面</title>
-    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css"/>
+    <link rel="stylesheet" href="<%=basePath%>css/style.css" media="screen" type="text/css"/>
     <script type="text/javascript" src="<%=basePath%>js/jquery-3.2.1.min.js"></script>
-    <script src="/ckeditor/ckeditor.js"></script>
-    <script src="/ckeditor/config.js"></script>
-    <script src="/ckfinder/ckfinder.js"></script>
+    <script src="<%=basePath%>ckeditor/ckeditor.js"></script>
+    <script src="<%=basePath%>ckeditor/config.js"></script>
+    <script src="<%=basePath%>ckfinder/ckfinder.js"></script>
+    <script src="<%=basePath%>js/Base64.js"></script>
 
     <script type="text/javascript">
         var userid;
@@ -46,51 +47,108 @@
 
             var userInfo = null;
             if (userid !== null && userid !== undefined) {
-                userInfo = userInfo + "<input type='text' name='userid' value='" + userid + "' >";
+                userInfo = userInfo + "<input type='text' name='userid' value='" + userid + "'>";
+                var pp = "<%=psw%>";
+                userInfo = userInfo + "<input type='text' name='psw' style='visibility: hidden' value='"+ pp +"'>";
                 $("#userinfo").html(userInfo);
             }
         }
 
+
         function validate() {
-            //JavaScript判空，如果确定
+            var formParam;
+            var userId = window.document.getElementsByName("userid")[0];
+            var psw = window.document.getElementsByName("psw")[0];
+            var id = window.document.getElementsByName("id")[0];
+
+            var title = window.document.getElementsByName("title")[0];
+            if (title === null || title.value === "") {
+                alert("请输入标题");
+                return;
+            }
+            var des = window.document.getElementsByName("des")[0];
+            if (des === null || des.value === "") {
+                alert("请输入副标题");
+                return;
+            }
             var editor_data = CKEDITOR.instances.content.getData();
-            var title = window.document.getElementsByName("title");
-            var des = window.document.getElementsByName("des");
-            if (editor_data === null || editor_data === ""
-                || title === null || title === ""
-                || des === null || des === "") {
-                alert("数据为空不能提交");
-            } else {
-                if (confirm(editor_data) && userid !== null && userid !== undefined) {
-                    document.submit.submit();
+            if (editor_data === null || editor_data === "") {
+                alert("请输入内容");
+                return;
+            }
+            formParam = "id=" + id.value + "&psw=" + psw.value +"&userid=" + userId.value + "&title=" + title.value + "&des=" + des.value + "&content=" + editor_data;
+
+            var str = getData("<%=basePath%>article/update", formParam);
+            if (str === null || str === "") {
+                return;
+            }
+            var json = new Base64().decode(str);
+            var obj = JSON.parse(json);
+            var code = obj.code;
+            var msg = obj.msg;
+            if (code === null || code === "") {
+                alert("提交失败");
+            } else if (code === "1") {
+                if (msg === null || msg === "") {
+                    alert("提交失败");
+                } else {
+                    alert(msg);
+                }
+            } else if (code === "0") {
+                if (msg === null || msg === "") {
+                    alert("提交失败");
+                } else {
+                    location.href = "<%=basePath%>article/showDetails?id=" + msg;
                 }
             }
+        }
+
+        function getData(url, jsonText) {
+            var callbackData = "";
+            $.ajax({
+                type: 'post',
+                url: url,
+                data: jsonText,
+                async: false,
+                success: function (data) {
+                    callbackData = data;
+                },
+                error: function (XMLHttpRequest, textStatus) {
+                    alert("status:" + XMLHttpRequest.status + "errorMsg:" + textStatus);
+                }
+            });
+            return callbackData;
         }
     </script>
 </head>
 <body>
 <div id="divCss" align="center" style="padding-top: 100px;margin-bottom: 100px">
-    <form action="/article/update" method="post" accept-charset="UTF-8">
-        <div id="userinfo" style="visibility: hidden">
-            <script type="text/javascript">getCookies()</script>
-        </div>
-        <input type="text" name="psw" style="visibility: hidden" value="<%=psw%>">
+    <%--<form action="/article/update" method="post" accept-charset="UTF-8">--%>
+    <div id="userinfo" style="visibility: hidden">
+        <script type="text/javascript">getCookies()</script>
+    </div>
+
+    <label>
+        <%--<input type="text" name="psw" style="visibility: hidden" value="<%=psw%>">--%>
         <input type="text" name="id" style="visibility: hidden" value="<%=articleModel.getId()%>">
-        <br>
-        <h2><input type="text" name="title" placeholder="输入标题" style="padding: 15px"
-                   value="<%=articleModel.getTitle()%>"></h2>
-        <br>
-        <h5><textarea rows="4" cols="4" name="des" placeholder="输入副标题"
-                      style="padding: 15px;width: 60%"><%=articleModel.getDescribes()%></textarea></h5>
-        <%--<h5><input type="text" name="des" placeholder="输入副标题" style="padding: 15px;width: 60%"></h5>--%>
-        <br>
-        <div>
-            <textarea id="TextArea1" cols="8" rows="2" class="ckeditor"
+    </label>
+    <br>
+    <h2><input type="text" name="title" placeholder="输入标题" style="padding: 15px"
+               value="<%=articleModel.getTitle()%>"></h2>
+    <br>
+    <h5><textarea rows="4" cols="4" name="des" placeholder="输入副标题"
+                  style="padding: 15px;width: 60%"><%=articleModel.getDescribes()%></textarea></h5>
+    <%--<h5><input type="text" name="des" placeholder="输入副标题" style="padding: 15px;width: 60%"></h5>--%>
+    <br>
+    <div>
+        <label>
+            <textarea id="content" cols="8" rows="2" class="ckeditor"
                       name="content"><%=articleModel.getContent()%></textarea>
-        </div>
-        <br><br>
-        <input type="submit" onclick="validate()" value="Submit">
-    </form>
+        </label>
+    </div>
+    <br><br>
+    <input type="submit" onclick="validate()" value="Submit">
+    <%--</form>--%>
 </div>
 
 </body>

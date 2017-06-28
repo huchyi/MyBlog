@@ -1,5 +1,6 @@
 package com.springmvc.controller;
 
+import com.springmvc.controller.utils.Base64;
 import com.springmvc.controller.utils.DESUtil;
 import com.springmvc.controller.utils.ModelAndJsonUtils;
 import com.springmvc.db.model.ArticleModel;
@@ -46,7 +47,7 @@ public class ArticleController {
     @RequestMapping(value = "/getArticleList", method = RequestMethod.GET)
     @ResponseBody
     public String getArticleList() {
-        ArrayList<ArticleModel> articleModels = (ArrayList<ArticleModel>)articleService.getArticleAll();
+        ArrayList<ArticleModel> articleModels = (ArrayList<ArticleModel>) articleService.getArticleAll();
         if (articleModels == null || articleModels.size() <= 0) {
             return "";
         }
@@ -90,13 +91,13 @@ public class ArticleController {
      */
     @RequestMapping(value = "/getPageNumData", method = RequestMethod.GET)
     @ResponseBody
-    public String getPageNumData(int pageNum,int totalCount) {
+    public String getPageNumData(int pageNum, int totalCount) {
         int endNum = totalCount - (pageNum - 1) * 10 - 1;
         int startNum = endNum - 9 >= 0 ? (endNum - 9) : 0;
-        Map<String,Integer> map = new HashMap<String, Integer>();
-        map.put("startNum",startNum);
-        map.put("endNum",endNum);
-        List<ArticleModel> articleModels =articleService.getPageNumData(map);
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        map.put("startNum", startNum);
+        map.put("endNum", endNum);
+        List<ArticleModel> articleModels = articleService.getPageNumData(map);
         if (articleModels == null || articleModels.size() <= 0) {
             return "fail";
         }
@@ -108,7 +109,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "/showDetails", method = RequestMethod.GET)
     public ModelAndView showDetails(String id) {
-        ArticleModel articleModel =articleService.getArticleById(Integer.valueOf(id));
+        ArticleModel articleModel = articleService.getArticleById(Integer.valueOf(id));
         ModelAndView modelAndView = new ModelAndView();
         if (articleModel == null) {
             modelAndView.setViewName("404");
@@ -125,8 +126,8 @@ public class ArticleController {
     @RequestMapping(value = "/editPage", method = RequestMethod.GET)
     public ModelAndView editPage(String id) {
         ModelAndView modelAndView = new ModelAndView();
-        if (id != null && !id.equals("") && !id.equals("0")) {
-            ArticleModel articleModel =articleService.getArticleById(Integer.valueOf(id));
+        if (id != null && !id.equals("") && !id.equals("-1")) {
+            ArticleModel articleModel = articleService.getArticleById(Integer.valueOf(id));
             if (articleModel == null) {
                 modelAndView.setViewName("404");
             } else {
@@ -143,8 +144,9 @@ public class ArticleController {
      * 插入一篇文章
      */
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public ModelAndView insert(HttpServletRequest req) {
-        ModelAndView modelAndView = new ModelAndView();
+    @ResponseBody
+    public String insert(HttpServletRequest req) {
+//        ModelAndView modelAndView = new ModelAndView();
         //取得表单数据
         ArticleModel articleModel = new ArticleModel();
         String username = req.getParameter("username");
@@ -160,43 +162,39 @@ public class ArticleController {
         articleModel.setDescribes(des);
         articleModel.setContent(content);
 
-        if(userid == null || userid.equals("")){
-            modelAndView.addObject("msg", "请登录");
-            modelAndView.setViewName("fail");
-            return modelAndView;
-        }else{
+        String callJson = "";
+        if (userid == null || userid.equals("")) {
+            callJson = "{\"code\":\"1\",\"msg\":\"请登录\"}";
+            return Base64.encode(callJson);
+        } else {
             User user = userService.getUserByUserId(userid);
-            if(user == null || user.getId() <= 0){
-                modelAndView.addObject("msg", "请先注册");
-                modelAndView.setViewName("fail");
-                return modelAndView;
+            if (user == null || user.getId() <= 0) {
+                callJson = "{\"code\":\"1\",\"msg\":\"请先注册\"}";
+                return Base64.encode(callJson);
             }
         }
 
-
-        int row =articleService.insertOne(articleModel);
+        int row = articleService.insertOne(articleModel);
         if (row <= 0) {
-            modelAndView.addObject("msg", "提交失败");
-            modelAndView.setViewName("fail");
-            return modelAndView;
+            callJson = "{\"code\":\"1\",\"msg\":\"提交失败\"}";
+            return Base64.encode(callJson);
         }
-        ArticleModel articleModel1 =articleService.getArticleLast();
+        ArticleModel articleModel1 = articleService.getArticleLast();
         if (articleModel1 == null) {
-            modelAndView.addObject("msg", "获取数据失败");
-            modelAndView.setViewName("fail");
-            return modelAndView;
+            callJson = "{\"code\":\"1\",\"msg\":\"获取数据失败\"}";
+            return Base64.encode(callJson);
         }
-        modelAndView.addObject("articleModel", articleModel1);
-        modelAndView.setViewName("detailsPage");
-        return modelAndView;
+
+        callJson = "{\"code\":\"0\",\"msg\":\"" + articleModel1.getId() + "\"}";
+        return Base64.encode(callJson);
     }
 
     /**
      * 更新文章
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ModelAndView update(HttpServletRequest req) {
-        ModelAndView modelAndView = new ModelAndView();
+    @ResponseBody
+    public String update(HttpServletRequest req) {
         //取得表单数据
         ArticleModel articleModel = new ArticleModel();
         String userid = req.getParameter("userid");
@@ -205,12 +203,13 @@ public class ArticleController {
         String des = req.getParameter("des");
         String content = req.getParameter("content");
         String psw = req.getParameter("psw");
+
+        String callJson = "";
         //密码解密
-        if(psw == null || psw.equals("")){
-            modelAndView.addObject("msg", "账号不正确");
-            modelAndView.setViewName("fail");
-            return modelAndView;
-        }else{
+        if (psw == null || psw.equals("")) {
+            callJson = "{\"code\":\"1\",\"msg\":\"令牌失效\"}";
+            return Base64.encode(callJson);
+        } else {
             psw = new DESUtil().decrypt(psw);
         }
 
@@ -219,10 +218,9 @@ public class ArticleController {
         map.put("userid", userid);
         map.put("psw", psw);
         User user = userService.login(map);
-        if(user == null || user.getId()<= 0){
-            modelAndView.addObject("msg", "账号不正确");
-            modelAndView.setViewName("fail");
-            return modelAndView;
+        if (user == null || user.getId() <= 0) {
+            callJson = "{\"code\":\"1\",\"msg\":\"账号不正确\"}";
+            return Base64.encode(callJson);
         }
 
         articleModel.setArticle_id(String.valueOf(System.currentTimeMillis()));
@@ -232,23 +230,20 @@ public class ArticleController {
         articleModel.setContent(content);
         if (id != null && !id.equals("")) {
             articleModel.setId(Integer.valueOf(id));
-            int row =articleService.updateOne(articleModel);
+            int row = articleService.updateOne(articleModel);
             if (row <= 0) {
-                modelAndView.addObject("msg", "用户信息不正确");
-                modelAndView.setViewName("fail");
-                return modelAndView;
+                callJson = "{\"code\":\"1\",\"msg\":\"用户信息不正确\"}";
+                return Base64.encode(callJson);
             }
         } else {
-            int row =articleService.insertOne(articleModel);
+            int row = articleService.insertOne(articleModel);
             if (row <= 0) {
-                modelAndView.addObject("msg", "提交失败");
-                modelAndView.setViewName("fail");
-                return modelAndView;
+                callJson = "{\"code\":\"1\",\"msg\":\"提交失败\"}";
+                return Base64.encode(callJson);
             }
         }
-        modelAndView.setViewName("detailsPage");
-        modelAndView.addObject("articleModel", articleModel);
-        return modelAndView;
+        callJson = "{\"code\":\"0\",\"msg\":\"" + articleModel.getId() + "\"}";
+        return Base64.encode(callJson);
     }
 
 }
