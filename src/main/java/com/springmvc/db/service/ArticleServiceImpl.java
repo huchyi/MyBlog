@@ -3,7 +3,9 @@ package com.springmvc.db.service;
 import com.springmvc.db.dao.ArticleDao;
 import com.springmvc.db.model.ArticleModel;
 import com.springmvc.redis.service.ArticleRedisService;
-import org.slf4j.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private ArticleRedisService articleRedisService;
+
+    private Logger logger  = LogManager.getLogger(ArticleServiceImpl.class);
 
     public ArticleModel getArticleById(int id) {
 //        ArticleModel articleModel = articleRedisService.getArticleById(id);
@@ -38,11 +42,13 @@ public class ArticleServiceImpl implements ArticleService {
     public int getPageCount() {
         int size = articleRedisService.getPageCount();
         if (size >= 0) {
+            logger.info("getPageCount redis:" + size);
 //            System.out.println(">>>>>>>>>>>>ArticleServiceImpl getPageCount redis:" + size);
             return size;
         }
         size = articleDao.getPageCount();
         if (size >= 0) {
+            logger.info("getPageCount db:" + size);
 //            System.out.println(">>>>>>>>>>>>ArticleServiceImpl getPageCount db:" + size);
             articleRedisService.setPageCount(size);
             return size;
