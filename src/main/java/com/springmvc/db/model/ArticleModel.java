@@ -1,15 +1,7 @@
 package com.springmvc.db.model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Table(name="article")
 public class ArticleModel {
-    @Id
     public int id;
-
-    @Column
     public String article_id;
     public String userid;
     public String username;
@@ -18,6 +10,22 @@ public class ArticleModel {
     public String content;
     public String img_url;
     public String create_time;
+
+    public ArticleModel(){
+
+    }
+
+    public ArticleModel(int id, String article_id, String userid, String username, String title, String describes, String content, String img_url, String create_time) {
+        this.id = id;
+        this.article_id = article_id;
+        this.userid = userid;
+        this.username = username;
+        this.title = title;
+        this.describes = describes;
+        this.content = content;
+        this.img_url = img_url;
+        this.create_time = create_time;
+    }
 
     public int getId() {
         return id;
