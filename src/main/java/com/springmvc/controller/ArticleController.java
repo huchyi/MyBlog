@@ -223,27 +223,9 @@ public class ArticleController {
         String title = req.getParameter("title");
         String des = req.getParameter("des");
         String content = req.getParameter("content");
-        String psw = req.getParameter("psw");
         String isPrivate = req.getParameter("isPrivate");
 
         String callJson = "";
-        //密码解密
-        if (psw == null || psw.equals("")) {
-            callJson = "{\"code\":\"1\",\"msg\":\"令牌失效\"}";
-            return Base64.encode(callJson);
-        } else {
-            psw = new DESUtil().decrypt(psw);
-        }
-
-        //首先进行账号的验证
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("userid", userid);
-        map.put("psw", psw);
-        User user = userService.login(map);
-        if (user == null || user.getId() <= 0) {
-            callJson = "{\"code\":\"1\",\"msg\":\"账号不正确\"}";
-            return Base64.encode(callJson);
-        }
 
         articleModel.setArticle_id(String.valueOf(System.currentTimeMillis()));
         articleModel.setUserid(userid);

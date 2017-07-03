@@ -49,8 +49,6 @@
             var userInfo = null;
             if (userid !== null && userid !== undefined) {
                 userInfo = userInfo + "<input type='text' name='userid' value='" + userid + "'>";
-                var pp = "<%=psw%>";
-                userInfo = userInfo + "<input type='text' name='psw' style='visibility: hidden' value='" + pp + "'>";
                 $("#userinfo").html(userInfo);
             }
         }
@@ -59,7 +57,6 @@
         function validate() {
             var formParam;
             var userId = window.document.getElementsByName("userid")[0];
-            var psw = window.document.getElementsByName("psw")[0];
             var id = window.document.getElementsByName("id")[0];
 
             var div1 = document.getElementById("div1");
@@ -81,7 +78,6 @@
                 return;
             }
             formParam = "id=" + id.value
-                + "&psw=" + psw.value
                 + "&userid=" + userId.value
                 + "&title=" + title.value
                 + "&des=" + des.value

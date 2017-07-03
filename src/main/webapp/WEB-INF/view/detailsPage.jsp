@@ -57,11 +57,8 @@
             if (userid !== null && userid !== undefined) {
                 var editStr;
                 editStr = "<div align='left'>当前登录用户：" + userName;
-                var userid2 = <%=articleModel.getUserid()%>;
-                if (userid2 !== undefined && userid == userid2) {
-                    editStr = editStr + "<br/><p id='editText' onclick=\"toEdit()\">编辑</p><br/><br/>";
-                    editStr = editStr + "<div><div id='div1' class='open1'><div id='div2' class='open2'></div></div><p id='editPrivateBtn'>公开:</p></div>"
-                }
+                editStr = editStr + "<br/><p id='editText' onclick=\"toEdit()\">编辑</p><br/><br/>";
+                editStr = editStr + "<div><div id='div1' class='open1'><div id='div2' class='open2'></div></div><p id='editPrivateBtn'>公开:</p></div>"
                 editStr = editStr + "</div>";
                 $("#edit").html(editStr);
 
@@ -73,26 +70,26 @@
                 div1.className = (isPrivate == "0") ? "open1" : "close1";
                 div2.className = (isPrivate == "0") ? "open2" : "close2";
                 div2.onclick = function () {
-                    changeIsPrivate((div2.className == "close2")?"0":"1",userid2,div1,div2);
+                    changeIsPrivate((div2.className == "close2") ? "0" : "1", userid2, div1, div2);
                 };
             }
         }
 
 
-        function changeIsPrivate(isPrivate,userid,div1,div2) {
+        function changeIsPrivate(isPrivate, userid, div1, div2) {
 
-            var param = "{\"isPrivate\":\""+isPrivate+"\"," +
-                "\"userid\":\""+userid+"\"," +
+            var param = "{\"isPrivate\":\"" + isPrivate + "\"," +
+                "\"userid\":\"" + userid + "\"," +
                 "\"id\":\"<%=articleModel.getId()%>\"," +
-            "}";
+                "}";
             param = new Base64().encode(param);
 
             $.get("/article/updatePrivate?param=" + param, function (data, status) {
 //                alert("update:" + data);
-                if(data === "success"){
+                if (data === "success") {
                     div1.className = (div1.className == "close1") ? "open1" : "close1";
                     div2.className = (div2.className == "close2") ? "open2" : "close2";
-                }else{
+                } else {
                     alert("设置失败，status：" + status);
                 }
             });

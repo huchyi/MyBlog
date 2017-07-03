@@ -18,18 +18,47 @@
     </update>
 
     <select id="getArticleLast" parameterType="int" resultMap="article">
-          select * from article order by id desc limit 1
+          select
+           id,
+           username,
+           article_id,
+           title,
+           describes,
+           content,
+           create_time,
+           is_private from article order by id desc limit 1
     </select>
 
-    <select id="getArticleById" parameterType="int"  resultMap="article">
-    select * from article where id=#{id}
+    <select id="getArticleById" parameterType="int" resultMap="article">
+    select id,
+           username,
+           article_id,
+           title,
+           describes,
+           content,
+           create_time,
+           is_private from article where id=#{id}
     </select>
     <select id="getArticleByUserid" parameterType="String" resultMap="article">
-        select * from article where userid=#{userid} order by id desc
+        select id,
+           username,
+           article_id,
+           title,
+           describes,
+           content,
+           create_time,
+           is_private from article where userid=#{userid} order by id desc
     </select>
 
     <select id="getArticleAll" resultMap="article">
-        select * from article
+        select id,
+           username,
+           article_id,
+           title,
+           describes,
+           content,
+           create_time,
+           is_private from article
     </select>
 
     <select id="getPageCount" resultType="int">
@@ -41,6 +70,14 @@
         select * from article order by id desc BETWEEN #{startNum} AND #{endNum}
              SELECT * FROM article WHERE id > =(select id from article limit #{startNum}, 1) limit 10-->
         <!--select * from article WHERE id  BETWEEN #{startNum} AND #{endNum} ORDER BY id DESC-->
-        SELECT * FROM article WHERE id >=(select id from article limit #{startNum}, 1) AND is_private=FALSE limit #{size}
+        SELECT id,
+        username,
+        article_id,
+        title,
+        describes,
+        content,
+        create_time,
+        is_private FROM article WHERE id >=(select id from article limit #{startNum}, 1) AND is_private=FALSE limit
+        #{size}
     </select>
 </mapper>
