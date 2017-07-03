@@ -1,5 +1,9 @@
 package com.springmvc.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPObject;
 import com.springmvc.controller.utils.Base64;
 import com.springmvc.controller.utils.DESUtil;
 import com.springmvc.controller.utils.ModelAndJsonUtils;
@@ -7,6 +11,8 @@ import com.springmvc.db.model.ArticleModel;
 import com.springmvc.db.model.User;
 import com.springmvc.db.service.ArticleService;
 import com.springmvc.db.service.UserService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +26,8 @@ import java.util.*;
 @Controller  //告诉DispatcherServlet相关的容器， 这是一个Controller，
 @RequestMapping(value = "/article")  //类级别的RequestMapping，告诉DispatcherServlet由这个类负责处理以及URL。HandlerMapping依靠这个标签来工作
 public class ArticleController {
+
+    private Logger logger  = LogManager.getLogger(ArticleController.class);
 
     @Autowired
     private ArticleService articleService;
@@ -62,7 +70,7 @@ public class ArticleController {
     }
 
     /**
-     * 通过userid得到所有的文章列表*****暂时没用到
+     * 通过userid得到所有的文章列表
      */
     @RequestMapping(value = "/getArticleListByUserid", method = RequestMethod.GET)
     @ResponseBody
@@ -164,6 +172,8 @@ public class ArticleController {
         String title = req.getParameter("title");
         String des = req.getParameter("des");
         String content = req.getParameter("content");
+        String isPrivate = req.getParameter("isPrivate");
+
 
         articleModel.setArticle_id(String.valueOf(System.currentTimeMillis()));
         articleModel.setUserid(userid);
@@ -171,6 +181,7 @@ public class ArticleController {
         articleModel.setTitle(title);
         articleModel.setDescribes(des);
         articleModel.setContent(content);
+        articleModel.setIs_private(isPrivate);
 
         String callJson = "";
         if (userid == null || userid.equals("")) {
@@ -213,6 +224,7 @@ public class ArticleController {
         String des = req.getParameter("des");
         String content = req.getParameter("content");
         String psw = req.getParameter("psw");
+        String isPrivate = req.getParameter("isPrivate");
 
         String callJson = "";
         //密码解密
@@ -238,6 +250,7 @@ public class ArticleController {
         articleModel.setTitle(title);
         articleModel.setDescribes(des);
         articleModel.setContent(content);
+        articleModel.setIs_private(isPrivate);
         if (id != null && !id.equals("")) {
             articleModel.setId(Integer.valueOf(id));
             int row = articleService.updateOne(articleModel);
@@ -255,5 +268,45 @@ public class ArticleController {
         callJson = "{\"code\":\"0\",\"msg\":\"" + articleModel.getId() + "\"}";
         return Base64.encode(callJson);
     }
+
+
+    /**
+     * 更新状态
+     */
+    @RequestMapping(value = "/updatePrivate", method = RequestMethod.GET)
+    @ResponseBody
+    public String updateIsPrivate(String param) {
+        if(param == null || param.equals("")){
+            return "fail";
+        }
+        param = Base64.decode(param);
+
+        JSONObject jsonObject = JSONArray.parseObject(param);
+        String userid = jsonObject.getString("userid");
+        String id = jsonObject.getString("id");
+        String isPrivate = jsonObject.getString("isPrivate");
+
+        if(userid == null || userid.equals("")){
+            return "fail";
+        }
+        if(id == null || id.equals("")){
+            return "fail";
+        }
+        if(isPrivate == null || isPrivate.equals("")){
+            return "fail";
+        }
+        ArticleModel articleModel = new ArticleModel();
+        articleModel.setUserid(userid);
+        articleModel.setId(Integer.valueOf(id));
+        articleModel.setIs_private(isPrivate);
+
+        int row = articleService.updateChangeIsPrivate(articleModel);
+        if (row <= 0) {
+            return "fail";
+        }
+
+        return "success";
+    }
+
 
 }

@@ -23,4 +23,6 @@ public interface ArticleDao {
 
     int updateOne(ArticleModel articleModel);
 
+    int updateChangeIsPrivate(ArticleModel articleModel);
+
 }

@@ -95,11 +95,15 @@
             var list = eval("(" + json + ")");
             var ulCss = "";
             for (var i = 0; i < list.length; i++) {
+                var isPrivate = list[i].is_private;
                 ulCss += "<li>";
                 ulCss += "<p id='title' onclick='toDetails(" + list[i].id + ") '>" + list[i].title + "</p>";
                 ulCss += "<p id='des'  onclick='toDetails(" + list[i].id + ")'>" + list[i].describes + "</p>";
                 ulCss += "<p></p>";
-                ulCss += "<p id='userAndTime'>作者:" + list[i].username + " | 创建时间:" + list[i].create_time + "</p>";
+                ulCss += "<p id='userAndTime'>作者:" + list[i].username
+                    + " | 创建时间:" + list[i].create_time
+                    + " | " + ((isPrivate === "0")?"公开":"私有")
+                    + "</p>";
                 ulCss += "</li>";
             }
             $("#ulCss").html(ulCss);

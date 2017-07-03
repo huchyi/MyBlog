@@ -104,5 +104,10 @@ public class ArticleServiceImpl implements ArticleService {
 //        }
         return row;
     }
+
+    @Override
+    public int updateChangeIsPrivate(ArticleModel articleModel) {
+        return articleDao.updateChangeIsPrivate(articleModel);
+    }
 }
 

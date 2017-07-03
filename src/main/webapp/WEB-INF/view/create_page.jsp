@@ -13,6 +13,7 @@
 <head>
     <title>新建文章</title>
     <link rel="stylesheet" href="<%=basePath%>css/style.css" media="screen" type="text/css"/>
+    <link rel="stylesheet" href="<%=basePath%>css/edit_page.css" media="screen" type="text/css"/>
     <script type="text/javascript" src="<%=basePath%>js/jquery-3.2.1.min.js"></script>
     <script src="<%=basePath%>ckeditor/ckeditor.js"></script>
     <script src="<%=basePath%>ckeditor/config.js"></script>
@@ -59,6 +60,10 @@
             var username = window.document.getElementsByName("username")[0];
             var userId = window.document.getElementsByName("userid")[0];
 
+            var div2 = document.getElementById("div2");
+            var div1 = document.getElementById("div1");
+            var isPrivate = div1.className = (div1.className == "close1") ? "1" : "0";
+
             var title = window.document.getElementsByName("title")[0];
             if (title === null || title.value === "") {
                 alert("请输入标题");
@@ -74,7 +79,12 @@
                 alert("请输入内容");
                 return;
             }
-            formParam = "username=" + username.value + "&userid=" + userId.value + "&title=" + title.value + "&des=" + des.value + "&content=" + editor_data;
+            formParam = "username=" + username.value
+                + "&userid=" + userId.value
+                + "&title=" + title.value
+                + "&des=" + des.value
+                + "&content=" + editor_data
+                + "&isPrivate=" + isPrivate;
 
             var str = getData("<%=basePath%>article/insert", formParam);
             if (str === null || str === "") {
@@ -128,7 +138,8 @@
     </div>
     <h2><input type="text" name="title" placeholder="输入标题" style="padding: 15px;font-size: 18px;color: #232323"></h2>
     <br>
-    <h5><textarea rows="4" cols="4" name="des" placeholder="输入副标题" style="padding: 15px;width: 60%;font-size: 14px;color: #232323"></textarea></h5>
+    <h5><textarea rows="4" cols="4" name="des" placeholder="输入副标题"
+                  style="padding: 15px;width: 60%;font-size: 14px;color: #232323"></textarea></h5>
     <%--<h5><input type="text" name="des" placeholder="输入副标题" style="padding: 15px;width: 60%"></h5>--%>
     <br>
     <div>
@@ -138,7 +149,21 @@
     </div>
     <br><br>
     <input type="submit" onclick="validate()" value="Submit">
-
+        <br><br>
+    <div id="btn">
+        <div id='div1' class='open1'>
+            <div id='div2' class='open2'></div>
+        </div>
+        <p id='editPrivateBtn'>公开:</p>
+    </div>
+        <script type="text/javascript">
+            var div2 = document.getElementById("div2");
+            var div1 = document.getElementById("div1");
+            div2.onclick = function () {
+                div1.className = (div1.className == "close1") ? "open1" : "close1";
+                div2.className = (div2.className == "close2") ? "open2" : "close2";
+            };
+        </script>
     <%--</form>--%>
 </div>
 

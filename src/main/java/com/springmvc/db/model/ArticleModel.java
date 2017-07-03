@@ -10,12 +10,13 @@ public class ArticleModel {
     public String content;
     public String img_url;
     public String create_time;
+    public String is_private;
 
     public ArticleModel(){
 
     }
 
-    public ArticleModel(int id, String article_id, String userid, String username, String title, String describes, String content, String img_url, String create_time) {
+    public ArticleModel(int id, String article_id, String userid, String username, String title, String describes, String content, String img_url, String create_time,String is_private) {
         this.id = id;
         this.article_id = article_id;
         this.userid = userid;
@@ -25,6 +26,7 @@ public class ArticleModel {
         this.content = content;
         this.img_url = img_url;
         this.create_time = create_time;
+        this.is_private = is_private;
     }
 
     public int getId() {
@@ -99,6 +101,14 @@ public class ArticleModel {
         this.create_time = create_time;
     }
 
+    public String getIs_private() {
+        return is_private;
+    }
+
+    public void setIs_private(String is_private) {
+        this.is_private = is_private;
+    }
+
     public void addAllData(ArticleModel articleModel){
         setArticle_id(articleModel.getArticle_id());
         setTitle(articleModel.getTitle());
@@ -106,5 +116,6 @@ public class ArticleModel {
         setContent(articleModel.getContent());
         setImg_url(articleModel.getImg_url());
         setCreate_time(articleModel.getCreate_time());
+        setIs_private(articleModel.getIs_private());
     }
 }

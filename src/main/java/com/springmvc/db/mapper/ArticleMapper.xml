@@ -4,13 +4,17 @@
     <resultMap id="article" type="com.springmvc.db.model.ArticleModel">
     </resultMap>
     <insert id="insertOne" parameterType="com.springmvc.db.model.ArticleModel">
-        insert into article (article_id,userid,username,title,describes,content,img_url,create_time)
-        values (#{article_id},#{userid},#{username},#{title},#{describes},#{content},#{img_url},now())
+        insert into article (article_id,userid,username,title,describes,content,img_url,create_time,is_private)
+        values (#{article_id},#{userid},#{username},#{title},#{describes},#{content},#{img_url},now(),#{is_private})
     </insert>
 
     <update id="updateOne" parameterType="com.springmvc.db.model.ArticleModel">
         UPDATE article SET article_id=#{article_id},title=#{title},describes=#{describes},content=#{content},
-        img_url=#{img_url} WHERE id = #{id} AND userid = #{userid}
+        img_url=#{img_url},is_private=#{is_private} WHERE id = #{id} AND userid = #{userid}
+    </update>
+
+    <update id="updateChangeIsPrivate" parameterType="com.springmvc.db.model.ArticleModel">
+        UPDATE article SET is_private=#{is_private} WHERE id = #{id} AND userid = #{userid}
     </update>
 
     <select id="getArticleLast" parameterType="int" resultMap="article">
@@ -29,7 +33,7 @@
     </select>
 
     <select id="getPageCount" resultType="int">
-        select COUNT(*) from article
+        select COUNT(*) from article WHERE is_private=FALSE
     </select>
 
     <select id="queryPageNumData" parameterType="map" resultMap="article">
@@ -37,6 +41,6 @@
         select * from article order by id desc BETWEEN #{startNum} AND #{endNum}
              SELECT * FROM article WHERE id > =(select id from article limit #{startNum}, 1) limit 10-->
         <!--select * from article WHERE id  BETWEEN #{startNum} AND #{endNum} ORDER BY id DESC-->
-        SELECT * FROM article WHERE id >=(select id from article limit #{startNum}, 1) limit #{size}
+        SELECT * FROM article WHERE id >=(select id from article limit #{startNum}, 1) AND is_private=FALSE limit #{size}
     </select>
 </mapper>

@@ -25,4 +25,6 @@ public interface  ArticleMapper{
     int insertOne(ArticleModel articleModel);
 
     int updateOne(ArticleModel articleModel);
+
+    int updateChangeIsPrivate(ArticleModel articleModel);
 }

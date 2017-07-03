@@ -16,6 +16,7 @@
     <title>编辑界面</title>
     <link rel="stylesheet" href="<%=basePath%>css/style.css" media="screen" type="text/css"/>
     <script type="text/javascript" src="<%=basePath%>js/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="<%=basePath%>css/edit_page.css" media="screen" type="text/css"/>
     <script src="<%=basePath%>ckeditor/ckeditor.js"></script>
     <script src="<%=basePath%>ckeditor/config.js"></script>
     <script src="<%=basePath%>ckfinder/ckfinder.js"></script>
@@ -49,7 +50,7 @@
             if (userid !== null && userid !== undefined) {
                 userInfo = userInfo + "<input type='text' name='userid' value='" + userid + "'>";
                 var pp = "<%=psw%>";
-                userInfo = userInfo + "<input type='text' name='psw' style='visibility: hidden' value='"+ pp +"'>";
+                userInfo = userInfo + "<input type='text' name='psw' style='visibility: hidden' value='" + pp + "'>";
                 $("#userinfo").html(userInfo);
             }
         }
@@ -60,6 +61,9 @@
             var userId = window.document.getElementsByName("userid")[0];
             var psw = window.document.getElementsByName("psw")[0];
             var id = window.document.getElementsByName("id")[0];
+
+            var div1 = document.getElementById("div1");
+            var isPrivate = (div1.className == "close1") ? "1" : "0";
 
             var title = window.document.getElementsByName("title")[0];
             if (title === null || title.value === "") {
@@ -76,7 +80,13 @@
                 alert("请输入内容");
                 return;
             }
-            formParam = "id=" + id.value + "&psw=" + psw.value +"&userid=" + userId.value + "&title=" + title.value + "&des=" + des.value + "&content=" + editor_data;
+            formParam = "id=" + id.value
+                + "&psw=" + psw.value
+                + "&userid=" + userId.value
+                + "&title=" + title.value
+                + "&des=" + des.value
+                + "&content=" + editor_data
+                + "&isPrivate=" + isPrivate;
 
             var str = getData("<%=basePath%>article/update", formParam);
             if (str === null || str === "") {
@@ -148,6 +158,25 @@
     </div>
     <br><br>
     <input type="submit" onclick="validate()" value="Submit">
+    <br><br>
+    <div id="btn">
+        <div id='div1' class='open1'>
+            <div id='div2' class='open2'></div>
+        </div>
+        <p id='editPrivateBtn'>公开:</p>
+    </div>
+        <script type="text/javascript">
+            var div2 = document.getElementById("div2");
+            var div1 = document.getElementById("div1");
+
+            var isPrivate = <%= articleModel.getIs_private()%>;
+            div1.className = (isPrivate == "0") ? "open1" : "close1";
+            div2.className = (isPrivate == "0") ? "open2" : "close2";
+            div2.onclick = function () {
+                div1.className = (div1.className == "close1") ? "open1" : "close1";
+                div2.className = (div2.className == "close2") ? "open2" : "close2";
+            };
+        </script>
     <%--</form>--%>
 </div>
 
