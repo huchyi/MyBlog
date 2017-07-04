@@ -12,4 +12,8 @@ public interface UserService {
 
     User getUserByUserId(String userid);
 
+    boolean isLogin(String userid);
+
+    void loginOut(String userid);
+
 }

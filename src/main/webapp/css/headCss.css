@@ -1,0 +1,19 @@
+.head-text{
+    font-weight:bold;
+    padding:7px;
+    margin-bottom: 8px;
+    margin-top: 25px;
+    list-style-type:none;
+    float:left;
+}
+.page-head-right
+{
+    margin-right:50px;
+    float:right;
+    color: #555555;
+
+}
+/*.page-head-right ul{*/
+    /*list-style-type:none;*/
+    /*float:right;*/
+/*}*/

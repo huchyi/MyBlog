@@ -4,6 +4,8 @@ import com.springmvc.controller.utils.AccountValidatorUtil;
 import com.springmvc.controller.utils.DESUtil;
 import com.springmvc.db.model.User;
 import com.springmvc.db.service.UserService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ import java.util.UUID;
 @Controller  //告诉DispatcherServlet相关的容器， 这是一个Controller，
 @RequestMapping(value = "/user")  //类级别的RequestMapping，告诉DispatcherServlet由这个类负责处理以及URL。HandlerMapping依靠这个标签来工作
 public class UserController {
+    private Logger logger = LogManager.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -87,7 +90,16 @@ public class UserController {
      */
     @RequestMapping(value = "/loginOut", method = RequestMethod.GET)
     @ResponseBody
-    public String loginOut(HttpServletResponse response) {
+    public String loginOut(HttpServletResponse response,HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (null==cookies){
+            return "false";
+        }
+        for (Cookie cookie : cookies) {
+            if ("userid".equals(cookie.getName())){
+                userService.loginOut(cookie.getValue());
+            }
+        }
         // 设置 name 和 url cookie
         Cookie usernameCookie = new Cookie("username", "");
         Cookie useridCookie = new Cookie("userid", "");
@@ -169,5 +181,25 @@ public class UserController {
         } else {
             return "register fail";
         }
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/queryUserIsLogin",method = RequestMethod.GET)
+    public String queryUserIsLogin(HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+        if (null==cookies){
+            return "false";
+        }
+        for (Cookie cookie : cookies) {
+            if ("userid".equals(cookie.getName())){
+                if(userService.isLogin(cookie.getValue())){
+                    return "true";
+                }
+                cookie.setValue("");
+                return "false";
+            }
+        }
+        return "false";
     }
 }

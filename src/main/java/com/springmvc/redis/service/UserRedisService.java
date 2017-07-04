@@ -37,6 +37,15 @@ public class UserRedisService {
         }
     }
 
+    public void loginOut(String userid){
+        try {
+            if(redisTemplate.hasKey(userid)){
+                redisTemplate.delete(userid);
+            }
+        } catch (Exception e) {
+        }
+    }
+
     public User getUserByUserId(String userid) {
         try {
             ValueOperations<String, User> valueops = redisTemplate.opsForValue();

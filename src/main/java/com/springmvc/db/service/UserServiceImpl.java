@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+
     public boolean register(Map<String, String> map) {
         userRedisService.add(map);
         return userDao.register(map);
@@ -39,5 +40,16 @@ public class UserServiceImpl implements UserService {
 
     public User getUserByUserId(String userid) {
         return userDao.getUserByUserId(userid);
+    }
+
+    @Override
+    public boolean isLogin(String userid) {
+        User user = userRedisService.getUserByUserId(userid);
+        return user != null;
+    }
+
+    @Override
+    public void loginOut(String userid) {
+        userRedisService.loginOut(userid);
     }
 }
