@@ -52,4 +52,9 @@ public class UserServiceImpl implements UserService {
     public void loginOut(String userid) {
         userRedisService.loginOut(userid);
     }
+
+    @Override
+    public User isRegister(Map<String, String> map) {
+        return userDao.isRegister(map);
+    }
 }

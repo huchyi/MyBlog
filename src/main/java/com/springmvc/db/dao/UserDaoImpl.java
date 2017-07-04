@@ -25,4 +25,9 @@ public class UserDaoImpl implements UserDao{
         return userMapper.getUserByUserId(userid);
     }
 
+    @Override
+    public User isRegister(Map<String, String> map) {
+        return userMapper.isRegister(map);
+    }
+
 }

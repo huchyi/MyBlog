@@ -1,6 +1,7 @@
 package com.springmvc.controller;
 
 import com.springmvc.controller.utils.AccountValidatorUtil;
+import com.springmvc.controller.utils.Base64;
 import com.springmvc.controller.utils.DESUtil;
 import com.springmvc.db.model.User;
 import com.springmvc.db.service.UserService;
@@ -28,6 +29,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
     /**
      * 登录
      */
@@ -47,7 +49,7 @@ public class UserController {
     public String loginRequest(HttpServletRequest req, HttpServletResponse response) {
         String account = req.getParameter("account");
         String psw = req.getParameter("psw");
-        String url = req.getParameter("url");
+        String isKeepLogin = req.getParameter("keep_login");
 
         Map<String, String> map = new HashMap<String, String>();
         map.put("email", account);
@@ -56,16 +58,22 @@ public class UserController {
         map.put("psw", psw);
         User user = userService.login(map);
 
+        String callJson = "";
         if (user != null && user.getId() > 0) {
             //设置cookie
 
             // 设置 name 和 url cookie
-            Cookie usernameCookie = new Cookie("username",  user.getUsername());
+            Cookie usernameCookie = new Cookie("username", user.getUsername());
             Cookie useridCookie = new Cookie("userid", user.getUserid());
 
             // 设置cookie过期时间为12h。
-            usernameCookie.setMaxAge(60 * 60 * 12);
-            useridCookie.setMaxAge(60 * 60 * 12);
+            if (isKeepLogin != null && isKeepLogin.equals("on")) {
+                usernameCookie.setMaxAge(60 * 60 * 12);
+                useridCookie.setMaxAge(60 * 60 * 12);
+            } else {
+                usernameCookie.setMaxAge(60 * 60 * 2);
+                useridCookie.setMaxAge(60 * 60 * 2);
+            }
 
             usernameCookie.setPath("/");
             useridCookie.setPath("/");
@@ -73,16 +81,11 @@ public class UserController {
             // 在响应头部添加cookie
             response.addCookie(usernameCookie);
             response.addCookie(useridCookie);
-
-            if (url != null && !url.equals("")) {
-                return "<script type=\"text/javascript\">" +
-                        "window.location.href = \"" + url + "\";" +
-                        "</script>";
-            } else {
-                return "login success";
-            }
+            callJson = "{\"code\":\"0\",\"msg\":\"success\"}";
+        } else {
+            callJson = "{\"code\":\"1\",\"msg\":\"注册失败\"}";
         }
-        return "login fail";
+        return Base64.encode(callJson);
     }
 
     /**
@@ -90,13 +93,13 @@ public class UserController {
      */
     @RequestMapping(value = "/loginOut", method = RequestMethod.GET)
     @ResponseBody
-    public String loginOut(HttpServletResponse response,HttpServletRequest request) {
+    public String loginOut(HttpServletResponse response, HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
-        if (null==cookies){
+        if (null == cookies) {
             return "false";
         }
         for (Cookie cookie : cookies) {
-            if ("userid".equals(cookie.getName())){
+            if ("userid".equals(cookie.getName())) {
                 userService.loginOut(cookie.getValue());
             }
         }
@@ -135,25 +138,36 @@ public class UserController {
     @ResponseBody
     public String registerRequest(HttpServletRequest req, HttpServletResponse response) {
 
+        String callJson = "";
+
         String username = req.getParameter("username");
         String phone = req.getParameter("phone");
         String email = req.getParameter("email");
         String psw = req.getParameter("psw");
-        String url = req.getParameter("url");
 
-        if(phone == null || phone.equals("") || !AccountValidatorUtil.isMobile(phone)){
-            return "register fail,Please enter the correct cell phone number";
+        if (phone == null || phone.equals("") || !AccountValidatorUtil.isMobile(phone)) {
+            callJson = "{\"code\":\"1\",\"msg\":\"register fail,Please enter the correct cell phone number\"}";
+            return Base64.encode(callJson);
         }
 
+        //注册验证
         Map<String, String> map = new HashMap<String, String>();
         map.put("username", username);
         map.put("userphone", phone);
         if (email != null && !email.equals("")) {
             map.put("email", email);
         }
+        User user = userService.isRegister(map);
+        if (user != null) {
+            callJson = "{\"code\":\"1\",\"msg\":\"该手机或邮箱已经被注册\"}";
+            return Base64.encode(callJson);
+        }
+
+        //开始注册
         UUID uuid = UUID.randomUUID();
         map.put("userid", uuid.toString());
         map.put("psw", psw);
+
         boolean isRegister = userService.register(map);
         if (isRegister) {
             // 设置 name 和 url cookie
@@ -171,29 +185,24 @@ public class UserController {
             response.addCookie(usernameCookie);
             response.addCookie(useridCookie);
 
-            if (url != null && !url.equals("")) {
-                return "<script type=\"text/javascript\">" +
-                        "window.location.href = \"" + url + "\";" +
-                        "</script>";
-            } else {
-                return "login success";
-            }
+            callJson = "{\"code\":\"0\",\"msg\":\"success\"}";
         } else {
-            return "register fail";
+            callJson = "{\"code\":\"1\",\"msg\":\"注册失败\"}";
         }
+        return Base64.encode(callJson);
     }
 
 
     @ResponseBody
-    @RequestMapping(value = "/queryUserIsLogin",method = RequestMethod.GET)
-    public String queryUserIsLogin(HttpServletRequest request){
+    @RequestMapping(value = "/queryUserIsLogin", method = RequestMethod.GET)
+    public String queryUserIsLogin(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
-        if (null==cookies){
+        if (null == cookies) {
             return "false";
         }
         for (Cookie cookie : cookies) {
-            if ("userid".equals(cookie.getName())){
-                if(userService.isLogin(cookie.getValue())){
+            if ("userid".equals(cookie.getName())) {
+                if (userService.isLogin(cookie.getValue())) {
                     return "true";
                 }
                 cookie.setValue("");

@@ -11,4 +11,6 @@ public interface UserDao {
     boolean register(Map<String, String> map);
 
     User getUserByUserId(String userid);
+
+    User isRegister(Map<String, String> map);
 }

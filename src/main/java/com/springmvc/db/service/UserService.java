@@ -16,4 +16,6 @@ public interface UserService {
 
     void loginOut(String userid);
 
+    User isRegister(Map<String, String> map);
+
 }

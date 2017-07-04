@@ -10,6 +10,10 @@
         insert into users (userid,psw,username,userphone,email) values(#{userid},#{psw},#{username},#{userphone},#{email})
     </insert>
 
+    <select id="isRegister" parameterType="map" resultMap="user">
+        select * from users where userphone=#{userphone}  OR email=#{email}
+    </select>
+
     <select id="getUserByUserId" parameterType="String" resultMap="user">
         select * from users where userid=#{userid}
     </select>

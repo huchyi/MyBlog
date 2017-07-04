@@ -9,7 +9,7 @@
     <div style="padding-top: 25px">
         <div class="page-head">
             <li class="head-text" style="margin-left: 80px"><a href="<%=basePath%>article/showHomePage"
-                                                               style="color: #555555">文章</a></li>
+                                                               style="color: #555555">首页</a></li>
         </div>
         <div class="page-head-right" id="notLogin">
         </div>
