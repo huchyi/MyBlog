@@ -25,4 +25,6 @@ public interface ArticleDao {
 
     int updateChangeIsPrivate(ArticleModel articleModel);
 
+    void updateReadTimes(int id);
+
 }

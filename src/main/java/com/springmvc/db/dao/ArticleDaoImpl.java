@@ -50,4 +50,9 @@ public class ArticleDaoImpl implements ArticleDao {
     public int updateChangeIsPrivate(ArticleModel articleModel) {
         return articleMapper.updateChangeIsPrivate(articleModel);
     }
+
+    @Override
+    public void updateReadTimes(int id) {
+        articleMapper.updateReadTimes(id);
+    }
 }

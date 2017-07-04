@@ -143,6 +143,7 @@ public class ArticleController {
         if (articleModel == null) {
             modelAndView.setViewName("404");
         } else {
+            articleService.updateReadTimes(Integer.valueOf(id));
             modelAndView.setViewName("detailsPage");
             modelAndView.addObject("articleModel", articleModel);
         }

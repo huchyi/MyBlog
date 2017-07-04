@@ -27,4 +27,6 @@ public interface  ArticleMapper{
     int updateOne(ArticleModel articleModel);
 
     int updateChangeIsPrivate(ArticleModel articleModel);
+
+    void updateReadTimes(int id);
 }

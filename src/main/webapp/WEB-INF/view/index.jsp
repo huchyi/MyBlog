@@ -102,7 +102,7 @@
         }
 
         function setTop(data) {
-            var json = new Base64().decode(data)
+            var json = new Base64().decode(data);
             var list = eval("(" + json + ")");
             var ulCss = "";
             for (var i = 0; i < list.length; i++) {
@@ -110,7 +110,9 @@
                 ulCss += "<p id='title' onclick='toDetails(" + list[i].id + ") '>" + list[i].title + "</p>";
                 ulCss += "<p id='des'  onclick='toDetails(" + list[i].id + ")'>" + list[i].describes + "</p>";
                 ulCss += "<p></p>";
-                ulCss += "<p id='userAndTime'>作者:" + list[i].username + " | 创建时间:" + list[i].create_time + "</p>";
+                ulCss += "<p id='userAndTime'>作者:" + list[i].username + " | 创建时间:" + list[i].create_time
+                        + "| 阅读次数：" + list[i].read_times
+                    + "</p>";
                 ulCss += "</li>";
             }
 

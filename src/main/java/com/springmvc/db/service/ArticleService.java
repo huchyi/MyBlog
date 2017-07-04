@@ -25,4 +25,6 @@ public interface ArticleService {
     int updateOne(ArticleModel articleModel);
 
     int updateChangeIsPrivate(ArticleModel articleModel);
+
+    void updateReadTimes(int id);
 }
