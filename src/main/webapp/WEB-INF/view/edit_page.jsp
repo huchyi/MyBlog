@@ -128,7 +128,8 @@
     </script>
 </head>
 <body>
-<div id="divCss" align="center" style="padding-top: 100px;margin-bottom: 100px">
+<div id="edit_divCss" align="center">
+    <jsp:include page="/template/header.jsp"/>
     <%--<form action="/article/update" method="post" accept-charset="UTF-8">--%>
     <div id="userinfo" style="visibility: hidden">
         <script type="text/javascript">getCookies()</script>

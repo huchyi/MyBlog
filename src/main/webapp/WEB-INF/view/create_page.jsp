@@ -130,7 +130,8 @@
     </script>
 </head>
 <body>
-<div id="divCss" align="center" style="padding-top: 100px;margin-bottom: 100px">
+<div id="edit_divCss" align="center">
+    <jsp:include page="/template/header.jsp"/>
     <%--<form action="<%=basePath%>article/insert" method = "post"  accept-charset="UTF-8" id="form1">--%>
 
     <div id="userinfo" style="visibility: hidden">
@@ -144,7 +145,7 @@
     <br>
     <div>
         <label>
-            <textarea id="content" cols="8" rows="2" class="ckeditor" name="content"></textarea>
+            <textarea id="content" cols="8" rows="2" class="ckeditor" name="content" placeholder="这里是内容......"></textarea>
         </label>
     </div>
     <br><br>

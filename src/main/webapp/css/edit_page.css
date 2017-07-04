@@ -1,4 +1,11 @@
 
+#edit_divCss{
+    width: 60%;
+    height: 100%;
+    background: #fefefe;
+    padding-bottom: 100px;
+}
+
 #btn{
     float: right;
     padding-right: 30px;

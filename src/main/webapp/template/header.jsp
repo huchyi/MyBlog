@@ -50,11 +50,7 @@
         });
 
         function newBlog() {
-            if(userid !== null && userid !== undefined){
-                window.open('<%=basePath%>/article/editPage');
-            }else{
-                window.location.href = "<%=basePath%>user/login?url=/article/showHomePage";
-            }
+          window.open('<%=basePath%>/article/editPage');
         }
 
         function showMyHome() {

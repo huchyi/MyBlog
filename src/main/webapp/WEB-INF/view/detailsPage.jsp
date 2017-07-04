@@ -25,7 +25,7 @@
     <script>hljs.initHighlightingOnLoad();</script>
     <script type="application/javascript">
         function toEdit() {
-            window.location.href = "/article/editPage?id=" + <%= articleModel.getId()%>;
+            window.location.href = "<%=basePath%>article/editPage?id=" + <%= articleModel.getId()%>;
         }
 
 
@@ -56,9 +56,15 @@
 
             if (userid !== null && userid !== undefined) {
                 var editStr;
-                editStr = "<div align='left'>当前登录用户：" + userName;
-                editStr = editStr + "<br/><p id='editText' onclick=\"toEdit()\">编辑</p><br/><br/>";
-                editStr = editStr + "<div><div id='div1' class='open1'><div id='div2' class='open2'></div></div><p id='editPrivateBtn'>公开:</p></div>"
+                editStr = "<div>";
+                editStr = editStr + "<li class='editList1'>" +
+                    "<div id='div1' class='open1'><div id='div2' class='open2'>" +
+                    "</div></div>" +
+                    "</li>";
+                editStr = editStr + "<li class='editList2'>" +
+                    "<p id='editPrivateBtn'>公开:</p>" +
+                    "</li>";
+                editStr = editStr + "<li class='editList3'><p class='editText' onclick=\"toEdit()\">编辑</p></li>";
                 editStr = editStr + "</div>";
                 $("#edit").html(editStr);
 
@@ -70,7 +76,7 @@
                 div1.className = (isPrivate == "0") ? "open1" : "close1";
                 div2.className = (isPrivate == "0") ? "open2" : "close2";
                 div2.onclick = function () {
-                    changeIsPrivate((div2.className == "close2") ? "0" : "1", userid2, div1, div2);
+                    changeIsPrivate((div2.className == "close2") ? "0" : "1", userid, div1, div2);
                 };
             }
         }
@@ -84,7 +90,7 @@
                 "}";
             param = new Base64().encode(param);
 
-            $.get("/article/updatePrivate?param=" + param, function (data, status) {
+            $.get("<%=basePath%>article/updatePrivate?param=" + param, function (data, status) {
 //                alert("update:" + data);
                 if (data === "success") {
                     div1.className = (div1.className == "close1") ? "open1" : "close1";
@@ -108,28 +114,32 @@
 </head>
 <body style="background: #e6e6e6;">
 <div id="divCss">
-    <div id="edit">
-        <script type="application/javascript">
-            getCookies();
-        </script>
-    </div>
+    <jsp:include page="/template/header.jsp"/>
+    <div id="divCss2">
 
-    <div style="background: #fefefe;margin-top: 30px">
-        <p id="title"><%= articleModel.getTitle()%>
-        </p>
-        <p style="margin-top: 30px">
-        <p id="des">
-        <pre id="preCss"><%= articleModel.getDescribes()%>
+        <div id="edit">
+            <script type="application/javascript">
+                getCookies();
+            </script>
+        </div>
+
+        <div style="background: #fefefe;margin-top: 30px">
+            <p id="title"><%= articleModel.getTitle()%>
+            </p>
+            <p style="margin-top: 30px">
+            <p id="des">
+            <pre id="preCss"><%= articleModel.getDescribes()%>
         </pre>
-        </p>
-        <p style="margin-top: 100px">
-            <%= articleModel.getContent()%>
-        </p>
-    </div>
+            </p>
+            <p style="margin-top: 100px">
+                <%= articleModel.getContent()%>
+            </p>
+        </div>
 
-    <div id="bottom">
-        <p>作者：<%= articleModel.getUsername()%>  | 创建时间：<%= articleModel.getCreate_time()%>
-        </p>
+        <div id="bottom">
+            <p>作者：<%= articleModel.getUsername()%>  | 创建时间：<%= articleModel.getCreate_time()%>
+            </p>
+        </div>
     </div>
 </div>
 </body>

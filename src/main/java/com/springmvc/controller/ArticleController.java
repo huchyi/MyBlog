@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
@@ -74,7 +75,17 @@ public class ArticleController {
      */
     @RequestMapping(value = "/getArticleListByUserid", method = RequestMethod.GET)
     @ResponseBody
-    public String getArticleList(String userid) {
+    public String getArticleListByUserid(HttpServletRequest request) {
+        String userid = "";
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if ("userid".equals(cookie.getName())){
+                userid = cookie.getValue();
+            }
+        }
+        if(userid == null || userid.equals("")){
+            return "";
+        }
         ArrayList<ArticleModel> articleModels = (ArrayList<ArticleModel>) articleService.getArticleByuserid(userid);
         if (articleModels == null || articleModels.size() <= 0) {
             return "";

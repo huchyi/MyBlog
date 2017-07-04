@@ -10,6 +10,8 @@ html {
 #divCss {
     width: 60%;
     height: 100%;
+}
+#divCss2 {
     background: #fefefe;
     padding-top: 30px;
     padding-right: 50px;
@@ -22,7 +24,26 @@ html {
     padding: 8px;
     background: #f2f2f2;
 }
-#editText{
+.editList1{
+    float: right;
+    text-align: center;
+    margin-left: 10px;
+    list-style-type:none;
+}
+.editList2{
+    float: right;
+    text-align: center;
+    margin-left: 30px;
+    list-style-type:none;
+}
+.editList3{
+    float: right;
+    text-align: center;
+    margin-left: 30px;
+    list-style-type:none;
+}
+
+.editText{
     font-size: 16px;
     width: auto;
     color: #bae0ea;
@@ -32,6 +53,7 @@ html {
     cursor:pointer;
     float: right;
 }
+
 
 /*设置开关 start*/
 #div1{
