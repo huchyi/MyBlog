@@ -5,7 +5,7 @@
 %>
 <link rel="stylesheet" href="<%=basePath%>css/headCss.css">
 
-<div style="background: #F6F6F6;height: 100px">
+<div style="background: #dfe3e6;height: 100px">
     <div style="padding-top: 25px">
         <div class="page-head">
             <li class="head-text" style="margin-left: 80px"><a href="<%=basePath%>article/showHomePage"

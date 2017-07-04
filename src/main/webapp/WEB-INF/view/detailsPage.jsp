@@ -112,7 +112,7 @@
         //        }
     </script>
 </head>
-<body style="background: #e6e6e6;">
+<body>
 <div id="divCss">
     <jsp:include page="/template/header.jsp"/>
     <div id="divCss2">
