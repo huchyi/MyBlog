@@ -8,8 +8,22 @@
 <div style="background: #dfe3e6;height: 100px">
     <div style="padding-top: 25px">
         <div class="page-head">
-            <li class="head-text" style="margin-left: 80px"><a href="<%=basePath%>article/showHomePage"
-                                                               style="color: #555555">首页</a></li>
+            <li class="head-text" style="margin-left: 80px">
+                <table>
+                    <tr>
+                        <td>
+                            <a href="<%=basePath%>article/showHomePage" style="color: #555555">
+                                首页
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="head_about_me" onclick="toAbout()">关于作者</p>
+                        </td>
+                    </tr>
+                </table>
+            </li>
         </div>
         <div class="page-head-right" id="notLogin">
         </div>
@@ -48,6 +62,10 @@
                 $("#notLogin").html(headHtml);
             }
         });
+        
+        function toAbout() {
+            window.location.href = "<%=basePath%>template/about_me.jsp";
+        }
 
         function newBlog() {
           window.open('<%=basePath%>/article/editPage');

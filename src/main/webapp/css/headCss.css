@@ -13,6 +13,15 @@
     color: #555555;
 
 }
+
+.head_about_me{
+    font-size: 12px;
+    width: auto;
+    color: #a6a6a6;
+    cursor:pointer;
+    float: left;
+    margin-top: 10px;
+}
 /*.page-head-right ul{*/
     /*list-style-type:none;*/
     /*float:right;*/
