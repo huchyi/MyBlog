@@ -12,6 +12,7 @@
 <html>
 <head>
     <title>登录界面</title>
+    <link rel="stylesheet" href="<%=basePath%>css/login_css.css" media="screen" type="text/css"/>
     <script type="text/javascript" src="<%=basePath%>js/CookieUtils.js"></script>
     <script type="text/javascript">
         function validate() {
@@ -30,17 +31,27 @@
 </head>
 <body>
 
-<div id="divCss" align="center" style="padding-top: 300px;margin-bottom: 100px">
+<%--<div id="divCss" align="center" style="padding-top: 300px;margin-bottom: 100px">--%>
+<%--<form action="<%=basePath%>user/loginRequest" method="post" accept-charset="UTF-8">--%>
+<%--<input type="text" name="url" value="<%=request.getAttribute("url")%>" style="visibility: hidden">--%>
+<%--<br>--%>
+<%--账号：<input type="text" name="account" placeholder="id/phone/email" style="padding: 5px;width: 150px">--%>
+<%--<br>--%>
+<%--密码：<input type="password" name="psw" placeholder="密码" style="padding: 5px;margin-top: 20px;width: 150px">--%>
+<%--<br>--%>
+<%--<input type="submit" onclick="validate()" value="登录" style="margin-top: 20px">--%>
+<%--</form>--%>
+<%--</div>--%>
+<div id="login" align="center">
+    <h1>Login</h1>
     <form action="<%=basePath%>user/loginRequest" method="post" accept-charset="UTF-8">
-        <input type="text" name="url" value="<%=request.getAttribute("url")%>" style="visibility: hidden">
-        <br>
-        账号：<input type="text" name="account" placeholder="id/phone/email" style="padding: 5px;width: 150px">
-        <br>
-        密码：<input type="password" name="psw" placeholder="密码" style="padding: 5px;margin-top: 20px;width: 150px">
-        <br>
-        <input type="submit" onclick="validate()" value="登录" style="margin-top: 20px">
+        <input type="text" required="required" name="account" placeholder="id/phone/email"/>
+        <input type="password" required="required" name="psw" placeholder="密码"/>
+        <button class="but" type="submit" onclick="validate()">登录</button>
+        <label style="height: 1px">
+        <input type="text" name="url" value="<%=request.getAttribute("url")%>" style="visibility: hidden"/>
+        </label>
     </form>
 </div>
-
 </body>
 </html>
