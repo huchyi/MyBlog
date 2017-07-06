@@ -128,11 +128,20 @@
             </p>
             <p style="margin-top: 30px">
             <p id="des">
-            <pre id="preCss"><%= articleModel.getDescribes()%>
+            <pre id="preCss">
+            <script type="application/javascript">
+                    var base64 = new Base64();
+                    var conn = base64.decode(base64.decode("<%= articleModel.getDescribes()%>"))
+                    $("#preCss").html(conn);
+                </script>
         </pre>
             </p>
-            <p style="margin-top: 100px">
-                <%= articleModel.getContent()%>
+            <p style="margin-top: 100px" id="contentt">
+                <script type="application/javascript">
+                    var base64 = new Base64();
+                    var con = base64.decode(base64.decode("<%= articleModel.getContent()%>"))
+                    $("#contentt").html(con);
+                </script>
             </p>
         </div>
 

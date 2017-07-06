@@ -4,7 +4,7 @@
   Time: 14:51
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
@@ -79,11 +79,13 @@
                 alert("请输入内容");
                 return;
             }
+
+           var base64 = new Base64();
             formParam = "username=" + username.value
                 + "&userid=" + userId.value
                 + "&title=" + title.value
-                + "&des=" + des.value
-                + "&content=" + editor_data
+                + "&des=" + base64.encode(base64.encode(des.value))
+                + "&content=" + base64.encode(base64.encode(editor_data))
                 + "&isPrivate=" + isPrivate;
 
             var str = getData("<%=basePath%>article/insert", formParam);

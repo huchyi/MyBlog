@@ -5,7 +5,7 @@
   Time: 11:57
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
@@ -77,11 +77,13 @@
                 alert("请输入内容");
                 return;
             }
+
+            var base64 = new Base64();
             formParam = "id=" + id.value
                 + "&userid=" + userId.value
                 + "&title=" + title.value
-                + "&des=" + des.value
-                + "&content=" + editor_data
+                + "&des=" + base64.encode(base64.encode(des.value))
+                + "&content=" + base64.encode(base64.encode(editor_data))
                 + "&isPrivate=" + isPrivate;
 
             var str = getData("<%=basePath%>article/update", formParam);
@@ -162,18 +164,18 @@
         </div>
         <p id='editPrivateBtn'>公开:</p>
     </div>
-        <script type="text/javascript">
-            var div2 = document.getElementById("div2");
-            var div1 = document.getElementById("div1");
+    <script type="text/javascript">
+        var div2 = document.getElementById("div2");
+        var div1 = document.getElementById("div1");
 
-            var isPrivate = <%= articleModel.getIs_private()%>;
-            div1.className = (isPrivate == "0") ? "open1" : "close1";
-            div2.className = (isPrivate == "0") ? "open2" : "close2";
-            div2.onclick = function () {
-                div1.className = (div1.className == "close1") ? "open1" : "close1";
-                div2.className = (div2.className == "close2") ? "open2" : "close2";
-            };
-        </script>
+        var isPrivate = <%= articleModel.getIs_private()%>;
+        div1.className = (isPrivate == "0") ? "open1" : "close1";
+        div2.className = (isPrivate == "0") ? "open2" : "close2";
+        div2.onclick = function () {
+            div1.className = (div1.className == "close1") ? "open1" : "close1";
+            div2.className = (div2.className == "close2") ? "open2" : "close2";
+        };
+    </script>
     <%--</form>--%>
 </div>
 
