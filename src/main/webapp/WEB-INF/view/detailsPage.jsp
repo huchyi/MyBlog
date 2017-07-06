@@ -15,14 +15,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>文章详情</title>
-    <link rel="stylesheet" href="<%=basePath%>/css/details_styles.css" media="screen" type="text/css"/>
+    <link rel="stylesheet" href="<%=basePath%>css/details_styles.css" media="screen" type="text/css"/>
     <script type="text/javascript" src="<%=basePath%>js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="<%=basePath%>js/Base64.js"></script>
-    <%--<script type="text/javascript" src="<%=basePath%>js/highlight.pack.js"></script>--%>
-    <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">
-    <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+
+    <%--<link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">--%>
+    <%--<script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>--%>
+    <link rel="stylesheet" href="<%=basePath%>css/highlight-zenburn.css" media="screen" type="text/css"/>
+    <script type="text/javascript" src="<%=basePath%>js/highlight.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+        $(document).ready(function () {
+            $('pre').each(function (i, e) {
+                hljs.highlightBlock(e)
+            });
+        });</script>
     <script type="application/javascript">
         function toEdit() {
             window.location.href = "<%=basePath%>article/editPage?id=" + <%= articleModel.getId()%>;
@@ -113,9 +123,9 @@
     </script>
 </head>
 <body>
-<div id="divCss">
+<div id="divCss_detail">
     <jsp:include page="/template/header.jsp"/>
-    <div id="divCss2">
+    <div id="divCss2_detail">
 
         <div id="edit">
             <script type="application/javascript">
@@ -128,13 +138,13 @@
             </p>
             <p style="margin-top: 30px">
             <p id="des">
-            <pre id="preCss">
-            <script type="application/javascript">
+            <p id="preCss">
+                <script type="application/javascript">
                     var base64 = new Base64();
                     var conn = base64.decode(base64.decode("<%= articleModel.getDescribes()%>"))
                     $("#preCss").html(conn);
                 </script>
-        </pre>
+            </p>
             </p>
             <p style="margin-top: 100px" id="contentt">
                 <script type="application/javascript">

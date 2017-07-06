@@ -112,7 +112,7 @@
                 ulCss += "<p id='des'  onclick='toDetails(" + list[i].id + ")'>" + base64.decode(base64.decode(list[i].describes)) + "</p>";
                 ulCss += "<p></p>";
                 ulCss += "<p id='userAndTime'>作者:" + list[i].username + " | 创建时间:" + list[i].create_time
-                        + "| 阅读次数：" + list[i].read_times
+                    + "| 阅读次数：" + list[i].read_times
                     + "</p>";
                 ulCss += "</li>";
             }
@@ -173,19 +173,21 @@
     </script>
 </head>
 <body onload="getPageCount()">
-<div id="divCss">
-    <%--<%@ include file="/template/header.jsp"%>--%>
+<div id="divCss0">
     <jsp:include page="/template/header.jsp"/>
-    <%--<div style="padding-top: 40px;padding-left: 20px;float: left" id="head">--%>
-    <%--</div>--%>
-    <%--<h2 style="padding-top: 80px">BLOG</h2>--%>
-    <%--<h6><a href='' onclick="newBlog();return false">新建博客</a></h6>--%>
-    <ul id="ulCss">
-    </ul>
-    <p style="margin-top: 100px">
-    <div id="menuOut">
-        <ul id="menu">
+    <div id="divCss">
+        <%--<%@ include file="/template/header.jsp"%>--%>
+        <%--<div style="padding-top: 40px;padding-left: 20px;float: left" id="head">--%>
+        <%--</div>--%>
+        <%--<h2 style="padding-top: 80px">BLOG</h2>--%>
+        <%--<h6><a href='' onclick="newBlog();return false">新建博客</a></h6>--%>
+        <ul id="ulCss">
         </ul>
+        <p style="margin-top: 100px">
+        <div id="menuOut">
+            <ul id="menu">
+            </ul>
+        </div>
     </div>
 </div>
 </body>

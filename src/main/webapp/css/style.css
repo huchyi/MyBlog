@@ -7,18 +7,27 @@ html {
     background: #eff3f6;
 }
 
+#divCss0 {
+    width: auto;
+    height: auto;
+    max-width: 960px;
+    min-width: 320px;
+    background: #fefefe;
+}
+
 #divCss {
-    width: 60%;
-    height: 100%;
+    text-align: center;
+    width: auto;
+    height: auto;
+    max-width: 860px;
+    min-width: 320px;
     background: #fefefe;
 }
 
 #ulCss {
     border: 0 solid;
     margin: 0 auto;
-    max-width: 800px;
-    padding-left: 30px;
-    padding-right: 30px;
+    max-width: 740px;
 }
 
 #ulCss li {
