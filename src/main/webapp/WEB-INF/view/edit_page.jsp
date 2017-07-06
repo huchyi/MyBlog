@@ -145,14 +145,23 @@
     <h2><input type="text" name="title" placeholder="输入标题" style="padding: 15px"
                value="<%=articleModel.getTitle()%>"></h2>
     <br>
-    <h5><textarea rows="4" cols="4" name="des" placeholder="输入副标题"
-                  style="padding: 15px;width: 60%"><%=articleModel.getDescribes()%></textarea></h5>
+    <h5><textarea rows="4" cols="4" name="des" placeholder="输入副标题" id="des" style="padding: 15px;width: 60%">
+         <script type="application/javascript">
+                    var base64 = new Base64();
+                    var conn = base64.decode(base64.decode("<%=articleModel.getDescribes()%>"))
+                    $("#preCss").html(conn);
+                </script>
+    </textarea></h5>
     <%--<h5><input type="text" name="des" placeholder="输入副标题" style="padding: 15px;width: 60%"></h5>--%>
     <br>
     <div>
         <label>
-            <textarea id="content" cols="8" rows="2" class="ckeditor"
-                      name="content"><%=articleModel.getContent()%></textarea>
+            <textarea id="content" cols="8" rows="2" class="ckeditor" name="content">
+                  <script type="application/javascript">
+                    var base64 = new Base64();
+                    var conn = base64.decode(base64.decode("<%=articleModel.getContent()%>"))
+                    $("#content").html(conn);
+                </script></textarea>
         </label>
     </div>
     <br><br>
