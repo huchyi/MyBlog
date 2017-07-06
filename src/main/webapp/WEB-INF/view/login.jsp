@@ -49,7 +49,7 @@
                 if (msg === null || msg === "") {
                     alert("登录失败");
                 } else {
-                    var uurl = "<%=request.getAttribute("url")%>";
+                    var uurl = "<%=basePath%><%=request.getAttribute("url")%>";
                     if(uurl == null || uurl == undefined){
                         location.href = "<%=basePath%>article/showHomePage"
                         return;

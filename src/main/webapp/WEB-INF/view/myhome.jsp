@@ -85,7 +85,7 @@
 
         function getPageCount() {
 //            getCookies();
-            $.get("/article/getArticleListByUserid", function (data, status) {
+            $.get("<%=basePath%>article/getArticleListByUserid", function (data, status) {
                 setTop(data);
             });
         }
@@ -110,7 +110,7 @@
         }
 
         function toDetails(id) {
-            window.open("/article/showDetails?id=" + id);
+            window.open("<%=basePath%>article/showDetails?id=" + id);
         }
     </script>
 </head>

@@ -83,7 +83,7 @@ public class UserController {
             response.addCookie(useridCookie);
             callJson = "{\"code\":\"0\",\"msg\":\"success\"}";
         } else {
-            callJson = "{\"code\":\"1\",\"msg\":\"注册失败\"}";
+            callJson = "{\"code\":\"1\",\"msg\":\"登录失败\"}";
         }
         return Base64.encode(callJson);
     }

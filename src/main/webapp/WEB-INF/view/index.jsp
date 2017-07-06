@@ -89,14 +89,14 @@
 
         function getPageCount() {
 //            getCookies();
-            $.get("/article/getPageNumCount", function (data) {
+            $.get("<%=basePath%>article/getPageNumCount", function (data) {
                 getPageData(data, 1);
             });
         }
 
         function getPageData(pageSize, pageNum) {
             setBottom(pageSize, pageNum);
-            $.get("/article/getPageNumData?pageNum=" + pageNum + "&totalCount=" + pageSize, function (data) {
+            $.get("<%=basePath%>article/getPageNumData?pageNum=" + pageNum + "&totalCount=" + pageSize, function (data) {
                 setTop(data);
             });
         }
@@ -123,7 +123,7 @@
 //            alert("到详情页去");
 //            $.get("/article/showDetails?id=" + id);
 //            window.location.href="/article/showDetails?id=" + id;
-            window.open("/article/showDetails?id=" + id);
+            window.open("<%=basePath%>article/showDetails?id=" + id);
         }
 
         function setBottom(pageSize, pageNum) {

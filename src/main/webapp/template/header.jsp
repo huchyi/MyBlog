@@ -84,11 +84,11 @@
         }
 
         function login() {
-            window.location.href = "<%=basePath%>user/login?url=/article/showHomePage";
+            window.location.href = "<%=basePath%>user/login?url=article/showHomePage";
         }
 
         function register() {
-            window.location.href = "<%=basePath%>user/register?url=/article/showHomePage";
+            window.location.href = "<%=basePath%>user/register?url=article/showHomePage";
         }
 
         //        $(function () {
