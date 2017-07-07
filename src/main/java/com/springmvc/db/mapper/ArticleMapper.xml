@@ -36,6 +36,7 @@
 
     <select id="getArticleById" parameterType="int" resultMap="article">
     select id,
+           userid,
            username,
            article_id,
            title,

@@ -64,7 +64,7 @@
               }
               %>
 
-            if (userid !== null && userid !== undefined) {
+            if (userid !== null && userid !== undefined && "<%=request.getAttribute("isShowEdit")%>" == "true") {
                 var editStr;
                 editStr = "<div>";
                 editStr = editStr + "<li class='editList1'>" +
