@@ -139,10 +139,10 @@
     <div id="userinfo" style="visibility: hidden">
         <script type="text/javascript">getCookies()</script>
     </div>
-    <h2><input type="text" name="title" placeholder="输入标题" style="padding: 15px;font-size: 18px;color: #232323"></h2>
+    <input type="text" name="title" placeholder="输入标题" style="padding: 15px;font-size: 18px;color: #232323">
     <br>
-    <h5><textarea rows="4" cols="4" name="des" placeholder="输入副标题"
-                  style="padding: 15px;width: 60%;font-size: 14px;color: #232323"></textarea></h5>
+    <textarea rows="4" cols="4" name="des" placeholder="输入副标题"
+                  style="padding: 15px;width: 60%;font-size: 14px;color: #232323"></textarea>
     <%--<h5><input type="text" name="des" placeholder="输入副标题" style="padding: 15px;width: 60%"></h5>--%>
     <br>
     <div>
