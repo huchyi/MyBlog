@@ -80,7 +80,7 @@
                 return;
             }
 
-           var base64 = new Base64();
+            var base64 = new Base64();
             formParam = "username=" + username.value
                 + "&userid=" + userId.value
                 + "&title=" + title.value
@@ -141,32 +141,35 @@
     </div>
     <input type="text" name="title" placeholder="输入标题" style="padding: 15px;font-size: 18px;color: #232323">
     <br>
-    <textarea rows="4" cols="4" name="des" placeholder="输入副标题"
-                  style="padding: 15px;width: 60%;font-size: 14px;color: #232323"></textarea>
-    <%--<h5><input type="text" name="des" placeholder="输入副标题" style="padding: 15px;width: 60%"></h5>--%>
-    <br>
-    <div>
+    <div style="margin-top: 60px">
         <label>
-            <textarea id="content" cols="8" rows="2" class="ckeditor" name="content" placeholder="这里是内容......"></textarea>
+    <textarea rows="4" cols="4" name="des" placeholder="输入副标题" class="des_des" id="des_des"></textarea>
+        </label>
+    </div>
+    <br>
+    <div style="margin-top: 60px">
+        <label>
+            <textarea id="content" cols="8" rows="2" class="ckeditor" name="content"
+                      placeholder="这里是内容......"></textarea>
         </label>
     </div>
     <br><br>
     <input type="submit" onclick="validate()" value="Submit">
-        <br><br>
+    <br><br>
     <div id="btn">
         <div id='div1' class='open1'>
             <div id='div2' class='open2'></div>
         </div>
         <p id='editPrivateBtn'>公开:</p>
     </div>
-        <script type="text/javascript">
-            var div2 = document.getElementById("div2");
-            var div1 = document.getElementById("div1");
-            div2.onclick = function () {
-                div1.className = (div1.className == "close1") ? "open1" : "close1";
-                div2.className = (div2.className == "close2") ? "open2" : "close2";
-            };
-        </script>
+    <script type="text/javascript">
+        var div2 = document.getElementById("div2");
+        var div1 = document.getElementById("div1");
+        div2.onclick = function () {
+            div1.className = (div1.className == "close1") ? "open1" : "close1";
+            div2.className = (div2.className == "close2") ? "open2" : "close2";
+        };
+    </script>
     <%--</form>--%>
 </div>
 

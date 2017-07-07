@@ -157,9 +157,9 @@
     <input type="text" name="title" placeholder="输入标题" style="padding: 15px"
            value="<%=articleModel.getTitle()%>">
     <br>
-    <div  style="margin-top: 60px">
+    <div style="margin-top: 60px">
         <label>
-            <textarea rows="4" cols="8" name="des" class="des" id="des_des" placeholder="输入副标题" style="padding: 15px;max-width: 100%;width: 100%"></textarea>
+            <textarea rows="4" cols="8" name="des" class="des_des" id="des_des" placeholder="输入副标题"></textarea>
         </label>
     </div>
     <div style="margin-top: 60px">

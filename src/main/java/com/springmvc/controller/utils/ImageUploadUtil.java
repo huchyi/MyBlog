@@ -76,11 +76,14 @@ public class ImageUploadUtil {
                             continue;
                         }
                         // 获得上传路径的绝对路径地址(/upload)-->
+//                        String realPath = request.getSession().getServletContext().getRealPath("/" + DirectoryName);
                         String realPath = request.getSession().getServletContext().getRealPath("/" + DirectoryName);
-                        System.out.println(realPath);
+                        if(realPath.contains("MyBlog")){
+                            realPath = realPath.replace("MyBlog"+ File.separator,"");
+                        }
                         // 如果路径不存在，则创建该路径
                         File realPathDirectory = new File(realPath);
-                        if (realPathDirectory == null || !realPathDirectory.exists()) {
+                        if (!realPathDirectory.exists()) {
                             realPathDirectory.mkdirs();
                         }
                         // 重命名上传后的文件名 111112323.jpg

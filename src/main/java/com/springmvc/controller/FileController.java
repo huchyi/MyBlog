@@ -81,8 +81,14 @@ public class FileController {
      */
     @RequestMapping("doUpload3")
     public void imageUpload(HttpServletRequest request, HttpServletResponse response) {
-        String DirectoryName = "upload/userImage";
+        String DirectoryName = "upload"+ File.separator +"userImage";
         try {
+//            String savedDir = request.getSession().getServletContext().getRealPath("/");
+//            String savedDir2 = request.getSession().getServletContext().getRealPath("/" + DirectoryName);
+//            String savedDir3 = request.getSession().getServletContext().getRealPath("");
+//            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>savedDir:" + savedDir);
+//            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>savedDir2:" + savedDir2);
+//            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>savedDir3:" + savedDir3);
             ImageUploadUtil.ckeditor(request, response, DirectoryName);
         } catch (IllegalStateException e) {
             e.printStackTrace();
