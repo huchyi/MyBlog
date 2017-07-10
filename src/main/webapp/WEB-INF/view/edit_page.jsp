@@ -39,25 +39,15 @@
              %>
             userid = "<%=URLDecoder.decode(cookie.getValue(),"utf-8")%>";
             <%
-                    }else if(cookieName.compareTo("psw") == 0){
-                   psw = URLDecoder.decode(cookie.getValue(),"utf-8");
-                    }
-                 }
+                }
+               }
               }
               %>
-
-            var userInfo = null;
-            if (userid !== null && userid !== undefined) {
-                userInfo = userInfo + "<input type='text' name='userid' value='" + userid + "'>";
-                $("#userinfo").html(userInfo);
-            }
         }
 
 
         function validate() {
             var formParam;
-            var userId = window.document.getElementsByName("userid")[0];
-            var id = window.document.getElementsByName("id")[0];
 
             var div1 = document.getElementById("div1");
             var isPrivate = (div1.className == "close1") ? "1" : "0";
@@ -79,9 +69,9 @@
             }
 
             var base64 = new Base64();
-            formParam = "id=" + id.value
-                + "&userid=" + userId.value
-                + "&title=" + title.value
+            formParam = "id=" + "<%=articleModel.getId()%>>"
+                + "&userid=" + userid
+                + "&title=" + base64.encode(base64.encode(title.value))
                 + "&des=" + base64.encode(base64.encode(des.value))
                 + "&content=" + base64.encode(base64.encode(editor_data))
                 + "&isPrivate=" + isPrivate;
@@ -130,14 +120,28 @@
 
 
         window.onload = function () {
+            getCookies();
             var base64 = new Base64();
-            var conn = base64.decode(base64.decode("<%=articleModel.getDescribes()%>"));
-            $("#des_des").text(conn);
+            var title = base64.decode(base64.decode("<%=articleModel.getTitle()%>"));
+            $("#title_title").text(title);
 
-            var base64 = new Base64();
+            var des = base64.decode(base64.decode("<%=articleModel.getDescribes()%>"));
+            $("#des_des").text(des);
+
             var conn1 = base64.decode(base64.decode("<%=articleModel.getContent()%>"));
-
             $("#content").text(conn1);
+
+
+            var div2 = document.getElementById("div2");
+            var div1 = document.getElementById("div1");
+
+            var isPrivate = <%= articleModel.getIs_private()%>;
+            div1.className = (isPrivate == "0") ? "open1" : "close1";
+            div2.className = (isPrivate == "0") ? "open2" : "close2";
+            div2.onclick = function () {
+                div1.className = (div1.className == "close1") ? "open1" : "close1";
+                div2.className = (div2.className == "close2") ? "open2" : "close2";
+            };
         }
     </script>
 </head>
@@ -146,16 +150,9 @@
     <jsp:include page="/template/header.jsp"/>
     <%--<form action="/article/update" method="post" accept-charset="UTF-8">--%>
     <div id="userinfo" style="visibility: hidden">
-        <script type="text/javascript">getCookies()</script>
     </div>
-
-    <label>
-        <%--<input type="text" name="psw" style="visibility: hidden" value="<%=psw%>">--%>
-        <input type="text" name="id" style="visibility: hidden" value="<%=articleModel.getId()%>">
-    </label>
     <br>
-    <input type="text" name="title" placeholder="输入标题" style="padding: 15px"
-           value="<%=articleModel.getTitle()%>">
+    <input type="text" name="title" placeholder="输入标题" style="padding: 15px" id="title_title">
     <br>
     <div style="margin-top: 60px">
         <label>
@@ -171,24 +168,14 @@
     <br><br>
     <input type="submit" onclick="validate()" value="Submit">
     <br><br>
+
+
     <div id="btn">
         <div id='div1' class='open1'>
             <div id='div2' class='open2'></div>
         </div>
         <p id='editPrivateBtn'>公开:</p>
     </div>
-    <script type="text/javascript">
-        var div2 = document.getElementById("div2");
-        var div1 = document.getElementById("div1");
-
-        var isPrivate = <%= articleModel.getIs_private()%>;
-        div1.className = (isPrivate == "0") ? "open1" : "close1";
-        div2.className = (isPrivate == "0") ? "open2" : "close2";
-        div2.onclick = function () {
-            div1.className = (div1.className == "close1") ? "open1" : "close1";
-            div2.className = (div2.className == "close2") ? "open2" : "close2";
-        };
-    </script>
     <%--</form>--%>
 </div>
 

@@ -26,13 +26,6 @@
     <%--<script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>--%>
     <link rel="stylesheet" href="<%=basePath%>css/highlight-zenburn.css" media="screen" type="text/css"/>
     <script type="text/javascript" src="<%=basePath%>js/highlight.js"></script>
-    <script>
-        hljs.initHighlightingOnLoad();
-        $(document).ready(function () {
-            $('pre').each(function (i, e) {
-                hljs.highlightBlock(e)
-            });
-        });</script>
     <script type="application/javascript">
         function toEdit() {
             window.location.href = "<%=basePath%>article/editPage?id=" + <%= articleModel.getId()%>;
@@ -111,15 +104,26 @@
             });
         }
 
-        //
-        //        window.onload=function(){
-        //            var div2=document.getElementById("div2");
-        //            var div1=document.getElementById("div1");
-        //            div2.onclick=function(){
-        //                div1.className=(div1.className=="close1")?"open1":"close1";
-        //                div2.className=(div2.className=="close2")?"open2":"close2";
-        //            }
-        //        }
+
+        window.onload = function () {
+            var base64 = new Base64();
+            var title = base64.decode(base64.decode("<%= articleModel.getTitle()%>"))
+            $("#title").html(title);
+
+            var des = base64.decode(base64.decode("<%= articleModel.getDescribes()%>"))
+            $("#preCss").html(des);
+
+            var con = base64.decode(base64.decode("<%= articleModel.getContent()%>"))
+            $("#contentt").html(con);
+
+            hljs.initHighlightingOnLoad();
+            $(document).ready(function () {
+                $('pre').each(function (i, e) {
+                    hljs.highlightBlock(e)
+                });
+            });
+
+        }
     </script>
 </head>
 <body>
@@ -134,31 +138,19 @@
         </div>
 
         <div style="background: #fefefe;margin-top: 30px">
-            <p id="title"><%= articleModel.getTitle()%>
+            <p id="title">
             </p>
-            <p style="margin-top: 30px">
-            <p id="des">
+            <br style="margin-top: 30px">
             <p id="preCss">
-                <script type="application/javascript">
-                    var base64 = new Base64();
-                    var conn = base64.decode(base64.decode("<%= articleModel.getDescribes()%>"))
-                    $("#preCss").html(conn);
-                </script>
             </p>
-            </p>
-            <p style="margin-top: 100px" id="contentt">
-                <script type="application/javascript">
-                    var base64 = new Base64();
-                    var con = base64.decode(base64.decode("<%= articleModel.getContent()%>"))
-                    $("#contentt").html(con);
-                </script>
+            <br style="margin-top: 80px">
+            <p id="contentt">
             </p>
         </div>
-
-        <div id="bottom">
-            <p>作者：<%= articleModel.getUsername()%>  | 创建时间：<%= articleModel.getCreate_time()%>
-            </p>
-        </div>
+    </div>
+    <div id="bottom">
+        <p>作者：<%= articleModel.getUsername()%>  | 创建时间：<%= articleModel.getCreate_time()%>
+        </p>
     </div>
 </div>
 </body>

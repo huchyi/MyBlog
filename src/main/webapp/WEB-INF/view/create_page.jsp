@@ -80,11 +80,13 @@
                 return;
             }
 
+
+
             var base64 = new Base64();
             formParam = "username=" + username.value
                 + "&userid=" + userId.value
-                + "&title=" + title.value
-                + "&des=" + base64.encode(base64.encode(des.value))
+                + "&title=" + base64.encode(base64.encode(title.value.replace(/</g,"&lt;").replace(/>/g,"&gt;")))
+                + "&des=" + base64.encode(base64.encode(des.value.replace(/</g,"&lt;").replace(/>/g,"&gt;")))
                 + "&content=" + base64.encode(base64.encode(editor_data))
                 + "&isPrivate=" + isPrivate;
 
