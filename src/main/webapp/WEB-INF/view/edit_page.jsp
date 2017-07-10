@@ -127,7 +127,7 @@
             $("#title").val(title);
 
             var des = base64.decode(base64.decode("<%=articleModel.getDescribes()%>"));
-            des = title.replace(/&lt;/g,"<").replace(/&gt;/g,">");
+            des = des.replace(/&lt;/g,"<").replace(/&gt;/g,">");
             $("#des_des").text(des);
 
             var conn1 = base64.decode(base64.decode("<%=articleModel.getContent()%>"));
