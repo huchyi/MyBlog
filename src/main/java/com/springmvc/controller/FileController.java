@@ -81,7 +81,7 @@ public class FileController {
      */
     @RequestMapping("doUpload3")
     public void imageUpload(HttpServletRequest request, HttpServletResponse response) {
-        String DirectoryName = "upload"+ File.separator +"userImage";
+        String DirectoryName = "upload/userImage";
         try {
             ImageUploadUtil.ckeditor(request, response, DirectoryName);
         } catch (IllegalStateException e) {

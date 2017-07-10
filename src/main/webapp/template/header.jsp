@@ -68,7 +68,7 @@
         }
 
         function newBlog() {
-          window.open('<%=basePath%>/article/editPage');
+          window.open('<%=basePath%>article/editPage');
         }
 
         function showMyHome() {
@@ -76,7 +76,7 @@
         }
 
         function loginOut() {
-            $.get("<%=basePath%>/user/loginOut", function (data, status) {
+            $.get("<%=basePath%>user/loginOut", function (data, status) {
                 if(data === "success"){
                     window.location.reload();
                 }

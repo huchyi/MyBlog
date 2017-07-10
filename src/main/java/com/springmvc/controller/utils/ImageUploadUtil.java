@@ -23,6 +23,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
  */
 public class ImageUploadUtil {
 
+    private static String SERVICE_IMG_URL = "/program/tomcat-9.0-hcy-copy/webapps/";
+
     // 图片类型
     private static List<String> fileTypes = new ArrayList<String>();
 
@@ -77,10 +79,7 @@ public class ImageUploadUtil {
                         }
                         // 获得上传路径的绝对路径地址(/upload)-->
 //                        String realPath = request.getSession().getServletContext().getRealPath("/" + DirectoryName);
-                        String realPath = request.getSession().getServletContext().getRealPath("/" + DirectoryName);
-                        if(realPath.contains("MyBlog")){
-                            realPath = realPath.replace("MyBlog"+ File.separator,"");
-                        }
+                        String realPath =  SERVICE_IMG_URL + DirectoryName;
                         // 如果路径不存在，则创建该路径
                         File realPathDirectory = new File(realPath);
                         if (!realPathDirectory.exists()) {
@@ -117,7 +116,8 @@ public class ImageUploadUtil {
         String fileName = upload(request, DirectoryName);
         // 结合ckeditor功能
         // imageContextPath为图片在服务器地址，如upload/123.jpg,非绝对路径
-        String imageContextPath = request.getContextPath() + "/" + DirectoryName + "/" + fileName;
+//        String imageContextPath = request.getContextPath() + "/" + DirectoryName + "/" + fileName;
+        String imageContextPath = SERVICE_IMG_URL + "/" + DirectoryName + "/" + fileName;
         response.setContentType("text/html;charset=UTF-8");
         String callback = request.getParameter("CKEditorFuncNum");
         PrintWriter out = response.getWriter();

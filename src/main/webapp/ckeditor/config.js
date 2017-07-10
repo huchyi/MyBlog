@@ -283,6 +283,6 @@ CKEDITOR.editorConfig = function (config) {
     // config.filebrowserImageBrowseUrl = 'kcfinder/browse.php?type=images';
     // config.filebrowserFlashBrowseUrl = 'kcfinder/browse.php?type=flash';
     // config.filebrowserUploadUrl = 'kcfinder/upload.php?type=files';
-    config.filebrowserImageUploadUrl = 'MyBlog/file/doUpload3';
+    config.filebrowserImageUploadUrl = '/file/doUpload3';
     // config.filebrowserFlashUploadUrl = 'kcfinder/upload.php?type=flash';
 };
