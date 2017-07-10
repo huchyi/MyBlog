@@ -87,7 +87,7 @@
         <%--});--%>
         <%--}--%>
 
-        function getPageCount() {
+        window.onload = function() {
 //            getCookies();
             $.get("<%=basePath%>article/getPageNumCount", function (data) {
                 getPageData(data, 1);
@@ -95,7 +95,10 @@
         }
 
         function getPageData(pageSize, pageNum) {
-            setBottom(pageSize, pageNum);
+            if(pageSize > 30){
+                document.getElementById("menuOut").style.visibility="visible";//隐藏
+                setBottom(pageSize, pageNum);
+            }
             $.get("<%=basePath%>article/getPageNumData?pageNum=" + pageNum + "&totalCount=" + pageSize, function (data) {
                 setTop(data);
             });
@@ -109,7 +112,7 @@
             for (var i = 0; i < list.length; i++) {
                 ulCss += "<li>";
                 ulCss += "<p id='title' onclick='toDetails(" + list[i].id + ") '>" + base64.decode(base64.decode(list[i].title)) + "</p>";
-                ulCss += "<p id='des'  onclick='toDetails(" + list[i].id + ")'>" + base64.decode(base64.decode(list[i].describes)) + "</p>";
+                ulCss += "<p id='des'  onclick='toDetails(" + list[i].id + ")'>" + base64.decode(base64.decode(list[i].describes)) + "</p><br>";
                 ulCss += "<p id='userAndTime'>作者:" + list[i].username + " | 创建时间:" + list[i].create_time
                     + "| 阅读次数：" + list[i].read_times
                     + "</p>";
@@ -171,7 +174,7 @@
         }
     </script>
 </head>
-<body onload="getPageCount()">
+<body>
 <div id="divCss0">
     <jsp:include page="/template/header.jsp"/>
     <div id="divCss">
@@ -183,7 +186,7 @@
         <ul id="ulCss">
         </ul>
         <p style="margin-top: 100px">
-        <div id="menuOut">
+        <div id="menuOut" style="visibility: hidden">
             <ul id="menu">
             </ul>
         </div>
