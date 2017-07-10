@@ -123,9 +123,11 @@
             getCookies();
             var base64 = new Base64();
             var title = base64.decode(base64.decode("<%=articleModel.getTitle()%>"));
-            $("#title_title").text(title);
+            title = title.replace(/&lt;/g,"<").replace(/&gt;/g,">");
+            $("#title").val(title);
 
             var des = base64.decode(base64.decode("<%=articleModel.getDescribes()%>"));
+            des = title.replace(/&lt;/g,"<").replace(/&gt;/g,">");
             $("#des_des").text(des);
 
             var conn1 = base64.decode(base64.decode("<%=articleModel.getContent()%>"));
@@ -152,7 +154,7 @@
     <div id="userinfo" style="visibility: hidden">
     </div>
     <br>
-    <input type="text" name="title" placeholder="输入标题" style="padding: 15px" id="title_title">
+    <input type="text" name="title" placeholder="输入标题" style="padding: 15px" id="title">
     <br>
     <div style="margin-top: 60px">
         <label>
