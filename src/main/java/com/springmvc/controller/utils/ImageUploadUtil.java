@@ -88,7 +88,8 @@ public class ImageUploadUtil {
                         // 重命名上传后的文件名 111112323.jpg
                         fileName = System.currentTimeMillis() + suffix;
                         // 定义上传路径 .../upload/111112323.jpg
-                        File uploadFile = new File(realPathDirectory + "\\" + fileName);
+//                        File uploadFile = new File(realPathDirectory + "\\" + fileName);
+                        File uploadFile = new File(realPathDirectory + "/" + fileName);
                         System.out.println(uploadFile);
                         file.transferTo(uploadFile);
                     }
@@ -117,7 +118,7 @@ public class ImageUploadUtil {
         // 结合ckeditor功能
         // imageContextPath为图片在服务器地址，如upload/123.jpg,非绝对路径
 //        String imageContextPath = request.getContextPath() + "/" + DirectoryName + "/" + fileName;
-        String imageContextPath = SERVICE_IMG_URL + "/" + DirectoryName + "/" + fileName;
+        String imageContextPath = "/" + DirectoryName + "/" + fileName;
         response.setContentType("text/html;charset=UTF-8");
         String callback = request.getParameter("CKEditorFuncNum");
         PrintWriter out = response.getWriter();
