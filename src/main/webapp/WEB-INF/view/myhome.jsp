@@ -117,10 +117,6 @@
 <body onload="getPageCount()">
 <div id="divCss">
     <jsp:include page="/template/header.jsp"/>
-    <%--<div style="padding-top: 40px;padding-left: 20px;float: left" id="head">--%>
-    <%--</div>--%>
-    <%--<h2 style="padding-top: 80px">我的BLOG</h2>--%>
-    <%--<h6><a href="" onclick="newBlog()">新建博客</a></h6>--%>
     <ul id="ulCss">
     </ul>
     <p style="margin-top: 100px">
