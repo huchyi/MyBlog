@@ -69,7 +69,7 @@
             }
 
             var base64 = new Base64();
-            formParam = "id=" + "<%=articleModel.getId()%>>"
+            formParam = "id=" + "<%=articleModel.getId()%>"
                 + "&userid=" + userid
                 + "&title=" + base64.encode(base64.encode(title.value))
                 + "&des=" + base64.encode(base64.encode(des.value))
