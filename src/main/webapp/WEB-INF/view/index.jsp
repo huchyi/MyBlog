@@ -8,8 +8,11 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    String url = request.getServerName();
+    String basePath = "https://" + request.getServerName() + request.getContextPath() + "/";
+    if(url != null && url.equals("localhost")){
+        basePath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+    }
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -21,15 +24,15 @@
 
     <title>首页</title>
 
-    <link rel="stylesheet" href="../static_hcy/css/style.css" media="screen" type="text/css"/>
+    <link rel="stylesheet" href="<%=basePath%>static_hcy/css/style.css" media="screen" type="text/css"/>
 
-    <script type="text/javascript" src="../static_hcy/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="../static_hcy/js/Base64.js"></script>
-    <script type="text/javascript" src="../static_hcy/js/CookieUtils.js"></script>
+    <script type="text/javascript" src="<%=basePath%>static_hcy/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="<%=basePath%>static_hcy/js/Base64.js"></script>
+    <script type="text/javascript" src="<%=basePath%>static_hcy/js/CookieUtils.js"></script>
     <script type="text/javascript">
 
         window.onload = function() {
-            $.get("/article/getPageNumCount", function (data) {
+            $.get("<%=basePath%>article/getPageNumCount", function (data) {
                 getPageData(data, 1);
             });
         }
@@ -39,7 +42,7 @@
                 document.getElementById("menuOut").style.visibility="visible";//隐藏
                 setBottom(pageSize, pageNum);
             }
-            $.get("/article/getPageNumData?pageNum=" + pageNum + "&totalCount=" + pageSize, function (data) {
+            $.get("<%=basePath%>article/getPageNumData?pageNum=" + pageNum + "&totalCount=" + pageSize, function (data) {
                 setTop(data);
             });
         }
@@ -66,7 +69,7 @@
 //            alert("到详情页去");
 //            $.get("/article/showDetails?id=" + id);
 //            window.location.href="/article/showDetails?id=" + id;
-            window.open("/article/showDetails?id=" + id);
+            window.open("<%=basePath%>article/showDetails?id=" + id);
         }
 
         function setBottom(pageSize, pageNum) {

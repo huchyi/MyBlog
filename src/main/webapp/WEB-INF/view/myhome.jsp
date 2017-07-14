@@ -7,8 +7,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    String url = request.getServerName();
+    String basePath = "https://" + request.getServerName() + request.getContextPath() + "/";
+    if(url != null && url.equals("localhost")){
+        basePath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+    }
 %>
 <html>
 <head>
@@ -18,15 +21,15 @@
 
     <title>我的主页</title>
 
-    <link rel="stylesheet" href="../static_hcy/css/style.css" media="screen" type="text/css"/>
+    <link rel="stylesheet" href="<%=basePath%>static_hcy/css/style.css" media="screen" type="text/css"/>
 
-    <script type="text/javascript" src="../static_hcy/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="../static_hcy/js/Base64.js"></script>
-    <script type="text/javascript" src="../static_hcy/js/CookieUtils.js"></script>
+    <script type="text/javascript" src="<%=basePath%>static_hcy/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="<%=basePath%>static_hcy/js/Base64.js"></script>
+    <script type="text/javascript" src="<%=basePath%>static_hcy/js/CookieUtils.js"></script>
     <script type="text/javascript">
 
         function getPageCount() {
-            $.get("/article/getArticleListByUserid", function (data, status) {
+            $.get("<%=basePath%>article/getArticleListByUserid", function (data, status) {
                 setTop(data);
             });
         }
@@ -51,7 +54,7 @@
         }
 
         function toDetails(id) {
-            window.open("/article/showDetails?id=" + id);
+            window.open("<%=basePath%>article/showDetails?id=" + id);
         }
     </script>
 </head>

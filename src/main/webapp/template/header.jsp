@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    String url = request.getServerName();
+    String basePath = "https://" + request.getServerName() + request.getContextPath() + "/";
+    if(url != null && url.equals("localhost")){
+        basePath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+    }
+
 %>
-<link rel="stylesheet" href="../../static_hcy/css/headCss.css">
+<link rel="stylesheet" href="<%=basePath%>static_hcy/css/headCss.css">
 
 <div style="background: #dfe3e6;height: 100px">
     <div style="padding-top: 25px">
@@ -12,7 +16,7 @@
                 <table>
                     <tr>
                         <td>
-                            <a href="/article/showHomePage" style="color: #555555">
+                            <a href="<%=basePath%>article/showHomePage" style="color: #555555">
                                 首页
                             </a>
                         </td>
@@ -30,9 +34,9 @@
         <div class="page-head-right" id="hasLogin">
         </div>
     </div>
-    <script type="text/javascript" src="../../static_hcy/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="<%=basePath%>static_hcy/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript">
-        $.get("/user/queryUserIsLogin", function (data) {
+        $.get("<%=basePath%>user/queryUserIsLogin", function (data) {
             var headHtml = "";
             if (data === "true") {
 
@@ -64,19 +68,19 @@
         });
         
         function toAbout() {
-            window.location.href = "/template/about_me.jsp";
+            window.location.href = "<%=basePath%>template/about_me.jsp";
         }
 
         function newBlog() {
-          window.open('/article/editPage');
+          window.open('<%=basePath%>article/editPage');
         }
 
         function showMyHome() {
-            window.location.href = "/article/showMyHome";
+            window.location.href = "<%=basePath%>article/showMyHome";
         }
 
         function loginOut() {
-            $.get("/user/loginOut", function (data, status) {
+            $.get("<%=basePath%>user/loginOut", function (data, status) {
                 if(data === "success"){
                     window.location.reload();
                 }
@@ -84,11 +88,11 @@
         }
 
         function login() {
-            window.location.href = "/user/login?url=article/showHomePage";
+            window.location.href = "<%=basePath%>user/login?url=article/showHomePage";
         }
 
         function register() {
-            window.location.href = "/user/register?url=article/showHomePage";
+            window.location.href = "<%=basePath%>user/register?url=article/showHomePage";
         }
 
     </script>

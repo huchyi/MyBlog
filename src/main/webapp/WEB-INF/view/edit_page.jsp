@@ -7,20 +7,23 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    String url = request.getServerName();
+    String basePath = "https://" + request.getServerName() + request.getContextPath() + "/";
+    if(url != null && url.equals("localhost")){
+        basePath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+    }
     ArticleModel articleModel = (ArticleModel) request.getAttribute("articleModel");
 %>
 <html>
 <head>
     <title>编辑界面</title>
-    <link rel="stylesheet" href="../static_hcy/css/style.css" media="screen" type="text/css"/>
-    <script type="text/javascript" src="../static_hcy/js/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" href="../static_hcy/css/edit_page.css" media="screen" type="text/css"/>
-    <script src="../static_hcy/ckeditor/ckeditor.js"></script>
-    <script src="../static_hcy/ckeditor/config.js"></script>
-    <script src="../static_hcy/ckfinder/ckfinder.js"></script>
-    <script src="../static_hcy/js/Base64.js"></script>
+    <link rel="stylesheet" href="<%=basePath%>static_hcy/css/style.css" media="screen" type="text/css"/>
+    <script type="text/javascript" src="<%=basePath%>static_hcy/js/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="<%=basePath%>static_hcy/css/edit_page.css" media="screen" type="text/css"/>
+    <script src="<%=basePath%>static_hcy/ckeditor/ckeditor.js"></script>
+    <script src="<%=basePath%>static_hcy/ckeditor/config.js"></script>
+    <script src="<%=basePath%>static_hcy/ckfinder/ckfinder.js"></script>
+    <script src="<%=basePath%>static_hcy/js/Base64.js"></script>
 
     <script type="text/javascript">
         var userid;
@@ -76,7 +79,7 @@
                 + "&content=" + base64.encode(base64.encode(editor_data))
                 + "&isPrivate=" + isPrivate;
 
-            var str = getData("/article/update", formParam);
+            var str = getData("<%=basePath%>article/update", formParam);
             if (str === null || str === "") {
                 return;
             }
@@ -96,7 +99,7 @@
                 if (msg === null || msg === "") {
                     alert("提交失败");
                 } else {
-                    location.href = "/article/showDetails?id=" + msg;
+                    location.href = "<%=basePath%>article/showDetails?id=" + msg;
                 }
             }
         }
@@ -112,7 +115,7 @@
                     callbackData = data;
                 },
                 error: function (XMLHttpRequest, textStatus) {
-                    alert("status:" + XMLHttpRequest.status + "errorMsg:" + textStatus);
+                    alert("status:" + XMLHttpRequest.status + "，errorMsg:" + textStatus);
                 }
             });
             return callbackData;

@@ -6,15 +6,18 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    String url = request.getServerName();
+    String basePath = "https://" + request.getServerName() + request.getContextPath() + "/";
+    if(url != null && url.equals("localhost")){
+        basePath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+    }
 %>
 <html>
 <head>
     <title>登录界面</title>
-    <link rel="stylesheet" href="../static_hcy/css/login_css.css" media="screen" type="text/css"/>
-    <script type="text/javascript" src="../static_hcy/js/jquery-3.2.1.min.js"></script>
-    <script src="../static_hcy/js/Base64.js"></script>
+    <link rel="stylesheet" href="<%=basePath%>static_hcy/css/login_css.css" media="screen" type="text/css"/>
+    <script type="text/javascript" src="<%=basePath%>static_hcy/js/jquery-3.2.1.min.js"></script>
+    <script src="<%=basePath%>static_hcy/js/Base64.js"></script>
     <script type="text/javascript">
         function validate() {
             //JavaScript判空，如果确定
@@ -29,7 +32,7 @@
             }
             var formParam = "account=" + account.value
                 + "&psw=" + psw.value;
-            var str = getData("/user/loginRequest",formParam);
+            var str = getData("<%=basePath%>user/loginRequest",formParam);
             if (str === null || str === "") {
                 return;
             }
@@ -49,9 +52,9 @@
                 if (msg === null || msg === "") {
                     alert("登录失败");
                 } else {
-                    var uurl = "../<%=request.getAttribute("url")%>";
+                    var uurl = "<%=basePath + request.getAttribute("url")%>";
                     if(uurl == null || uurl == undefined){
-                        location.href = "/article/showHomePage"
+                        location.href = "<%=basePath%>article/showHomePage"
                         return;
                     }
                     location.href = uurl;
@@ -81,7 +84,7 @@
     <div class="box login">
     <fieldset class="boxBody">
         <label>账号</label>
-        <input type="text" tabindex="1" name="account" placeholder="id/phone/email" required>
+        <input type="text" tabindex="1" name="account" placeholder="ID/手机号/邮箱" required>
         <label>密码</label>
         <input type="password" tabindex="2" name="psw" placeholder="密码" required>
     </fieldset>
