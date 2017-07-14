@@ -12,9 +12,9 @@
 <html>
 <head>
     <title>登录界面</title>
-    <link rel="stylesheet" href="<%=basePath%>css/login_css.css" media="screen" type="text/css"/>
-    <script type="text/javascript" src="<%=basePath%>js/jquery-3.2.1.min.js"></script>
-    <script src="<%=basePath%>js/Base64.js"></script>
+    <link rel="stylesheet" href="../static_hcy/css/login_css.css" media="screen" type="text/css"/>
+    <script type="text/javascript" src="../static_hcy/js/jquery-3.2.1.min.js"></script>
+    <script src="../static_hcy/js/Base64.js"></script>
     <script type="text/javascript">
         function validate() {
             //JavaScript判空，如果确定
@@ -29,7 +29,7 @@
             }
             var formParam = "account=" + account.value
                 + "&psw=" + psw.value;
-            var str = getData("<%=basePath%>user/loginRequest",formParam);
+            var str = getData("/user/loginRequest",formParam);
             if (str === null || str === "") {
                 return;
             }
@@ -49,9 +49,9 @@
                 if (msg === null || msg === "") {
                     alert("登录失败");
                 } else {
-                    var uurl = "<%=basePath%><%=request.getAttribute("url")%>";
+                    var uurl = "../<%=request.getAttribute("url")%>";
                     if(uurl == null || uurl == undefined){
-                        location.href = "<%=basePath%>article/showHomePage"
+                        location.href = "/article/showHomePage"
                         return;
                     }
                     location.href = uurl;
@@ -78,10 +78,7 @@
     </script>
 </head>
 <body>
-<%--<form class="box login" action="<%=basePath%>user/loginRequest" method="post" accept-charset="UTF-8">--%>
     <div class="box login">
-
-
     <fieldset class="boxBody">
         <label>账号</label>
         <input type="text" tabindex="1" name="account" placeholder="id/phone/email" required>
@@ -93,17 +90,5 @@
         <input type="submit" class="btnLogin" value="登录" onclick="validate()" tabindex="4">
     </footer>
     </div>
-<%--</form>--%>
-<%--<div id="login" align="center">--%>
-    <%--<h1>Login</h1>--%>
-    <%--<form action="<%=basePath%>user/loginRequest" method="post" accept-charset="UTF-8">--%>
-        <%--<input type="text" required="required" name="account" placeholder="id/phone/email"/>--%>
-        <%--<input type="password" required="required" name="psw" placeholder="密码"/>--%>
-        <%--<button class="but" type="submit" onclick="validate()">登录</button>--%>
-        <%--<label style="height: 1px">--%>
-        <%--<input type="text" name="url" value="<%=request.getAttribute("url")%>" style="visibility: hidden"/>--%>
-        <%--</label>--%>
-    <%--</form>--%>
-<%--</div>--%>
 </body>
 </html>

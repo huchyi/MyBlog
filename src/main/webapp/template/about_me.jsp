@@ -12,7 +12,7 @@
 <html>
 <head>
     <title>关于作者</title>
-    <link rel="stylesheet" href="<%=basePath%>css/about_me.css">
+    <link rel="stylesheet" href="../static_hcy/css/about_me.css">
 </head>
 <body>
 <div class="box">

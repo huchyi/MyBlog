@@ -3,7 +3,7 @@
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
-<link rel="stylesheet" href="<%=basePath%>css/headCss.css">
+<link rel="stylesheet" href="../../static_hcy/css/headCss.css">
 
 <div style="background: #dfe3e6;height: 100px">
     <div style="padding-top: 25px">
@@ -12,7 +12,7 @@
                 <table>
                     <tr>
                         <td>
-                            <a href="<%=basePath%>article/showHomePage" style="color: #555555">
+                            <a href="/article/showHomePage" style="color: #555555">
                                 首页
                             </a>
                         </td>
@@ -30,9 +30,9 @@
         <div class="page-head-right" id="hasLogin">
         </div>
     </div>
-    <script type="text/javascript" src="<%=basePath%>js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../../static_hcy/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript">
-        $.get("<%=basePath%>user/queryUserIsLogin", function (data) {
+        $.get("/user/queryUserIsLogin", function (data) {
             var headHtml = "";
             if (data === "true") {
 
@@ -64,19 +64,19 @@
         });
         
         function toAbout() {
-            window.location.href = "<%=basePath%>template/about_me.jsp";
+            window.location.href = "/template/about_me.jsp";
         }
 
         function newBlog() {
-          window.open('<%=basePath%>article/editPage');
+          window.open('/article/editPage');
         }
 
         function showMyHome() {
-            window.location.href = "<%=basePath%>article/showMyHome";
+            window.location.href = "/article/showMyHome";
         }
 
         function loginOut() {
-            $.get("<%=basePath%>user/loginOut", function (data, status) {
+            $.get("/user/loginOut", function (data, status) {
                 if(data === "success"){
                     window.location.reload();
                 }
@@ -84,34 +84,12 @@
         }
 
         function login() {
-            window.location.href = "<%=basePath%>user/login?url=article/showHomePage";
+            window.location.href = "/user/login?url=article/showHomePage";
         }
 
         function register() {
-            window.location.href = "<%=basePath%>user/register?url=article/showHomePage";
+            window.location.href = "/user/register?url=article/showHomePage";
         }
 
-        //        $(function () {
-        //            $.ajax({
-        //                type: "GET",
-        //                url: "user/queryUserIsLogin",
-        //                dataType: "json",
-        //                success: function (msg) {
-        //                    var headHtml = "";
-        //                    alert("msg:" + msg);
-        //                    if (msg) {
-        //                        headHtml = headHtml
-        //                            + " <li class='head-text'><a style='color: #555555' href='article/editPage'>写文章</a></li>"
-        //                            + "<li class='head-text'><a href='user/showMyHome' style='color: #555555'>我的</a></li>"
-        //                            + "<li class='head-text'><a href='user/loginOut' style='color: #555555;margin-right:280px'>退出</a></li>"
-        //                        $("#hasLogin").html(headHtml);
-        //                    } else {
-        //                        headHtml = headHtml + " <li class='head-text'><a href='user/login' style='color: #555555'>登陆</a></li>"
-        //                            + "<li class='head-text'><a href='user/register' style='color: #555555;margin-right:280px'>注册</a></li>"
-        //                        $("#notLogin").html(headHtml);
-        //                    }
-        //                }
-        //            });
-        //        });
     </script>
 </div>

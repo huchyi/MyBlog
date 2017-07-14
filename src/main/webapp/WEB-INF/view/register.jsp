@@ -12,9 +12,9 @@
 <html>
 <head>
     <title>注册</title>
-    <link rel="stylesheet" href="<%=basePath%>css/register_css.css" media="screen" type="text/css"/>
-    <script type="text/javascript" src="<%=basePath%>js/jquery-3.2.1.min.js"></script>
-    <script src="<%=basePath%>js/Base64.js"></script>
+    <link rel="stylesheet" href="../static_hcy/css/register_css.css" media="screen" type="text/css"/>
+    <script type="text/javascript" src="../static_hcy/js/jquery-3.2.1.min.js"></script>
+    <script src="../static_hcy/js/Base64.js"></script>
     <script type="text/javascript">
         function validate() {
             //JavaScript判空，如果确定
@@ -43,7 +43,7 @@
                 + "&phone=" + phone.value
                 + "&email=" + email.value
                 + "&psw=" + psw.value;
-            var str = getData("<%=basePath%>user/registerRequest",formParam);
+            var str = getData("/user/registerRequest",formParam);
             if (str === null || str === "") {
                 return;
             }
@@ -63,9 +63,9 @@
                 if (msg === null || msg === "") {
                     alert("注册失败");
                 } else {
-                    var uurl = "<%=basePath%><%=request.getAttribute("url")%>";
+                    var uurl = "../<%=request.getAttribute("url")%>";
                     if(uurl == null || uurl == undefined){
-                        location.href = "<%=basePath%>article/showHomePage"
+                        location.href = "/article/showHomePage"
                         return;
                     }
                     location.href = uurl;
@@ -92,7 +92,6 @@
     </script>
 </head>
 <body>
-<%--<form class="box login" action="<%=basePath%>user/registerRequest" method="post" accept-charset="UTF-8">--%>
     <div class="box login">
     <fieldset class="boxBody">
         <label>
@@ -121,79 +120,6 @@
         <input type="submit" class="btnLogin" value="注册" onclick="validate()" tabindex="4">
     </footer>
     </div>
-<%--</form>--%>
-
-<%--<div id="register" align="center">--%>
-    <%--<h1>Register</h1>--%>
-    <%--<form action="<%=basePath%>user/registerRequest" method="post" accept-charset="UTF-8">--%>
-        <%--<table>--%>
-            <%--<tr>--%>
-                <%--<td>--%>
-                    <%--<label>--%>
-                        <%--<input type="text" name="url" value="<%=request.getAttribute("url")%>" style="visibility: hidden">--%>
-                    <%--</label>--%>
-                <%--</td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-                <%--<td>--%>
-                    <%--昵称：--%>
-                <%--</td>--%>
-                <%--<td>--%>
-                    <%--<input type="text" name="username" placeholder="昵称" style="padding: 5px;width: 100px">--%>
-                <%--</td>--%>
-                <%--<td>--%>
-                    <%--<font style="color: #ff0000">*</font>--%>
-                <%--</td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-                <%--<td>--%>
-                    <%--手机号：--%>
-                <%--</td>--%>
-                <%--<td>--%>
-                    <%--<input type="text" name="phone" placeholder="phone" style="padding: 5px;width: 100px">--%>
-                <%--</td>--%>
-                <%--<td>--%>
-                    <%--<font style="color: #ff0000">*</font>--%>
-                <%--</td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-                <%--<td>--%>
-                    <%--邮箱：--%>
-                <%--</td>--%>
-                <%--<td>--%>
-                    <%--<input type="text" name="email" placeholder="email" style="padding: 5px;width: 100px">--%>
-                <%--</td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-                <%--<td>--%>
-                    <%--密码：--%>
-                <%--</td>--%>
-                <%--<td>--%>
-                    <%--<input type="password" required="true" name="psw" placeholder="密码" style="padding: 5px;width: 100px">--%>
-                <%--</td>--%>
-                <%--<td>--%>
-                    <%--<font style="color: #ff0000">*</font>--%>
-                <%--</td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-                <%--<td>--%>
-                    <%--确认密码：--%>
-                <%--</td>--%>
-                <%--<td>--%>
-                    <%--<input type="password" name="psw2" placeholder="确认密码" style="padding: 5px;width: 100px">--%>
-                <%--</td>--%>
-                <%--<td>--%>
-                    <%--<font style="color: #ff0000">*</font>--%>
-                <%--</td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-                <%--<td>--%>
-                    <%--<input type="submit" onclick="validate()" value="Submit">--%>
-                <%--</td>--%>
-            <%--</tr>--%>
-        <%--</table>--%>
-    <%--</form>--%>
-<%--</div>--%>
 
 </body>
 </html>

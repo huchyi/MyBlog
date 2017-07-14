@@ -18,74 +18,15 @@
 
     <title>我的主页</title>
 
-    <link rel="stylesheet" href="<%=basePath%>css/style.css" media="screen" type="text/css"/>
+    <link rel="stylesheet" href="../static_hcy/css/style.css" media="screen" type="text/css"/>
 
-    <script type="text/javascript" src="<%=basePath%>js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="<%=basePath%>js/Base64.js"></script>
-    <script type="text/javascript" src="<%=basePath%>js/CookieUtils.js"></script>
+    <script type="text/javascript" src="../static_hcy/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../static_hcy/js/Base64.js"></script>
+    <script type="text/javascript" src="../static_hcy/js/CookieUtils.js"></script>
     <script type="text/javascript">
-        <%--var userName;--%>
-        <%--var userid;--%>
-        <%--function getCookies() {--%>
-        <%--<%--%>
-        <%--Cookie cookie = null;--%>
-        <%--Cookie[] cookies = null;--%>
-        <%--// 获取cookies的数据,是一个数组数据。--%>
-        <%--cookies = request.getCookies();--%>
-        <%--if( cookies != null ){--%>
-        <%--for (int i = 0; i < cookies.length; i++){--%>
-        <%--cookie = cookies[i];--%>
-        <%--String cookieName = cookie.getName();--%>
-        <%--if(cookieName.compareTo("username") == 0){--%>
-        <%--%>--%>
-        <%--userName = "<%=URLDecoder.decode(cookie.getValue(),"utf-8")%>";--%>
-        <%--<%--%>
-        <%--}else if(cookieName.compareTo("userid") == 0){--%>
-        <%--%>--%>
-        <%--userid = "<%=URLDecoder.decode(cookie.getValue(),"utf-8")%>";--%>
-        <%--<%--%>
-        <%--}--%>
-        <%--}--%>
-        <%--}--%>
-        <%--%>--%>
-
-        <%--var  headDiv = null;--%>
-        <%--if (userid === null || userid === undefined) {--%>
-        <%--headDiv = "<table style=\"text-space: 10px\">"--%>
-        <%--+ "<tr align=\"center\">"--%>
-        <%--+ " <td>"--%>
-        <%--+ "  <a href=\"<%=basePath%>user/login?url=/article/showHomePage\">登录</a>"--%>
-        <%--+ "</td>"--%>
-        <%--+ "<td>"--%>
-        <%--+ "<a href=\"<%=basePath%>user/register?url=/article/showHomePage\">注册</a>"--%>
-        <%--+ "</td>"--%>
-        <%--+ "</tr>"--%>
-        <%--+ "</table>";--%>
-        <%--}else{--%>
-        <%--headDiv = "<a href=\"<%=basePath%>user/login\">当前登录用户：" + userName + "</a>"--%>
-        <%--+ "    <a href='' onclick='loginOut();return false'>退出登录</a>";--%>
-        <%--}--%>
-        <%--$("#head").html(headDiv);--%>
-        <%--}--%>
-
-        <%--function loginOut() {--%>
-        <%--$.get("/user/loginOut", function (data, status) {--%>
-        <%--if(data === "success"){--%>
-        <%--window.location.href = "<%=basePath%>article/showHomePage";--%>
-        <%--}--%>
-        <%--});--%>
-        <%--}--%>
-        <%--function newBlog() {--%>
-        <%--if(userid !== null || userid !== undefined){--%>
-        <%--window.open('/article/editPage');--%>
-        <%--}else{--%>
-        <%--window.location.href = "<%=basePath%>user/login?url=/article/showHomePage"--%>
-        <%--}--%>
-        <%--}--%>
 
         function getPageCount() {
-//            getCookies();
-            $.get("<%=basePath%>article/getArticleListByUserid", function (data, status) {
+            $.get("/article/getArticleListByUserid", function (data, status) {
                 setTop(data);
             });
         }
@@ -110,7 +51,7 @@
         }
 
         function toDetails(id) {
-            window.open("<%=basePath%>article/showDetails?id=" + id);
+            window.open("/article/showDetails?id=" + id);
         }
     </script>
 </head>

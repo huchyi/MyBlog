@@ -18,17 +18,17 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>文章详情</title>
-    <link rel="stylesheet" href="<%=basePath%>css/details_styles.css" media="screen" type="text/css"/>
-    <script type="text/javascript" src="<%=basePath%>js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="<%=basePath%>js/Base64.js"></script>
+    <link rel="stylesheet" href="../static_hcy/css/details_styles.css" media="screen" type="text/css"/>
+    <script type="text/javascript" src="../static_hcy/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../static_hcy/js/Base64.js"></script>
 
     <%--<link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">--%>
     <%--<script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>--%>
-    <link rel="stylesheet" href="<%=basePath%>css/highlight-zenburn.css" media="screen" type="text/css"/>
-    <script type="text/javascript" src="<%=basePath%>js/highlight.js"></script>
+    <link rel="stylesheet" href="../static_hcy/css/highlight-zenburn.css" media="screen" type="text/css"/>
+    <script type="text/javascript" src="../static_hcy/js/highlight.js"></script>
     <script type="application/javascript">
         function toEdit() {
-            window.location.href = "<%=basePath%>article/editPage?id=" + <%= articleModel.getId()%>;
+            window.location.href = "/article/editPage?id=" + <%= articleModel.getId()%>;
         }
 
 
@@ -93,7 +93,7 @@
                 "}";
             param = new Base64().encode(param);
 
-            $.get("<%=basePath%>article/updatePrivate?param=" + param, function (data, status) {
+            $.get("../article/updatePrivate?param=" + param, function (data, status) {
 //                alert("update:" + data);
                 if (data === "success") {
                     div1.className = (div1.className == "close1") ? "open1" : "close1";
