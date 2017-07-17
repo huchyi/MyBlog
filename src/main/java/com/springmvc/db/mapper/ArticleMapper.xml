@@ -52,7 +52,6 @@
            article_id,
            title,
            describes,
-           content,
            create_time,
            is_private,
            read_times  from article where userid=#{userid} order by id desc
@@ -84,7 +83,6 @@
         article_id,
         title,
         describes,
-        content,
         create_time,
         is_private,
         read_times  FROM article WHERE id >=(select id from article limit #{startNum}, 1) AND is_private=FALSE limit
