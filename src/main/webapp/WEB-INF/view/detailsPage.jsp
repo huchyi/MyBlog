@@ -27,8 +27,13 @@
 
     <%--<link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">--%>
     <%--<script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>--%>
+    <%-- 代码高亮 --%>
     <link rel="stylesheet" href="<%=basePath%>static_hcy/css/highlight-zenburn.css" media="screen" type="text/css"/>
     <script type="text/javascript" src="<%=basePath%>static_hcy/js/highlight.js"></script>
+
+    <%-- 图片有预览效果--%>
+    <link href="<%=basePath%>static_hcy/css/lightbox.css" rel="stylesheet">
+    <script type="text/javascript" src="<%=basePath%>static_hcy/js/lightbox.js"></script>
     <script type="application/javascript">
         function toEdit() {
             window.location.href = "<%=basePath%>article/editPage?id=" + <%= articleModel.getId()%>;
@@ -126,7 +131,21 @@
                 });
             });
 
+
+            var imgs = document.getElementsByTagName('img');
+            for (var i = 0;i<imgs.length;i++){
+                imgs[i].setAttribute("data-lightbox", "imgs-" + i);
+                imgs[i].setAttribute("id", "imgs-" + i);
+                $("#imgs-" + i).wrapAll("<a data-lightbox='"+ "imgs-" + i +"' href='"+ imgs[i].getAttribute('src') +"'></a>");
+            }
+
+            lightbox.option({
+                'resizeDuration': 200,
+                'wrapAround': true,
+                'maxWidth':2000
+            })
         }
+
     </script>
 </head>
 <body>
