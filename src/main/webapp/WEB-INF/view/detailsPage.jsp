@@ -115,13 +115,13 @@
 
         window.onload = function () {
             var base64 = new Base64();
-            var title = base64.decode(base64.decode("<%= articleModel.getTitle()%>"))
+            var title = base64.decode(base64.decode("<%= articleModel.getTitle()%>"));
             $("#title").html(title);
 
-            var des = base64.decode(base64.decode("<%= articleModel.getDescribes()%>"))
+            var des = base64.decode(base64.decode("<%= articleModel.getDescribes()%>"));
             $("#preCss").html(des);
 
-            var con = base64.decode(base64.decode("<%= articleModel.getContent()%>"))
+            var con = base64.decode(base64.decode("<%= articleModel.getContent()%>"));
             $("#contentt").html(con);
 
             hljs.initHighlightingOnLoad();
