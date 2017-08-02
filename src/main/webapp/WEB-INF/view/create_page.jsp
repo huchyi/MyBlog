@@ -144,7 +144,7 @@
     <div id="userinfo" style="visibility: hidden">
         <script type="text/javascript">getCookies()</script>
     </div>
-    <input type="text" name="title" placeholder="输入标题" style="padding: 15px;font-size: 18px;color: #232323">
+    <input type="text" name="title" placeholder="输入标题" style="padding: 15px;font-size: 18px;color: #232323;min-width: 60%;max-width: 100%">
     <br>
     <div style="margin-top: 60px">
         <label>

@@ -157,7 +157,7 @@
     <div id="userinfo" style="visibility: hidden">
     </div>
     <br>
-    <input type="text" name="title" placeholder="输入标题" style="padding: 15px" id="title">
+    <input type="text" name="title" placeholder="输入标题" style="padding: 15px;min-width: 60%;max-width: 100%" id="title">
     <br>
     <div style="margin-top: 60px">
         <label>
