@@ -41,10 +41,14 @@
             if(pageSize > 30){
                 document.getElementById("menuOut").style.visibility="visible";//隐藏
                 setBottom(pageSize, pageNum);
+                $.get("<%=basePath%>article/getPageNumData?pageNum=" + pageNum + "&totalCount=" + pageSize, function (data) {
+                    setTop(data);
+                });
+            }else{
+                $.get("<%=basePath%>article/getArticleList", function (data) {
+                    setTop(data);
+                });
             }
-            $.get("<%=basePath%>article/getPageNumData?pageNum=" + pageNum + "&totalCount=" + pageSize, function (data) {
-                setTop(data);
-            });
         }
 
         function setTop(data) {
