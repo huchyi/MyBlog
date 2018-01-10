@@ -52,6 +52,9 @@
         }
 
         function setTop(data) {
+            if(data === null || data === ""){
+                return;
+            }
             var base64 = new Base64();
             var json = base64.decode(data);
             var list = eval("(" + json + ")");
