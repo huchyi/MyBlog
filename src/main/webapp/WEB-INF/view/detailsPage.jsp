@@ -8,21 +8,32 @@
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    String url = request.getServerName();
+    String basePath = "https://" + request.getServerName() + request.getContextPath() + "/";
+    if(url != null && url.equals("localhost")){
+        basePath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+    }
     ArticleModel articleModel = (ArticleModel) request.getAttribute("articleModel");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>文章详情</title>
-    <link rel="stylesheet" href="<%=basePath%>/css/details_styles.css" media="screen" type="text/css"/>
-    <script type="text/javascript" src="<%=basePath%>js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="<%=basePath%>js/Base64.js"></script>
-    <%--<script type="text/javascript" src="<%=basePath%>js/highlight.pack.js"></script>--%>
-    <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">
-    <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="<%=basePath%>static_hcy/css/details_styles.css" media="screen" type="text/css"/>
+    <script type="text/javascript" src="<%=basePath%>static_hcy/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="<%=basePath%>static_hcy/js/Base64.js"></script>
+
+    <%--<link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">--%>
+    <%--<script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>--%>
+    <%-- 代码高亮 --%>
+    <link rel="stylesheet" href="<%=basePath%>static_hcy/css/highlight-zenburn.css" media="screen" type="text/css"/>
+    <script type="text/javascript" src="<%=basePath%>static_hcy/js/highlight.js"></script>
+
+    <%-- 图片有预览效果--%>
+    <link href="<%=basePath%>static_hcy/css/lightbox.css" rel="stylesheet">
+    <script type="text/javascript" src="<%=basePath%>static_hcy/js/lightbox.js"></script>
     <script type="application/javascript">
         function toEdit() {
             window.location.href = "<%=basePath%>article/editPage?id=" + <%= articleModel.getId()%>;
@@ -54,7 +65,7 @@
               }
               %>
 
-            if (userid !== null && userid !== undefined) {
+            if (userid !== null && userid !== undefined && "<%=request.getAttribute("isShowEdit")%>" == "true") {
                 var editStr;
                 editStr = "<div>";
                 editStr = editStr + "<li class='editList1'>" +
@@ -101,21 +112,46 @@
             });
         }
 
-        //
-        //        window.onload=function(){
-        //            var div2=document.getElementById("div2");
-        //            var div1=document.getElementById("div1");
-        //            div2.onclick=function(){
-        //                div1.className=(div1.className=="close1")?"open1":"close1";
-        //                div2.className=(div2.className=="close2")?"open2":"close2";
-        //            }
-        //        }
+
+        window.onload = function () {
+            var base64 = new Base64();
+            var title = base64.decode(base64.decode("<%= articleModel.getTitle()%>"));
+            $("#title").html(title);
+
+            var des = base64.decode(base64.decode("<%= articleModel.getDescribes()%>"));
+            $("#preCss").html(des);
+
+            var con = base64.decode(base64.decode("<%= articleModel.getContent()%>"));
+            $("#contentt").html(con);
+
+            hljs.initHighlightingOnLoad();
+            $(document).ready(function () {
+                $('pre').each(function (i, e) {
+                    hljs.highlightBlock(e)
+                });
+            });
+
+
+            var imgs = document.getElementsByTagName('img');
+            for (var i = 0;i<imgs.length;i++){
+                imgs[i].setAttribute("data-lightbox", "imgs-" + i);
+                imgs[i].setAttribute("id", "imgs-" + i);
+                $("#imgs-" + i).wrapAll("<a data-lightbox='"+ "imgs-" + i +"' href='"+ imgs[i].getAttribute('src') +"'></a>");
+            }
+
+            lightbox.option({
+                'resizeDuration': 200,
+                'wrapAround': true,
+                'maxWidth':2000
+            })
+        }
+
     </script>
 </head>
 <body>
-<div id="divCss">
+<div id="divCss_detail">
     <jsp:include page="/template/header.jsp"/>
-    <div id="divCss2">
+    <div id="divCss2_detail">
 
         <div id="edit">
             <script type="application/javascript">
@@ -124,22 +160,19 @@
         </div>
 
         <div style="background: #fefefe;margin-top: 30px">
-            <p id="title"><%= articleModel.getTitle()%>
+            <p id="title">
             </p>
-            <p style="margin-top: 30px">
-            <p id="des">
-            <pre id="preCss"><%= articleModel.getDescribes()%>
-        </pre>
+            <br style="margin-top: 30px">
+            <p id="preCss">
             </p>
-            <p style="margin-top: 100px">
-                <%= articleModel.getContent()%>
+            <br style="margin-top: 80px">
+            <p id="contentt">
             </p>
         </div>
-
-        <div id="bottom">
-            <p>作者：<%= articleModel.getUsername()%>  | 创建时间：<%= articleModel.getCreate_time()%>
-            </p>
-        </div>
+    </div>
+    <div id="bottom">
+        <p>作者：<%= articleModel.getUsername()%>  | 创建时间：<%= articleModel.getCreate_time()%>
+        </p>
     </div>
 </div>
 </body>

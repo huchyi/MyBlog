@@ -36,6 +36,7 @@
 
     <select id="getArticleById" parameterType="int" resultMap="article">
     select id,
+           userid,
            username,
            article_id,
            title,
@@ -51,7 +52,6 @@
            article_id,
            title,
            describes,
-           content,
            create_time,
            is_private,
            read_times  from article where userid=#{userid} order by id desc
@@ -63,10 +63,9 @@
            article_id,
            title,
            describes,
-           content,
            create_time,
            is_private,
-           read_times  from article
+           read_times  from article order by id desc
     </select>
 
     <select id="getPageCount" resultType="int">
@@ -83,7 +82,6 @@
         article_id,
         title,
         describes,
-        content,
         create_time,
         is_private,
         read_times  FROM article WHERE id >=(select id from article limit #{startNum}, 1) AND is_private=FALSE limit

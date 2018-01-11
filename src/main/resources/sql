@@ -1,18 +1,19 @@
-create database mybatis;
+create database bloghcy;
 create table article
 (
-	id int auto_increment
-		primary key,
+	id int auto_increment primary key,
 	title varchar(255) not null,
 	content text null,
 	img_url varchar(255) null,
 	create_time datetime not null,
-	article_id mediumtext not null,
+	article_id varchar(20) not null,
 	describes text null,
 	userid varchar(255) null,
-	username varchar(255) null
-)
-;
+	username varchar(255) null,
+	is_private tinyint(1) default '0' not null,
+	read_times int default '0' null
+) DEFAULT CHARSET=utf8;
+
 
 create table users
 (
@@ -23,12 +24,14 @@ create table users
 	psw varchar(255) not null,
 	userphone varchar(255) null,
 	email varchar(255) null,
+	create_time datetime default CURRENT_TIMESTAMP null,
 	constraint users_userid_uindex
 		unique (userid),
 	constraint users_userphone_uindex
 		unique (userphone),
 	constraint users_email_uindex
 		unique (email)
-)
-;
+) DEFAULT CHARSET=utf8;
+
+
 

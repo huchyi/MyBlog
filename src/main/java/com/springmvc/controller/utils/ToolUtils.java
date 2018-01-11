@@ -32,4 +32,18 @@ public class ToolUtils {
     \s 空格(\u0008)
     \r 换行(\u000d)*/
 
+
+
+    /**
+     * html 转译
+     *
+     * */
+    public static String replaceHtml(String html){
+        String dest = "";
+        if (html!=null) {
+            dest = html.replace("<","&lt;").replace(">","&gt;");
+        }
+        return dest;
+    }
+
 }

@@ -5,22 +5,25 @@
   Time: 11:57
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    String url = request.getServerName();
+    String basePath = "https://" + request.getServerName() + request.getContextPath() + "/";
+    if(url != null && url.equals("localhost")){
+        basePath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+    }
     ArticleModel articleModel = (ArticleModel) request.getAttribute("articleModel");
 %>
 <html>
 <head>
     <title>编辑界面</title>
-    <link rel="stylesheet" href="<%=basePath%>css/style.css" media="screen" type="text/css"/>
-    <script type="text/javascript" src="<%=basePath%>js/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" href="<%=basePath%>css/edit_page.css" media="screen" type="text/css"/>
-    <script src="<%=basePath%>ckeditor/ckeditor.js"></script>
-    <script src="<%=basePath%>ckeditor/config.js"></script>
-    <script src="<%=basePath%>ckfinder/ckfinder.js"></script>
-    <script src="<%=basePath%>js/Base64.js"></script>
+    <link rel="stylesheet" href="<%=basePath%>static_hcy/css/style.css" media="screen" type="text/css"/>
+    <script type="text/javascript" src="<%=basePath%>static_hcy/js/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="<%=basePath%>static_hcy/css/edit_page.css" media="screen" type="text/css"/>
+    <script src="<%=basePath%>static_hcy/ckeditor/ckeditor.js"></script>
+    <script src="<%=basePath%>static_hcy/ckeditor/config.js"></script>
+    <script src="<%=basePath%>static_hcy/ckfinder/ckfinder.js"></script>
+    <script src="<%=basePath%>static_hcy/js/Base64.js"></script>
 
     <script type="text/javascript">
         var userid;
@@ -39,25 +42,15 @@
              %>
             userid = "<%=URLDecoder.decode(cookie.getValue(),"utf-8")%>";
             <%
-                    }else if(cookieName.compareTo("psw") == 0){
-                   psw = URLDecoder.decode(cookie.getValue(),"utf-8");
-                    }
-                 }
+                }
+               }
               }
               %>
-
-            var userInfo = null;
-            if (userid !== null && userid !== undefined) {
-                userInfo = userInfo + "<input type='text' name='userid' value='" + userid + "'>";
-                $("#userinfo").html(userInfo);
-            }
         }
 
 
         function validate() {
             var formParam;
-            var userId = window.document.getElementsByName("userid")[0];
-            var id = window.document.getElementsByName("id")[0];
 
             var div1 = document.getElementById("div1");
             var isPrivate = (div1.className == "close1") ? "1" : "0";
@@ -77,11 +70,13 @@
                 alert("请输入内容");
                 return;
             }
-            formParam = "id=" + id.value
-                + "&userid=" + userId.value
-                + "&title=" + title.value
-                + "&des=" + des.value
-                + "&content=" + editor_data
+
+            var base64 = new Base64();
+            formParam = "id=" + "<%=articleModel.getId()%>"
+                + "&userid=" + userid
+                + "&title=" + base64.encode(base64.encode(title.value))
+                + "&des=" + base64.encode(base64.encode(des.value))
+                + "&content=" + base64.encode(base64.encode(editor_data))
                 + "&isPrivate=" + isPrivate;
 
             var str = getData("<%=basePath%>article/update", formParam);
@@ -120,49 +115,28 @@
                     callbackData = data;
                 },
                 error: function (XMLHttpRequest, textStatus) {
-                    alert("status:" + XMLHttpRequest.status + "errorMsg:" + textStatus);
+                    alert("status:" + XMLHttpRequest.status + "，errorMsg:" + textStatus);
                 }
             });
             return callbackData;
         }
-    </script>
-</head>
-<body>
-<div id="edit_divCss" align="center">
-    <jsp:include page="/template/header.jsp"/>
-    <%--<form action="/article/update" method="post" accept-charset="UTF-8">--%>
-    <div id="userinfo" style="visibility: hidden">
-        <script type="text/javascript">getCookies()</script>
-    </div>
 
-    <label>
-        <%--<input type="text" name="psw" style="visibility: hidden" value="<%=psw%>">--%>
-        <input type="text" name="id" style="visibility: hidden" value="<%=articleModel.getId()%>">
-    </label>
-    <br>
-    <h2><input type="text" name="title" placeholder="输入标题" style="padding: 15px"
-               value="<%=articleModel.getTitle()%>"></h2>
-    <br>
-    <h5><textarea rows="4" cols="4" name="des" placeholder="输入副标题"
-                  style="padding: 15px;width: 60%"><%=articleModel.getDescribes()%></textarea></h5>
-    <%--<h5><input type="text" name="des" placeholder="输入副标题" style="padding: 15px;width: 60%"></h5>--%>
-    <br>
-    <div>
-        <label>
-            <textarea id="content" cols="8" rows="2" class="ckeditor"
-                      name="content"><%=articleModel.getContent()%></textarea>
-        </label>
-    </div>
-    <br><br>
-    <input type="submit" onclick="validate()" value="Submit">
-    <br><br>
-    <div id="btn">
-        <div id='div1' class='open1'>
-            <div id='div2' class='open2'></div>
-        </div>
-        <p id='editPrivateBtn'>公开:</p>
-    </div>
-        <script type="text/javascript">
+
+        window.onload = function () {
+            getCookies();
+            var base64 = new Base64();
+            var title = base64.decode(base64.decode("<%=articleModel.getTitle()%>"));
+            title = title.replace(/&lt;/g,"<").replace(/&gt;/g,">");
+            $("#title").val(title);
+
+            var des = base64.decode(base64.decode("<%=articleModel.getDescribes()%>"));
+            des = des.replace(/&lt;/g,"<").replace(/&gt;/g,">");
+            $("#des_des").text(des);
+
+            var conn1 = base64.decode(base64.decode("<%=articleModel.getContent()%>"));
+            $("#content").text(conn1);
+
+
             var div2 = document.getElementById("div2");
             var div1 = document.getElementById("div1");
 
@@ -173,7 +147,40 @@
                 div1.className = (div1.className == "close1") ? "open1" : "close1";
                 div2.className = (div2.className == "close2") ? "open2" : "close2";
             };
-        </script>
+        }
+    </script>
+</head>
+<body>
+<div id="edit_divCss" align="center">
+    <jsp:include page="/template/header.jsp"/>
+    <%--<form action="/article/update" method="post" accept-charset="UTF-8">--%>
+    <div id="userinfo" style="visibility: hidden">
+    </div>
+    <br>
+    <input type="text" name="title" placeholder="输入标题" style="padding: 15px;min-width: 60%;max-width: 100%" id="title">
+    <br>
+    <div style="margin-top: 60px">
+        <label>
+            <textarea rows="4" cols="8" name="des" class="des_des" id="des_des" placeholder="输入副标题"></textarea>
+        </label>
+    </div>
+    <div style="margin-top: 60px">
+        <label>
+            <textarea id="content" cols="8" rows="2" class="ckeditor" name="content"></textarea>
+        </label>
+    </div>
+
+    <br><br>
+    <input type="submit" onclick="validate()" value="Submit">
+    <br><br>
+
+
+    <div id="btn">
+        <div id='div1' class='open1'>
+            <div id='div2' class='open2'></div>
+        </div>
+        <p id='editPrivateBtn'>公开:</p>
+    </div>
     <%--</form>--%>
 </div>
 

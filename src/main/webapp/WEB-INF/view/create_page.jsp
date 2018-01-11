@@ -4,21 +4,24 @@
   Time: 14:51
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    String url = request.getServerName();
+    String basePath = "https://" + request.getServerName() + request.getContextPath() + "/";
+    if(url != null && url.equals("localhost")){
+        basePath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+    }
 %>
 <html>
 <head>
     <title>新建文章</title>
-    <link rel="stylesheet" href="<%=basePath%>css/style.css" media="screen" type="text/css"/>
-    <link rel="stylesheet" href="<%=basePath%>css/edit_page.css" media="screen" type="text/css"/>
-    <script type="text/javascript" src="<%=basePath%>js/jquery-3.2.1.min.js"></script>
-    <script src="<%=basePath%>ckeditor/ckeditor.js"></script>
-    <script src="<%=basePath%>ckeditor/config.js"></script>
-    <script src="<%=basePath%>ckfinder/ckfinder.js"></script>
-    <script src="<%=basePath%>js/Base64.js"></script>
+    <link rel="stylesheet" href="<%=basePath%>static_hcy/css/style.css" media="screen" type="text/css"/>
+    <link rel="stylesheet" href="<%=basePath%>static_hcy/css/edit_page.css" media="screen" type="text/css"/>
+    <script type="text/javascript" src="<%=basePath%>static_hcy/js/jquery-3.2.1.min.js"></script>
+    <script src="<%=basePath%>static_hcy/ckeditor/ckeditor.js"></script>
+    <script src="<%=basePath%>static_hcy/ckeditor/config.js"></script>
+    <script src="<%=basePath%>static_hcy/ckfinder/ckfinder.js"></script>
+    <script src="<%=basePath%>static_hcy/js/Base64.js"></script>
 
     <script type="text/javascript">
 
@@ -79,14 +82,18 @@
                 alert("请输入内容");
                 return;
             }
+
+
+
+            var base64 = new Base64();
             formParam = "username=" + username.value
                 + "&userid=" + userId.value
-                + "&title=" + title.value
-                + "&des=" + des.value
-                + "&content=" + editor_data
+                + "&title=" + base64.encode(base64.encode(title.value.replace(/</g,"&lt;").replace(/>/g,"&gt;")))
+                + "&des=" + base64.encode(base64.encode(des.value.replace(/</g,"&lt;").replace(/>/g,"&gt;")))
+                + "&content=" + base64.encode(base64.encode(editor_data))
                 + "&isPrivate=" + isPrivate;
 
-            var str = getData("<%=basePath%>article/insert", formParam);
+            var str = getData("<%=basePath%>/article/insert", formParam);
             if (str === null || str === "") {
                 return;
             }
@@ -122,7 +129,7 @@
                     callbackData = data;
                 },
                 error: function (XMLHttpRequest, textStatus) {
-                    alert("status:" + XMLHttpRequest.status + "errorMsg:" + textStatus);
+                    alert("status:" + XMLHttpRequest.status + "，errorMsg:" + textStatus);
                 }
             });
             return callbackData;
@@ -137,34 +144,37 @@
     <div id="userinfo" style="visibility: hidden">
         <script type="text/javascript">getCookies()</script>
     </div>
-    <h2><input type="text" name="title" placeholder="输入标题" style="padding: 15px;font-size: 18px;color: #232323"></h2>
+    <input type="text" name="title" placeholder="输入标题" style="padding: 15px;font-size: 18px;color: #232323;min-width: 60%;max-width: 100%">
     <br>
-    <h5><textarea rows="4" cols="4" name="des" placeholder="输入副标题"
-                  style="padding: 15px;width: 60%;font-size: 14px;color: #232323"></textarea></h5>
-    <%--<h5><input type="text" name="des" placeholder="输入副标题" style="padding: 15px;width: 60%"></h5>--%>
-    <br>
-    <div>
+    <div style="margin-top: 60px">
         <label>
-            <textarea id="content" cols="8" rows="2" class="ckeditor" name="content" placeholder="这里是内容......"></textarea>
+    <textarea rows="4" cols="4" name="des" placeholder="输入副标题" class="des_des" id="des_des"></textarea>
+        </label>
+    </div>
+    <br>
+    <div style="margin-top: 60px">
+        <label>
+            <textarea id="content" cols="8" rows="2" class="ckeditor" name="content"
+                      placeholder="这里是内容......"></textarea>
         </label>
     </div>
     <br><br>
     <input type="submit" onclick="validate()" value="Submit">
-        <br><br>
+    <br><br>
     <div id="btn">
         <div id='div1' class='open1'>
             <div id='div2' class='open2'></div>
         </div>
         <p id='editPrivateBtn'>公开:</p>
     </div>
-        <script type="text/javascript">
-            var div2 = document.getElementById("div2");
-            var div1 = document.getElementById("div1");
-            div2.onclick = function () {
-                div1.className = (div1.className == "close1") ? "open1" : "close1";
-                div2.className = (div2.className == "close2") ? "open2" : "close2";
-            };
-        </script>
+    <script type="text/javascript">
+        var div2 = document.getElementById("div2");
+        var div1 = document.getElementById("div1");
+        div2.onclick = function () {
+            div1.className = (div1.className == "close1") ? "open1" : "close1";
+            div2.className = (div2.className == "close2") ? "open2" : "close2";
+        };
+    </script>
     <%--</form>--%>
 </div>
 

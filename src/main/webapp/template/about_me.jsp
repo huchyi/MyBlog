@@ -7,20 +7,21 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+    String url = request.getServerName();
+    String basePath = "https://" + request.getServerName() + request.getContextPath() + "/";
+    if(url != null && url.equals("localhost")){
+        basePath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+    }
 %>
 <html>
 <head>
     <title>关于作者</title>
-
-    <link rel="stylesheet" href="<%=basePath%>css/about_me.css">
+    <link rel="stylesheet" href="<%=basePath%>static_hcy/css/about_me.css">
 </head>
 <body>
 <div class="box">
     <p>作者：hcy</p>
     <a href="https://github.com/huchyi">点击去作者GitHub</a>
-    <p></p>
-    <a href="https://github.com/huchyi/MyBlog">点击去博客开源地址</a>
     <p style="margin-top: 100px">
     欢迎大家留言并提意见，有问题请在Issues中反馈。
 </div>

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPObject;
 import com.springmvc.controller.utils.Base64;
+import com.springmvc.controller.utils.CookieUtils;
 import com.springmvc.controller.utils.DESUtil;
 import com.springmvc.controller.utils.ModelAndJsonUtils;
 import com.springmvc.db.model.ArticleModel;
@@ -137,13 +138,22 @@ public class ArticleController {
      * 展示详情页
      */
     @RequestMapping(value = "/showDetails", method = RequestMethod.GET)
-    public ModelAndView showDetails(String id) {
+    public ModelAndView showDetails(HttpServletRequest request,String id) {
         ArticleModel articleModel = articleService.getArticleById(Integer.valueOf(id));
         ModelAndView modelAndView = new ModelAndView();
         if (articleModel == null) {
             modelAndView.setViewName("404");
         } else {
             articleService.updateReadTimes(Integer.valueOf(id));
+
+            String userid = CookieUtils.getUserId(request);
+            String userid2 = articleModel.getUserid();
+            articleModel.setUserid("");
+            if(userid != null && !userid.equals("") && userid2 != null && !userid2.equals("") && userid.equals(userid2)){
+                modelAndView.addObject("isShowEdit", "true");
+            }else{
+                modelAndView.addObject("isShowEdit", "false");
+            }
             modelAndView.setViewName("detailsPage");
             modelAndView.addObject("articleModel", articleModel);
         }
